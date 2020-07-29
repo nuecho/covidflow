@@ -15,6 +15,7 @@ rules:
       - intent: greet
       - action: action_greeting_messages
 
+  ## Assessment rules
   - rule: Severe symptoms
     steps:
       - form: assessment_form
@@ -197,44 +198,28 @@ rules:
     steps:
       - ...
       - action: utter_ask_anything_else_with_test_navigation
-      - intent: done
+      - or:
+          - intent: done
+          - intent: deny
       - action: action_goodbye
 
   - rule: utter_ask_anything_else_without_test_navigation done
     steps:
       - ...
       - action: utter_ask_anything_else_without_test_navigation
-      - intent: done
-      - action: action_goodbye
-
-  - rule: utter_ask_anything_else_with_test_navigation deny
-    steps:
-      - ...
-      - action: utter_ask_anything_else_with_test_navigation
-      - intent: deny
-      - action: action_goodbye
-
-  - rule: utter_ask_anything_else_without_test_navigation deny
-    steps:
-      - ...
-      - action: utter_ask_anything_else_without_test_navigation
-      - intent: deny
+      - or:
+          - intent: done
+          - intent: deny
       - action: action_goodbye
 
   # utter_ask_assess_to_answer
-  - rule: utter_ask_assess_to_answer deny
-    steps:
-      - ...
-      - action: utter_ask_assess_to_answer
-      - intent: deny
-      - action: utter_please_visit_again
-      - action: action_qa_goodbye
-
   - rule: utter_ask_assess_to_answer done
     steps:
       - ...
       - action: utter_ask_assess_to_answer
-      - intent: done
+      - or:
+          - intent: done
+          - intent: deny
       - action: utter_please_visit_again
       - action: action_qa_goodbye
 
@@ -248,27 +233,14 @@ rules:
       - ...
 
   # utter_ask_assess_after_error
-  - rule: utter_ask_assess_after_error deny
-    steps:
-      - ...
-      - action: utter_ask_assess_after_error
-      - intent: deny
-      - action: utter_try_again_later
-      - action: action_qa_goodbye
-
   - rule: utter_ask_assess_after_error done
     steps:
       - ...
       - action: utter_ask_assess_after_error
-      - intent: done
-      - action: utter_try_again_later
-      - action: action_qa_goodbye
-
-  - rule: utter_ask_assess_after_error fallback
-    steps:
-      - ...
-      - action: utter_ask_assess_after_error
-      - intent: nlu_fallback
+      - or:
+          - intent: done
+          - intent: deny
+          - intent: nlu_fallback
       - action: utter_try_again_later
       - action: action_qa_goodbye
 
@@ -282,19 +254,13 @@ rules:
       - ...
 
   # utter_ask_another_question
-  - rule: utter_ask_another_question deny
-    steps:
-      - ...
-      - action: utter_ask_another_question
-      - intent: deny
-      - action: utter_please_visit_again
-      - action: action_qa_goodbye
-
   - rule: utter_ask_another_question done
     steps:
       - ...
       - action: utter_ask_another_question
-      - intent: done
+      - or:
+          - intent: done
+          - intent: deny
       - action: utter_please_visit_again
       - action: action_qa_goodbye
 
@@ -308,19 +274,13 @@ rules:
       - ...
 
   # utter_ask_different_question
-  - rule: utter_ask_different_question deny
-    steps:
-      - ...
-      - action: utter_ask_different_question
-      - intent: deny
-      - action: utter_please_visit_again
-      - action: action_qa_goodbye
-
   - rule: utter_ask_different_question done
     steps:
       - ...
       - action: utter_ask_different_question
-      - intent: done
+      - or:
+          - intent: done
+          - intent: deny
       - action: utter_please_visit_again
       - action: action_qa_goodbye
 
