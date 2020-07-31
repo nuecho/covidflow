@@ -114,7 +114,7 @@
   - form{"name": "tested_positive_form"}
   - form{"name": null}
   - slot{"self_assess_done": true}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - action_tested_positive_no_symptoms_recommendations
   - utter_ask_when_tested
 * deny
@@ -137,7 +137,7 @@
   - form{"name": "tested_positive_form"}
   - form{"name": null}
   - slot{"self_assess_done": true}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - action_tested_positive_no_symptoms_recommendations
   - utter_ask_when_tested
 * nlu_fallback
@@ -162,7 +162,7 @@
   - form{"name": "tested_positive_form"}
   - form{"name": null}
   - slot{"self_assess_done": true}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - action_tested_positive_no_symptoms_recommendations
   - utter_ask_when_tested
 * affirm
@@ -177,7 +177,7 @@
   - form{"name": "tested_positive_form"}
   - form{"name": null}
   - slot{"self_assess_done": true}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - action_tested_positive_no_symptoms_recommendations
   - utter_ask_when_tested
 * nlu_fallback
@@ -292,7 +292,7 @@
   - form{"name": "checkin_return_form"}
   - form{"name": null}
   - slot{"self_assess_done": true}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - utter_returning_no_symptoms
   - utter_ask_when_first_symptoms
 * affirm
@@ -307,7 +307,7 @@
   - form{"name": "checkin_return_form"}
   - form{"name": null}
   - slot{"self_assess_done": true}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - utter_returning_no_symptoms
   - utter_ask_when_first_symptoms
 * nlu_fallback
@@ -324,7 +324,7 @@
   - form{"name": "checkin_return_form"}
   - form{"name": null}
   - slot{"self_assess_done": true}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - utter_returning_no_symptoms
   - utter_ask_when_first_symptoms
 * deny
@@ -339,7 +339,7 @@
   - form{"name": "checkin_return_form"}
   - form{"name": null}
   - slot{"self_assess_done": true}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - utter_returning_no_symptoms
   - utter_ask_when_first_symptoms
 * nlu_fallback
@@ -460,7 +460,7 @@
   - daily_ci_feel_worse_form
   - form{"name": "daily_ci_feel_worse_form"}
   - form{"name": null}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - slot{"self_assess_done": true}
   - daily_ci_keep_or_cancel_form
   - form{"name": "daily_ci_keep_or_cancel_form"}
@@ -555,7 +555,7 @@
   - daily_ci_feel_no_change_form
   - form{"name": "daily_ci_feel_no_change_form"}
   - form{"name": null}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - slot{"self_assess_done": true}
   - daily_ci_keep_or_cancel_form
   - form{"name": "daily_ci_keep_or_cancel_form"}
@@ -618,7 +618,7 @@
   - daily_ci_feel_better_form
   - form{"name": "daily_ci_feel_better_form"}
   - form{"name": null}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - slot{"self_assess_done": true}
   - daily_ci_keep_or_cancel_form
   - form{"name": "daily_ci_keep_or_cancel_form"}
@@ -641,7 +641,7 @@
   - daily_ci_feel_better_form
   - form{"name": "daily_ci_feel_better_form"}
   - form{"name": null}
-  - slot{"symptoms": "neni"}
+  - slot{"symptoms": "nothing"}
   - slot{"self_assess_done": true}
   - daily_ci_keep_or_cancel_form
   - form{"name": "daily_ci_keep_or_cancel_form"}

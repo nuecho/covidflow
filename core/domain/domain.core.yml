@@ -107,7 +107,7 @@ slots:
       - severe
       - moderate
       - mild
-      - neni
+      - nothing
 
   has_cough:
     type: unfeaturized
