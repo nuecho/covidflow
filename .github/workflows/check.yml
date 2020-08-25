@@ -30,16 +30,19 @@ jobs:
   check-core:
     runs-on: ubuntu-latest
     needs: setup
+    env:
+      working-directory: ./core
     steps:
+      - uses: actions/checkout@v2
       - name: Installing dependencies
         run: make install
-        working-directory: ./core
+        working-directory: ${{env.working-directory}}
       - name: Linting
         run: make lint
-        working-directory: ./core
+        working-directory: ${{env.working-directory}}
       - name: Unit testing
         run: make test
-        working-directory: ./core
+        working-directory: ${{env.working-directory}}
   check-action-server:
     runs-on: ubuntu-latest
     needs: setup
