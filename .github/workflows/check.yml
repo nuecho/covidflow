@@ -9,12 +9,8 @@ on:
   pull_request:
 
 jobs:
-  check:
+  setup:
     runs-on: ubuntu-latest
-    env:
-      core: ./core
-      action-server: ./action-server
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.6.8
@@ -31,21 +27,33 @@ jobs:
           )
           pip install --upgrade pip \
           && pip install "poetry==1.0.5"
-      - name: Installing core dependencies
+  check-core:
+    runs-on: ubuntu-latest
+    needs: setup
+    env:
+      working-directory: ./core
+    steps:
+      - name: Installing dependencies
         run: make install
-        working-directory: ${{env.core}}
-      - name: Linting core
+        working-directory: ${{env.working-directory}}
+      - name: Linting
         run: make lint
-        working-directory: ${{env.core}}
-      - name: Unit testing core
+        working-directory: ${{env.working-directory}}
+      - name: Unit testing
         run: make test
-        working-directory: ${{env.core}}
-      - name: Installing action-server dependencies
+        working-directory: ${{env.working-directory}}
+  check-action-server:
+    runs-on: ubuntu-latest
+    needs: setup
+    env:
+      working-directory: ./action-server
+    steps:
+      - name: Installing dependencies
         run: make install
-        working-directory: ${{env.action-server}}
-      - name: Linting action-server
+        working-directory: ${{env.working-directory}}
+      - name: Linting
         run: make lint
-        working-directory: ${{env.action-server}}
-      - name: Unit testing action-server
+        working-directory: ${{env.working-directory}}
+      - name: Unit testing
         run: make test
-        working-directory: ${{env.action-server}}
+        working-directory: ${{env.working-directory}}
