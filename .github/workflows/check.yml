@@ -9,8 +9,10 @@ on:
   pull_request:
 
 jobs:
-  setup:
+  check-core:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./core
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.6.8
@@ -27,13 +29,6 @@ jobs:
           )
           pip install --upgrade pip \
           && pip install "poetry==1.0.5"
-  check-core:
-    runs-on: ubuntu-latest
-    needs: setup
-    env:
-      working-directory: ./core
-    steps:
-      - uses: actions/checkout@v2
       - name: Installing dependencies
         run: make install
         working-directory: ${{env.working-directory}}
@@ -45,10 +40,24 @@ jobs:
         working-directory: ${{env.working-directory}}
   check-action-server:
     runs-on: ubuntu-latest
-    needs: setup
     env:
       working-directory: ./action-server
     steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.6.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6.8
+      - name: Installing poetry
+        run: |
+          export $( \
+              PYTHONFAULTHANDLER=TRUE \
+              PYTHONUNBUFFERED=TRUE \
+              PIP_DISABLE_PIP_VERSION_CHECK=on \
+              PIP_NO_CACHE_DIR=off \
+          )
+          pip install --upgrade pip \
+          && pip install "poetry==1.0.5"
       - name: Installing dependencies
         run: make install
         working-directory: ${{env.working-directory}}
