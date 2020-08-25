@@ -1,0 +1,51 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+
+name: Python Checks
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      core: ./core
+      action-server: ./action-server
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.6.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6.8
+      - name: Installing poetry
+        run: |
+          export $( \
+              PYTHONFAULTHANDLER=TRUE \
+              PYTHONUNBUFFERED=TRUE \
+              PIP_DISABLE_PIP_VERSION_CHECK=on \
+              PIP_NO_CACHE_DIR=off \
+          )
+          pip install --upgrade pip \
+          && pip install "poetry==1.0.5"
+      - name: Installing core dependencies
+        run: make install
+        working-directory: ${{env.core}}
+      - name: Linting core
+        run: make lint
+        working-directory: ${{env.core}}
+      - name: Unit testing core
+        run: make test
+        working-directory: ${{env.core}}
+      - name: Installing action-server dependencies
+        run: make install
+        working-directory: ${{env.action-server}}
+      - name: Linting action-server
+        run: make lint
+        working-directory: ${{env.action-server}}
+      - name: Unit testing action-server
+        run: make test
+        working-directory: ${{env.action-server}}
