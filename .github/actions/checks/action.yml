@@ -2,7 +2,6 @@ runs:
   using: "composite"
   steps:
     - name: Installing poetry
-      shell: bash
       run: |
         export $( \
             PYTHONFAULTHANDLER=TRUE \
@@ -12,12 +11,3 @@ runs:
         )
         pip install --upgrade pip \
         && pip install "poetry==1.0.5"
-    - name: Installing dependencies
-      shell: bash
-      run: make install
-    - name: Linting
-      shell: bash
-      run: make lint
-    - name: Unit testing
-      shell: bash
-      run: make test

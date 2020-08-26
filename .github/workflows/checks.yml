@@ -21,6 +21,12 @@ jobs:
         with:
           python-version: 3.6.8
       - uses: ./.github/actions/checks
+      - name: Installing dependencies
+        run: make install
+      - name: Linting
+        run: make lint
+      - name: Unit testing
+        run: make test
 
   check-action-server:
     runs-on: ubuntu-latest
@@ -34,3 +40,9 @@ jobs:
         with:
           python-version: 3.6.8
       - uses: ./.github/actions/checks
+      - name: Installing dependencies
+        run: make install
+      - name: Linting
+        run: make lint
+      - name: Unit testing
+        run: make test
