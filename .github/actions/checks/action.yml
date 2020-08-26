@@ -1,11 +1,8 @@
 runs:
   using: "composite"
   steps:
-    - name: Set up Python 3.6.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.6.8
     - name: Installing poetry
+      shell: bash
       run: |
         export $( \
             PYTHONFAULTHANDLER=TRUE \
@@ -15,3 +12,12 @@ runs:
         )
         pip install --upgrade pip \
         && pip install "poetry==1.0.5"
+    - name: Installing dependencies
+      shell: bash
+      run: make install
+    - name: Linting
+      shell: bash
+      run: make lint
+    - name: Unit testing
+      shell: bash
+      run: make test

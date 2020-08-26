@@ -16,13 +16,11 @@ jobs:
         working-directory: ./core
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/python-setup
-      - name: Installing dependencies
-        run: make install
-      - name: Linting
-        run: make lint
-      - name: Unit testing
-        run: make test
+      - name: Set up Python 3.6.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6.8
+      - uses: ./.github/actions/checks
 
   check-action-server:
     runs-on: ubuntu-latest
@@ -31,10 +29,8 @@ jobs:
         working-directory: ./action-server
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/python-setup
-      - name: Installing dependencies
-        run: make install
-      - name: Linting
-        run: make lint
-      - name: Unit testing
-        run: make test
+      - name: Set up Python 3.6.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6.8
+      - uses: ./.github/actions/checks
