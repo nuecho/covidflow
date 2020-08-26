@@ -11,3 +11,4 @@ runs:
         )
         pip install --upgrade pip \
         && pip install "poetry==1.0.5"
+      shell: bash
