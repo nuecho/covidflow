@@ -16,7 +16,7 @@ jobs:
         working-directory: ./core
     steps:
       - uses: actions/checkout@v2
-      - uses: python/setup@v1
+      - uses: ./.github/actions/python-setup
       - name: Installing dependencies
         run: make install
       - name: Linting
@@ -31,7 +31,7 @@ jobs:
         working-directory: ./action-server
     steps:
       - uses: actions/checkout@v2
-      - uses: python/setup@v1
+      - uses: ./.github/actions/python-setup
       - name: Installing dependencies
         run: make install
       - name: Linting
