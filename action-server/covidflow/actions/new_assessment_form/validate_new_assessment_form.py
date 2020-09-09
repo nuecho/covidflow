@@ -49,7 +49,7 @@ class ValidateNewAssessmentForm(Action):
 
         extracted_slots: Dict[Text, Any] = tracker.form_slots_to_validate()
 
-        validation_events = []
+        validation_events: List[EventType] = []
 
         for slot_name, slot_value in extracted_slots.items():
             slot_events = [SlotSet(slot_name, slot_value)]
@@ -74,7 +74,7 @@ class ValidateNewAssessmentForm(Action):
         return validation_events
 
 
-def validate_province(value, domain: Dict) -> List[EventType]:
+def validate_province(value: str, domain: Dict) -> List[EventType]:
     if value not in PROVINCES:
         return [SlotSet(PROVINCE_SLOT, None)]
     else:

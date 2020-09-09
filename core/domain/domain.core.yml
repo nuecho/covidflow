@@ -1,13 +1,14 @@
 version: "2.0"
 
 anchors:
-  - affirm-deny-mappings: &affirm-deny-mappings
-    - type: from_intent
-      intent: affirm
-      value: true
-    - type: from_intent
-      intent: deny
-      value: false
+  slot_mappings:
+    - boolean: &boolean
+      - type: from_intent
+        intent: affirm
+        value: true
+      - type: from_intent
+        intent: deny
+        value: false
 
 intents:
   - greet
@@ -88,14 +89,14 @@ forms:
   - question_answering_form:
   - test_navigation_form:
   - new_assessment_form:
-      severe_symptoms: *affirm-deny-mappings
+      severe_symptoms: *boolean
       province_code:
         - type: from_entity
           entity: province
-      age_over_65: *affirm-deny-mappings
-      has_fever: *affirm-deny-mappings
-      moderate_symptoms: *affirm-deny-mappings
-      has_cough: *affirm-deny-mappings
+      age_over_65: *boolean
+      has_fever: *boolean
+      moderate_symptoms: *boolean
+      has_cough: *boolean
 
 slots:
   metadata:
