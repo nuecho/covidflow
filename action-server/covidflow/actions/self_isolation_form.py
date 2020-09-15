@@ -18,7 +18,7 @@ class ValidateSelfIsolationForm(Action):
     def name(self) -> Text:
         return VALIDATE_ACTION_NAME
 
-    async def run(
+    def run(
         self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict
     ) -> List[EventType]:
         bind_logger(tracker)
