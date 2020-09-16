@@ -82,7 +82,7 @@ def _has_template(domain: Dict[Text, Any], template: str) -> bool:
     return template in domain.get("responses", {})
 
 
-def form_slots_to_validate(tracker: Tracker) -> Dict[Text, Any]:
+def _form_slots_to_validate(tracker: Tracker) -> Dict[Text, Any]:
     """
     Waiting for a solution to: https://github.com/RasaHQ/rasa-sdk/issues/269
     I copied the function and adapted it and replaced it where it does change something.

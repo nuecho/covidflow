@@ -23,7 +23,7 @@ from covidflow.constants import (
     Symptoms,
 )
 
-from .lib.form_helper import form_slots_to_validate
+from .lib.form_helper import _form_slots_to_validate
 from .lib.log_util import bind_logger
 from .lib.provincial_811 import get_provincial_811
 
@@ -69,7 +69,7 @@ class ValidateNewAssessmentForm(Action):
     ) -> List[EventType]:
         bind_logger(tracker)
 
-        extracted_slots: Dict[Text, Any] = form_slots_to_validate(
+        extracted_slots: Dict[Text, Any] = _form_slots_to_validate(
             tracker
         )  # https://github.com/RasaHQ/rasa-sdk/issues/269
 
@@ -101,15 +101,13 @@ class ValidateNewAssessmentForm(Action):
 
 
 def validate_assessment_type(value: str, tracker: Tracker) -> List[EventType]:
-    def check_tested_positive(event):
-        return (
-            event["event"] == "user"
-            and event["parse_data"]["intent"]["name"] == "tested_positive"
-        )
+    applied_intents = [
+        event["parse_data"]["intent"]["name"]
+        for event in tracker.applied_events()
+        if event["event"] == "user"
+    ]
 
-    user_events = list(filter(check_tested_positive, tracker.applied_events()))
-
-    if user_events != []:
+    if applied_intents[-2:] == ["tested_positive", "affirm"]:
         return [SlotSet(ASSESSMENT_TYPE_SLOT, AssessmentType.TESTED_POSITIVE)]
     return [SlotSet(ASSESSMENT_TYPE_SLOT, value)]
 
