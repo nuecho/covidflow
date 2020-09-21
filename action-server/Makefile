@@ -31,6 +31,11 @@ install:
 install-dev:
 	poetry install --no-root
 
+clean:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f  {} +
+
 lint:
 	poetry run pylama
 	poetry run mypy .

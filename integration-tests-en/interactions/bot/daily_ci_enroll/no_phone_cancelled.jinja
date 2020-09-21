@@ -1,0 +1,11 @@
+{% import 'bot/macros.jinja' as bot %}
+
+[
+    {
+        "text": "Unfortunately, if you don’t have a mobile phone, I won’t be able to enroll you for the daily check-in"
+    },
+    {
+        "text": "Let’s continue"
+    },
+    {% include 'bot/common/moderate_final_recommendations.jinja' %}
+]

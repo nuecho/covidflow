@@ -27,10 +27,6 @@ help:
 	@echo "        Train English Rasa models"
 	@echo "    train-fr"
 	@echo "        Train French Rasa models"
-	@echo "    shell-en"
-	@echo "        Start a Rasa shell using English models"
-	@echo "    shell-fr"
-	@echo "        Start a Rasa shell using French models"
 	@echo "    test-integration-en"
 	@echo "        Run integration tests in English"
 	@echo "    test-integration-fr"
@@ -44,6 +40,11 @@ install:
 
 install-dev:
 	poetry install --no-root
+
+clean:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f  {} +
 
 lint:
 	poetry run pylama

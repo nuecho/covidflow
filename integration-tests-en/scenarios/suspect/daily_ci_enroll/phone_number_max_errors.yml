@@ -1,0 +1,15 @@
+- suspect
+- suspect_reach_moderate
+- suspect_reach_home_assistance
+- user: affirm
+  bot: home_assistance/has_help
+- user: affirm
+  bot: daily_ci_enroll/ask_first_name
+- user: first_name
+  bot: daily_ci_enroll/ask_phone_number
+- user: invalid_input
+  bot: daily_ci_enroll/ask_phone_number_error
+- user: invalid_input
+  bot: daily_ci_enroll/ask_phone_number_error
+- user: invalid_input
+  bot: daily_ci_enroll/max_errors

@@ -460,7 +460,7 @@ responses:
         - title: No
           payload: "/deny"
         - title: What are pre-existing conditions?
-          payload: "/help_preconditions"
+          payload: "/dont_know"
       custom:
         data:
           disableTextField: "true"
@@ -485,7 +485,7 @@ responses:
           disableTextField: "true"
 
   utter_daily_ci_enroll__note_preconditions:
-    - text: If you're not sure, I will put a note in your profile that you might be at risk
+    - text: If you’re not sure, I will put a note in your profile that you might be at risk
 
   utter_ask_has_dialogue:
     - text: Finally, do you have health services with Dialogue?
@@ -511,7 +511,7 @@ responses:
     - text: I will check-in with you everyday around this time to see how you're doing, monitor your symptoms and direct you to the right resources
 
   utter_daily_ci_enroll__enroll_fail_1:
-    - text: I'm sorry, but a technical problem prevents me completing your enrollment to the Daily Check-in
+    - text: I'm sorry, but a technical problem prevents me from completing your enrollment to the Daily Check-in
 
   utter_daily_ci_enroll__enroll_fail_2:
     - text: You may try to enroll at another time
