@@ -89,7 +89,7 @@ class ActionAskActiveQuestion(Action):
 
         events = []
 
-        if tracker.get_slot(SKIP_QA_INTRO_SLOT) != True:
+        if not (tracker.get_slot(SKIP_QA_INTRO_SLOT) is True):
 
             dispatcher.utter_message(template="utter_can_help_with_questions")
             dispatcher.utter_message(template="utter_qa_disclaimer")
@@ -141,9 +141,7 @@ class ValidateQuestionAnsweringForm(Action):
 
                 slot_events += [SlotSet(STATUS_SLOT, result.status)]
 
-                if (
-                    result.status == QuestionAnsweringStatus.SUCCESS and result.answers
-                ):  # not sure about this. Shouldn't happen
+                if result.status == QuestionAnsweringStatus.SUCCESS:
                     dispatcher.utter_message(result.answers[0])
                     slot_events += [SlotSet(ANSWERS_SLOT, result.answers)]
                 else:
