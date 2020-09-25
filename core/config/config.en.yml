@@ -3,6 +3,8 @@
 language: en
 
 pipeline:
+  # When we'll update to a version where https://github.com/RasaHQ/rasa/issues/6741 is solved,
+  # we'll change it back to the ConveRT tokenizer and featurizer
   - name: WhitespaceTokenizer
   # - name: ConveRTTokenizer
   # - name: ConveRTFeaturizer

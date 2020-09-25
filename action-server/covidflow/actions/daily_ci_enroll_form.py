@@ -1,5 +1,5 @@
 import re
-from typing import Any, Dict, List, Optional, Text, Union
+from typing import Any, Dict, List, Optional, Text, Tuple, Union
 
 from rasa_sdk import Action, ActionExecutionRejection, Tracker
 from rasa_sdk.events import EventType, SlotSet
@@ -45,8 +45,7 @@ ASK_PHONE_NUMBER_ACTION_NAME = f"action_ask_{PHONE_NUMBER_SLOT}"
 ASK_VALIDATION_CODE_ACTION_NAME = f"action_ask_{VALIDATION_CODE_SLOT}"
 ASK_PRECONDITIONS_ACTION_NAME = f"action_ask_{PRECONDITIONS_SLOT}"
 
-PHONE_TRY_MAX = 2
-CODE_TRY_MAX = 2
+LOCAL_ERROR_MAX = 2
 
 NOT_DIGIT_REGEX = re.compile(r"\D")
 
@@ -244,18 +243,15 @@ async def _validate_phone_number(
 
         return slots + await _send_validation_code(tracker, dispatcher, phone_number)
 
-    try_counter = tracker.get_slot(PHONE_TRY_COUNTER_SLOT)
-    if try_counter == PHONE_TRY_MAX:
-        dispatcher.utter_message(
-            template="utter_daily_ci_enroll__invalid_phone_no_checkin"
-        )
-        return [SlotSet(PHONE_NUMBER_SLOT, SKIP_SLOT_PLACEHOLDER)] + end_form_events(
-            PHONE_NUMBER_SLOT
-        )
+    (reached_max_errors, error_events) = _check_error_counter(
+        PHONE_NUMBER_SLOT, PHONE_TRY_COUNTER_SLOT, tracker, dispatcher
+    )
+
+    if reached_max_errors:
+        return error_events
 
     dispatcher.utter_message(template="utter_daily_ci_enroll__invalid_phone_number")
-
-    return slots + [SlotSet(PHONE_TRY_COUNTER_SLOT, try_counter + 1)]
+    return error_events + [SlotSet(PHONE_TO_CHANGE_SLOT, False)]
 
 
 async def _validate_validation_code(
@@ -280,20 +276,23 @@ async def _validate_validation_code(
             SlotSet(PHONE_TO_CHANGE_SLOT, True),
         ]
 
-    if value == "did_not_get_code":
-        error_result = _check_code_error_counter(tracker, dispatcher)
-        return (
-            error_result + [SlotSet(NO_CODE_SOLUTION_SLOT, None)]
-            if tracker.get_slot(CODE_TRY_COUNTER_SLOT) < CODE_TRY_MAX
-            else error_result
-        )
-
     validation_code = _get_validation_code(value)
     if validation_code == tracker.get_slot(VALIDATION_CODE_REFERENCE_SLOT):
         dispatcher.utter_message(template="utter_daily_ci_enroll__thanks")
         return [SlotSet(VALIDATION_CODE_SLOT, validation_code)]
 
-    return _check_code_error_counter(tracker, dispatcher)
+    (reached_max_errors, error_events) = _check_error_counter(
+        VALIDATION_CODE_SLOT, CODE_TRY_COUNTER_SLOT, tracker, dispatcher
+    )
+
+    if value == "did_not_get_code":
+        return (
+            error_events
+            if reached_max_errors
+            else error_events + [SlotSet(NO_CODE_SOLUTION_SLOT, None)]
+        )
+
+    return error_events
 
 
 async def _validate_no_code_solution(
@@ -394,23 +393,27 @@ async def _send_validation_code(
     return [SlotSet(VALIDATION_CODE_REFERENCE_SLOT, validation_code)]
 
 
-def _check_code_error_counter(
-    tracker: Tracker, dispatcher: CollectingDispatcher
-) -> List[EventType]:
-    try_counter = tracker.get_slot(CODE_TRY_COUNTER_SLOT)
+def _check_error_counter(
+    slot_name: str,
+    counter_slot_name: str,
+    tracker: Tracker,
+    dispatcher: CollectingDispatcher,
+) -> Tuple[bool, List[EventType]]:
+    try_counter = tracker.get_slot(counter_slot_name)
 
-    if try_counter >= CODE_TRY_MAX:
+    if try_counter >= LOCAL_ERROR_MAX:
         dispatcher.utter_message(
             template="utter_daily_ci_enroll__invalid_phone_no_checkin"
         )
-        return [SlotSet(VALIDATION_CODE_SLOT, SKIP_SLOT_PLACEHOLDER)] + end_form_events(
-            VALIDATION_CODE_SLOT
+        return (
+            True,
+            [SlotSet(slot_name, SKIP_SLOT_PLACEHOLDER)] + end_form_events(slot_name),
         )
 
-    return [
-        SlotSet(VALIDATION_CODE_SLOT, None),
-        SlotSet(CODE_TRY_COUNTER_SLOT, try_counter + 1),
-    ]
+    return (
+        False,
+        [SlotSet(slot_name, None), SlotSet(counter_slot_name, try_counter + 1),],
+    )
 
 
 # Fills all the slots that were not yet asked. Workaround for https://github.com/RasaHQ/rasa/issues/6569

@@ -319,8 +319,8 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
     async def test_provide_first_invalid_phone_number(self):
         templates = ["utter_daily_ci_enroll__invalid_phone_number"]
         extra_events = [
-            SlotSet(PHONE_TO_CHANGE_SLOT, False),
             SlotSet(PHONE_TRY_COUNTER_SLOT, 1),
+            SlotSet(PHONE_TO_CHANGE_SLOT, False),
         ]
 
         await self.check_slot_value_rejected(
@@ -335,8 +335,8 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
         previous_slots = {PHONE_TRY_COUNTER_SLOT: 1}
         templates = ["utter_daily_ci_enroll__invalid_phone_number"]
         extra_events = [
-            SlotSet(PHONE_TO_CHANGE_SLOT, False),
             SlotSet(PHONE_TRY_COUNTER_SLOT, 2),
+            SlotSet(PHONE_TO_CHANGE_SLOT, False),
         ]
 
         await self.check_slot_value_rejected(
@@ -500,13 +500,20 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
             SlotSet(CODE_TRY_COUNTER_SLOT, 1),
             SlotSet(NO_CODE_SOLUTION_SLOT, None),
         ]
+        previous_slots = {VALIDATION_CODE_REFERENCE_SLOT: VALIDATION_CODE}
         await self.check_slot_value_rejected(
-            VALIDATION_CODE_SLOT, "did_not_get_code", extra_events=extra_events
+            VALIDATION_CODE_SLOT,
+            "did_not_get_code",
+            extra_events=extra_events,
+            previous_slots=previous_slots,
         )
 
     @pytest.mark.asyncio
     async def test_provide_validation_code_did_not_get_code_second_time(self):
-        previous_slots = {CODE_TRY_COUNTER_SLOT: 1}
+        previous_slots = {
+            CODE_TRY_COUNTER_SLOT: 1,
+            VALIDATION_CODE_REFERENCE_SLOT: VALIDATION_CODE,
+        }
         extra_events = [
             SlotSet(CODE_TRY_COUNTER_SLOT, 2),
             SlotSet(NO_CODE_SOLUTION_SLOT, None),
@@ -520,7 +527,10 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
 
     @pytest.mark.asyncio
     async def test_provide_validation_code_did_not_get_code_third_time(self):
-        previous_slots = {CODE_TRY_COUNTER_SLOT: 2}
+        previous_slots = {
+            CODE_TRY_COUNTER_SLOT: 2,
+            VALIDATION_CODE_REFERENCE_SLOT: VALIDATION_CODE,
+        }
         templates = ["utter_daily_ci_enroll__invalid_phone_no_checkin"]
         extra_events = [
             SlotSet(REQUESTED_SLOT, None),
