@@ -11,7 +11,9 @@
   bot: daily_ci_enroll/ask_validation_code
 - user: daily_ci_enroll/validation_code
   bot: daily_ci_enroll/ask_preconditions
-- user: deny
+- user: daily_ci_enroll/dont_know
+  bot: daily_ci_enroll/ask_preconditions_with_examples
+- user: affirm
   bot: daily_ci_enroll/ask_has_dialogue
 - user: affirm
   bot: daily_ci_enroll/registration_complete

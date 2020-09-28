@@ -460,7 +460,7 @@ responses:
         - title: Non
           payload: "/deny"
         - title: Avez-vous des exemples?
-          payload: "/help_preconditions"
+          payload: "/dont_know"
       custom:
         data:
           disableTextField: "true"

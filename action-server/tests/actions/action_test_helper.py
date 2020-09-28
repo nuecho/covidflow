@@ -8,12 +8,10 @@ from covidflow.constants import ACTION_LISTEN_NAME
 
 PHONE_TRY_COUNTER_SLOT = "daily_ci_enroll__phone_number_error_counter"
 CODE_TRY_COUNTER_SLOT = "daily_ci_enroll__validation_code_error_counter"
-WANTS_CANCEL_SLOT = "daily_ci_enroll__wants_cancel"
 
 INITIAL_SLOT_VALUES = {
     PHONE_TRY_COUNTER_SLOT: 0,
     CODE_TRY_COUNTER_SLOT: 0,
-    WANTS_CANCEL_SLOT: False,
 }
 
 

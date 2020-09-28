@@ -64,7 +64,6 @@ def _replay_message_with_suffix(
         "No rule matched for intent, playing error version of last bot message"
     )
     latest_bot_message = tracker.get_last_event_for("bot")
-    logger.warn(latest_bot_message)
     template = latest_bot_message["metadata"]["template_name"]
     dispatcher.utter_message(template=_with_error_suffix(template))
 

@@ -1,0 +1,17 @@
+{% import 'bot/macros.jinja' as bot %}
+
+[
+    {
+        "text": "Sorry, please tell me which you would like:",
+        "buttons": [
+            {
+                "payload": "/new_code",
+                "title": "Re-send code"
+            },
+            {
+                "payload": "/change_phone",
+                "title": "Re-enter my number"
+            }
+        ]
+    }
+]

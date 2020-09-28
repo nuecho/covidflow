@@ -9,11 +9,9 @@
   bot: daily_ci_enroll/ask_phone_number
 - user: daily_ci_enroll/phone_number
   bot: daily_ci_enroll/ask_validation_code
-- user: daily_ci_enroll/validation_code
-  bot: daily_ci_enroll/ask_preconditions
-- user: deny
-  bot: daily_ci_enroll/ask_has_dialogue
-- user: affirm
-  bot: daily_ci_enroll/registration_complete
-- user: done
-  bot: thank_you_take_care
+- user: daily_ci_enroll/change_phone_with_number
+  bot: daily_ci_enroll/ask_validation_code_new_phone
+- user: daily_ci_enroll/did_not_get_code
+  bot: daily_ci_enroll/ask_no_code_solution
+- user: daily_ci_enroll/phone_number
+  bot: daily_ci_enroll/ask_validation_code_new_phone

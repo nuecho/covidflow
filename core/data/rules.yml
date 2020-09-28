@@ -77,7 +77,15 @@ rules:
       - action: self_isolation_form
       - action: home_assistance_form
       - action: action_suspect_moderate_symptoms_recommendations
-      - action: daily_ci_enroll_form
+      - action: action_offer_daily_ci_enrollment
+
+  - rule: Assessment moderate symptoms suite
+    condition:
+      - slot_was_set:
+          - assessment_type: generic
+          - symptoms: moderate
+    steps:
+      - action: action_daily_ci_enroll_form_ended
       - action: action_suspect_moderate_symptoms_final_recommendations
       - action: action_visit_package
       - action: utter_ask_anything_else_with_test_navigation
@@ -96,7 +104,15 @@ rules:
       - action: self_isolation_form
       - action: home_assistance_form
       - action: action_suspect_mild_symptoms_exposure_recommendations
-      - action: daily_ci_enroll_form
+      - action: action_offer_daily_ci_enrollment
+
+  - rule: Assessment mild symptoms suite
+    condition:
+      - slot_was_set:
+          - assessment_type: generic
+          - symptoms: mild
+    steps:
+      - action: action_daily_ci_enroll_form_ended
       - action: action_suspect_mild_symptoms_exposure_final_recommendations
       - action: action_visit_package
       - action: utter_ask_anything_else_with_test_navigation
@@ -118,7 +134,16 @@ rules:
       - action: self_isolation_form
       - action: home_assistance_form
       - action: action_suspect_mild_symptoms_exposure_recommendations
-      - action: daily_ci_enroll_form
+      - action: action_offer_daily_ci_enrollment
+
+  - rule: Assessment contact risk suite
+    condition:
+      - slot_was_set:
+          - assessment_type: generic
+          - symptoms: nothing
+          - has_contact_risk: true
+    steps:
+      - action: action_daily_ci_enroll_form_ended
       - action: action_suspect_mild_symptoms_exposure_final_recommendations
       - action: action_visit_package
       - action: utter_ask_anything_else_with_test_navigation
@@ -152,7 +177,15 @@ rules:
       - slot_was_set:
           - symptoms: moderate
       - action: utter_symptoms_worsen_emergency_assistance
-      - action: daily_ci_enroll_form
+      - action: action_offer_daily_ci_enrollment
+
+  - rule: Tested positive moderate symptoms suite
+    condition:
+      - slot_was_set:
+          - assessment_type: tested_positive
+          - symptoms: moderate
+    steps:
+      - action: action_daily_ci_enroll_form_ended
       - action: action_tested_positive_not_cured_final_recommendations
       - action: home_assistance_form
       - action: action_visit_package
@@ -175,17 +208,21 @@ rules:
       - action: utter_ask_tested_positive__mild_symptoms_worsened
       - intent: affirm
       - action: utter_symptoms_worsen_emergency_assistance
-      - action: daily_ci_enroll_form
-      - action: action_tested_positive_not_cured_final_recommendations
-      - action: home_assistance_form
-      - action: action_visit_package
-      - action: utter_ask_anything_else_without_test_navigation
+      - action: action_offer_daily_ci_enrollment
 
   - rule: Tested positive mild symptoms not worsened
     steps:
       - action: utter_ask_tested_positive__mild_symptoms_worsened
       - intent: deny
-      - action: daily_ci_enroll_form
+      - action: action_offer_daily_ci_enrollment
+
+  - rule: Tested positive mild symptoms suite
+    condition:
+      - slot_was_set:
+          - assessment_type: tested_positive
+          - symptoms: mild
+    steps:
+      - action: action_daily_ci_enroll_form_ended
       - action: action_tested_positive_not_cured_final_recommendations
       - action: home_assistance_form
       - action: action_visit_package
@@ -209,7 +246,15 @@ rules:
       - action: utter_ask_when_tested
       - intent: deny
       - action: utter_when_tested_less_14_recommendation
-      - action: daily_ci_enroll_form
+      - action: action_offer_daily_ci_enrollment
+
+  - rule: Tested positive utter_ask_when_tested deny suite
+    condition:
+      - slot_was_set:
+          - assessment_type: tested_positive
+          - symptoms: nothing
+    steps:
+      - action: action_daily_ci_enroll_form_ended
       - action: action_tested_positive_not_cured_final_recommendations
       - action: home_assistance_form
       - action: action_visit_package
@@ -244,11 +289,7 @@ rules:
       - action: utter_symptoms_worsen_emergency
       - action: utter_returning_self_isolate
       - action: utter_self_isolation_final
-      - action: daily_ci_enroll_form
-      - action: utter_remind_monitor_symptoms_temperature
-      - action: utter_remind_possible_checkin
-      - action: home_assistance_form
-      - action: utter_ask_anything_else_with_test_navigation
+      - action: action_offer_daily_ci_enrollment
 
   - rule: Check-in return moderate symptoms not worsened
     steps:
@@ -257,7 +298,15 @@ rules:
       - action: utter_symptoms_worsen_emergency
       - action: utter_returning_self_isolate
       - action: utter_self_isolation_final
-      - action: daily_ci_enroll_form
+      - action: action_offer_daily_ci_enrollment
+
+  - rule: Checkin return moderate symptoms suite
+    condition:
+      - slot_was_set:
+          - assessment_type: checkin_return
+          - symptoms: moderate
+    steps:
+      - action: action_daily_ci_enroll_form_ended
       - action: utter_remind_monitor_symptoms_temperature
       - action: utter_remind_possible_checkin
       - action: home_assistance_form
@@ -275,7 +324,15 @@ rules:
           - symptoms: mild
       - action: utter_returning_self_isolate
       - action: utter_self_isolation_final
-      - action: daily_ci_enroll_form
+      - action: action_offer_daily_ci_enrollment
+
+  - rule: Checkin return mild symptoms suite
+    condition:
+      - slot_was_set:
+          - assessment_type: checkin_return
+          - symptoms: mild
+    steps:
+      - action: action_daily_ci_enroll_form_ended
       - action: utter_remind_monitor_symptoms_temperature
       - action: utter_remind_possible_checkin
       - action: home_assistance_form
@@ -307,6 +364,88 @@ rules:
       - intent: affirm
       - action: utter_social_distancing_leave_home
       - action: utter_ask_anything_else_without_test_navigation
+
+  # Daily check-in enrollment rules
+  - rule: Offer daily check-in enrollment affirm
+    steps:
+      - action: action_offer_daily_ci_enrollment
+      - intent: affirm
+      - action: utter_daily_ci_enroll__start_enroll
+      - action: daily_ci_enroll_form
+      - active_loop: daily_ci_enroll_form
+
+  - rule: Offer daily check-in enrollment deny
+    steps:
+      - action: action_offer_daily_ci_enrollment
+      - intent: deny
+      - action: action_daily_ci_enroll_form_ended
+    wait_for_user_input: false
+
+  - rule: No phone
+    condition:
+      - active_loop: daily_ci_enroll_form
+      - slot_was_set:
+          - requested_slot: phone_number
+    steps:
+      - intent: no_phone
+      - action: action_deactivate_form
+      - active_loop: null
+      - action: utter_daily_ci_enroll__no_phone_no_checkin
+      - action: utter_daily_ci_enroll__continue
+      - action: action_daily_ci_enroll_form_ended
+    wait_for_user_input: false
+
+  - rule: Asking phone cancel affirm
+    condition:
+      - active_loop: daily_ci_enroll_form
+      - slot_was_set:
+          - requested_slot: phone_number
+    steps:
+      - intent: cancel
+      - action: utter_ask_daily_ci_enroll__wants_cancel
+      - intent: affirm
+      - action: utter_daily_ci_enroll__no_problem_continue
+      - action: action_deactivate_form
+      - active_loop: null
+      - action: action_daily_ci_enroll_form_ended
+    wait_for_user_input: false
+
+  - rule: Asking phone cancel cancel
+    condition:
+      - active_loop: daily_ci_enroll_form
+      - slot_was_set:
+          - requested_slot: phone_number
+    steps:
+      - intent: cancel
+      - action: utter_ask_daily_ci_enroll__wants_cancel
+      - intent: cancel
+      - action: utter_daily_ci_enroll__no_problem_continue
+      - action: action_deactivate_form
+      - active_loop: null
+      - action: action_daily_ci_enroll_form_ended # Dammit, le nombre d'actions fonctionne pas
+    wait_for_user_input: false
+
+  - rule: Asking phone cancel deny
+    condition:
+      - active_loop: daily_ci_enroll_form
+      - slot_was_set:
+          - requested_slot: phone_number
+    steps:
+      - intent: cancel
+      - action: utter_ask_daily_ci_enroll__wants_cancel
+      - intent: deny
+      - action: utter_daily_ci_enroll__ok_continue # set error counter or not? Was in code but not in design...
+      - action: daily_ci_enroll_form # ça marche... Le form repose la question. Est-ce qu'on peut faire l'autre cas?
+    wait_for_user_input: false
+
+  - rule: Daily checkin enrollment normal end
+    condition:
+      - active_loop: daily_ci_enroll_form
+    steps:
+      - action: daily_ci_enroll_form
+      - active_loop: null
+      - action: action_daily_ci_enroll_form_ended
+    wait_for_user_input: false
 
   # QA rules
   - rule: QA success

@@ -4,9 +4,9 @@
   bot: daily_ci_enroll/ask_first_name
 - user: first_name
   bot: daily_ci_enroll/ask_phone_number
-- user: phone_number
+- user: daily_ci_enroll/phone_number
   bot: daily_ci_enroll/ask_validation_code
-- user: validation_code
+- user: daily_ci_enroll/validation_code
   bot: daily_ci_enroll/ask_preconditions
 - user: deny
   bot: daily_ci_enroll/ask_has_dialogue

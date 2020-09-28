@@ -1,0 +1,29 @@
+- suspect
+- suspect_reach_moderate
+- suspect_reach_home_assistance
+- user: affirm
+  bot: home_assistance/has_help
+- user: affirm
+  bot: daily_ci_enroll/ask_first_name
+- user: first_name
+  bot: daily_ci_enroll/ask_phone_number
+- user: daily_ci_enroll/phone_number
+  bot: daily_ci_enroll/ask_validation_code
+- user: daily_ci_enroll/change_phone
+  bot: daily_ci_enroll/ask_new_phone
+- user: daily_ci_enroll/phone_number
+  bot: daily_ci_enroll/ask_validation_code
+- user: daily_ci_enroll/did_not_get_code
+  bot: daily_ci_enroll/ask_no_code_solution
+- user: daily_ci_enroll/change_phone
+  bot: daily_ci_enroll/ask_new_phone
+- user: daily_ci_enroll/phone_number
+  bot: daily_ci_enroll/ask_validation_code
+- user: daily_ci_enroll/did_not_get_code
+  bot: daily_ci_enroll/ask_no_code_solution
+- user: invalid_input
+  bot: daily_ci_enroll/ask_no_code_solution_error
+- user: daily_ci_enroll/new_code
+  bot: daily_ci_enroll/ask_new_validation_code
+- user: invalid_input
+  bot: daily_ci_enroll/max_errors

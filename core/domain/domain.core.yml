@@ -22,7 +22,6 @@ intents:
   - tested_positive
   - ask_question
   - inform
-  - help_preconditions
   - done
   - better
   - worse
@@ -85,6 +84,13 @@ actions:
   - action_activate_fallback_question_answering_form
   - action_ask_active_question
   - action_submit_question_answering_form
+  - validate_daily_ci_enroll_form
+  - action_offer_daily_ci_enrollment
+  - action_ask_phone_number
+  - action_ask_daily_ci_enroll__validation_code
+  - action_ask_preconditions
+  - action_daily_ci_enroll_form_ended
+
 
 forms:
   - home_assistance_form:
@@ -95,6 +101,40 @@ forms:
       contact: *boolean
       travel: *boolean
   - daily_ci_enroll_form:
+      first_name:
+        - type: from_text
+      phone_number:
+        - type: from_text
+          not_intent:
+            - no_phone
+            - cancel
+      daily_ci_enroll__no_code_solution:
+        - type: from_intent
+          intent: new_code
+          value: new_code
+        - type: from_intent
+          intent: change_phone
+          value: change_phone
+        - type: from_text
+      daily_ci_enroll__validation_code:
+        - type: from_intent
+          intent: did_not_get_code
+          value: did_not_get_code
+        - type: from_intent
+          intent: change_phone
+          value: change_phone
+        - type: from_text
+      preconditions:
+        - type: from_intent
+          intent: affirm
+          value: true
+        - type: from_intent
+          intent: deny
+          value: false
+        - type: from_intent
+          intent: dont_know
+          value: dont_know # Will reject first time and set to true second time
+      has_dialogue: *boolean
   - daily_ci_feel_no_change_form:
   - daily_ci_feel_better_form:
   - daily_ci_feel_worse_form:
@@ -266,9 +306,6 @@ slots:
   tested_positive__mild_symptoms_worsened:
     type: unfeaturized
 
-  daily_ci_enroll__do_enroll:
-    type: unfeaturized
-
   daily_ci_enroll__phone_number_to_change:
     type: unfeaturized
 
@@ -290,17 +327,7 @@ slots:
     type: unfeaturized
     initial_value: 0
 
-  daily_ci_enroll__validation_no_code_solution:
-    type: unfeaturized
-
-  daily_ci_enroll__just_sent_code:
-    type: unfeaturized
-
-  daily_ci_enroll__wants_cancel:
-    type: unfeaturized
-    initial_value: false
-
-  daily_ci_enroll__preconditions_examples:
+  daily_ci_enroll__display_preconditions_examples:
     type: unfeaturized
 
   daily_ci__feel_worse__has_diff_breathing_worsened:

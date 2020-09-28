@@ -11,8 +11,10 @@
   bot: daily_ci_enroll/ask_validation_code
 - user: daily_ci_enroll/validation_code
   bot: daily_ci_enroll/ask_preconditions
-- user: deny
-  bot: daily_ci_enroll/ask_has_dialogue
+- user: daily_ci_enroll/dont_know
+  bot: daily_ci_enroll/ask_preconditions_with_examples
+- user: daily_ci_enroll/dont_know
+  bot: daily_ci_enroll/ask_has_dialogue_dont_know_pc
 - user: affirm
   bot: daily_ci_enroll/registration_complete
 - user: done
