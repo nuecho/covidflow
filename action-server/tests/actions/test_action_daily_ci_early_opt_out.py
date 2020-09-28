@@ -2,30 +2,30 @@ import pytest
 from asynctest.mock import patch
 from rasa_sdk.events import SlotSet
 
-from covidflow.actions.action_daily_ci_early_opt_out import ActionDailyCiEarlyOptOut
-from covidflow.constants import CONTINUE_CI_SLOT
+from covidflow.actions.action_daily_ci_cancel_ci import ActionDailyCiCancelCi
+from covidflow.constants import CANCEL_CI_SLOT
 
 from .action_test_helper import ActionTestCase
 
 
-class ActionDailyCiEarlyOptOutTest(ActionTestCase):
+class ActionDailyCiCancelCiTest(ActionTestCase):
     def setUp(self):
         super().setUp()
-        self.action = ActionDailyCiEarlyOptOut()
+        self.action = ActionDailyCiCancelCi()
 
     @pytest.mark.asyncio
-    @patch("covidflow.actions.action_daily_ci_early_opt_out.cancel_reminder")
+    @patch("covidflow.actions.action_daily_ci_cancel_ci.cancel_reminder")
     async def test_early_opt_out(self, mock_cancel_reminder):
         tracker = self.create_tracker()
 
         await self.run_action(tracker)
 
-        self.assert_events([SlotSet(CONTINUE_CI_SLOT, False)])
+        self.assert_events([SlotSet(CANCEL_CI_SLOT, True)])
 
         self.assert_templates(
             [
-                "utter_daily_ci__early_opt_out__acknowledge_cancel_ci",
-                "utter_daily_ci__early_opt_out__cancel_ci_recommendation",
+                "utter_daily_ci__acknowledge_cancel_ci",
+                "utter_daily_ci__cancel_ci_recommendation",
             ]
         )
 
