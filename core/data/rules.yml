@@ -657,6 +657,7 @@ rules:
     steps:
       - action: utter_ask_daily_ci__feel
       - intent: worse
+      - action: action_set_feel_worse_true
       - action: daily_ci_feel_worse_form
       - active_loop: daily_ci_feel_worse_form
     wait_for_user_input: false
@@ -673,6 +674,7 @@ rules:
     steps:
       - action: utter_ask_daily_ci__feel
       - intent: better
+      - action: utter_daily_ci_feel_better_acknowledge # Added. Need to do something with the feel worse slot too
       - action: daily_ci_feel_better_form
       - active_loop: daily_ci_feel_better_form
     wait_for_user_input: false
@@ -686,6 +688,7 @@ rules:
       - active_loop: null
       - slot_was_set:
           - symptoms: severe
+      - action: action_submit_daily_ci_assessment
       - action: action_severe_symptoms_recommendations
 
   - rule: Daily check-in worse to keep_or_cancel
@@ -694,6 +697,7 @@ rules:
     steps:
       - action: daily_ci_feel_worse_form
       - active_loop: null
+      - action: action_submit_daily_ci_assessment
       - action: daily_ci_keep_or_cancel_form
       - active_loop: daily_ci_keep_or_cancel_form
     wait_for_user_input: false
@@ -704,6 +708,7 @@ rules:
     steps:
       - action: daily_ci_feel_no_change_form
       - active_loop: null
+      - action: action_submit_daily_ci_assessment
       - action: daily_ci_keep_or_cancel_form
       - active_loop: daily_ci_keep_or_cancel_form
     wait_for_user_input: false
@@ -714,6 +719,7 @@ rules:
     steps:
       - action: daily_ci_feel_better_form
       - active_loop: null
+      - action: action_submit_daily_ci_assessment
       - action: daily_ci_keep_or_cancel_form
       - active_loop: daily_ci_keep_or_cancel_form
     wait_for_user_input: false
