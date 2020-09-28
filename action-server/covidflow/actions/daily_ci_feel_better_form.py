@@ -16,6 +16,7 @@ from covidflow.constants import (
     Symptoms,
 )
 
+from .lib.form_helper import end_form_additional_events
 from .lib.log_util import bind_logger
 
 FORM_NAME = "daily_ci_feel_better_form"
@@ -26,6 +27,14 @@ IS_SYMPTOM_FREE_SLOT = "daily_ci_feel_better_form_is_symptom_free"
 
 ASK_HAS_OTHER_MILD_SYMPTOMS_ACTION_NAME = f"action_ask_{HAS_OTHER_MILD_SYMPTOMS_SLOT}"
 ASK_HAS_COUGH_ACTION_NAME = f"action_ask_{FORM_NAME}_{HAS_COUGH_SLOT}"
+
+ORDERED_FORM_SLOTS = [
+    HAS_FEVER_SLOT,
+    HAS_COUGH_SLOT,
+    HAS_DIFF_BREATHING_SLOT,
+    HAS_OTHER_MILD_SYMPTOMS_SLOT,
+    IS_SYMPTOM_FREE_SLOT,
+]
 
 
 class ActionAskDailyCiFeelBetterFormHasCough(Action):
@@ -90,7 +99,7 @@ class ValidateDailyCiFeelBetterForm(Action):
                 slot_events += _validate_has_cough(slot_value, dispatcher)
                 if (
                     tracker.get_slot(LAST_SYMPTOMS_SLOT) != Symptoms.MODERATE
-                ):  # Next slot only happens when symptoms are moderate
+                ):  # Next slot is only asked when symptoms are moderate
                     slot_events.append(
                         SlotSet(HAS_DIFF_BREATHING_SLOT, SKIP_SLOT_PLACEHOLDER)
                     )
@@ -145,11 +154,9 @@ def _validate_has_diff_breathing(
         dispatcher.utter_message(
             template="utter_daily_ci_feel_better_breathing_difficulty_recommendation_2"
         )
-        return [
-            SlotSet(REQUESTED_SLOT, None),
-            SlotSet(HAS_OTHER_MILD_SYMPTOMS_SLOT, SKIP_SLOT_PLACEHOLDER),
-            SlotSet(IS_SYMPTOM_FREE_SLOT, SKIP_SLOT_PLACEHOLDER),
-        ]  # Récupérer le cossin de l'autre
+        return [SlotSet(REQUESTED_SLOT, None)] + end_form_additional_events(
+            HAS_DIFF_BREATHING_SLOT, ORDERED_FORM_SLOTS
+        )
     else:
         return [SlotSet(SYMPTOMS_SLOT, Symptoms.MILD)]
 
@@ -165,10 +172,9 @@ def _validate_has_other_mild_symptoms(
         dispatcher.utter_message(
             template="utter_daily_ci_feel_better_form_has_other_mild_symptoms_recommendation"
         )
-        return [
-            SlotSet(REQUESTED_SLOT, None),
-            SlotSet(IS_SYMPTOM_FREE_SLOT, SKIP_SLOT_PLACEHOLDER),
-        ]
+        return [SlotSet(REQUESTED_SLOT, None)] + end_form_additional_events(
+            HAS_OTHER_MILD_SYMPTOMS_SLOT, ORDERED_FORM_SLOTS
+        )
 
     return []
 

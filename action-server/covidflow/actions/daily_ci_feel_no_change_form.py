@@ -87,8 +87,8 @@ class ValidateDailyCiFeelNoChangeForm(Action):
             elif slot_name == HAS_COUGH_SLOT:
                 slot_events += _validate_has_cough(slot_value, dispatcher)
                 if (
-                    tracker.get_slot(LAST_SYMPTOMS_SLOT) == Symptoms.MILD
-                ):  # Stop there if symptoms were mild
+                    tracker.get_slot(LAST_SYMPTOMS_SLOT) != Symptoms.MODERATE
+                ):  # Do not ask for diff breathing if symptoms were not moderate
                     slot_events.extend(
                         [
                             SlotSet(REQUESTED_SLOT, None),
