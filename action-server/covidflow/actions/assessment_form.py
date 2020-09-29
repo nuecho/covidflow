@@ -17,13 +17,12 @@ from covidflow.constants import (
     PROVINCIAL_811_SLOT,
     SELF_ASSESS_DONE_SLOT,
     SEVERE_SYMPTOMS_SLOT,
-    SKIP_SLOT_PLACEHOLDER,
     SYMPTOMS_SLOT,
     AssessmentType,
     Symptoms,
 )
 
-from .lib.form_helper import _form_slots_to_validate
+from .lib.form_helper import _form_slots_to_validate, end_form_additional_events
 from .lib.log_util import bind_logger
 from .lib.provincial_811 import get_provincial_811
 
@@ -129,13 +128,4 @@ def set_symptoms(symptoms_value: str, end_form_slot: str) -> List[EventType]:
         SlotSet(SYMPTOMS_SLOT, symptoms_value),
         SlotSet(SELF_ASSESS_DONE_SLOT, True),
         SlotSet(REQUESTED_SLOT, None),
-    ] + end_form_additional_events(end_form_slot)
-
-
-# Fills all the slots that were not yet asked. Workaround for https://github.com/RasaHQ/rasa/issues/6569
-def end_form_additional_events(actual_slot: str) -> List[EventType]:
-    actual_slot_index = ORDERED_FORM_SLOTS.index(actual_slot)
-    return [
-        SlotSet(slot, SKIP_SLOT_PLACEHOLDER)
-        for slot in ORDERED_FORM_SLOTS[actual_slot_index + 1 :]
-    ]
+    ] + end_form_additional_events(end_form_slot, ORDERED_FORM_SLOTS)

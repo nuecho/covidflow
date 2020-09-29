@@ -7,10 +7,10 @@ from covidflow.constants import ACTION_LISTEN_NAME
 
 from .action_test_helper import ActionTestCase
 
-PHONE_TRY_COUNTER_SLOT = "daily_ci_enroll__phone_number_error_counter"
-CODE_TRY_COUNTER_SLOT = "daily_ci_enroll__validation_code_error_counter"
-NO_CODE_SOLUTION_SLOT = "daily_ci_enroll__no_code_solution"
-INVALID_POSTAL_CODE_COUNTER_SLOT = "test_navigation__invalid_postal_code_counter"
+PHONE_TRY_COUNTER_SLOT = "daily_ci_enroll_form_phone_number_error_counter"
+CODE_TRY_COUNTER_SLOT = "daily_ci_enroll_form_validation_code_error_counter"
+NO_CODE_SOLUTION_SLOT = "daily_ci_enroll_form_no_code_solution"
+INVALID_POSTAL_CODE_COUNTER_SLOT = "test_navigation_invalid_postal_code_counter"
 
 INITIAL_SLOT_VALUES = {
     PHONE_TRY_COUNTER_SLOT: 0,

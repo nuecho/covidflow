@@ -6,8 +6,8 @@ from rasa_sdk.executor import CollectingDispatcher
 
 from covidflow.constants import ACTION_LISTEN_NAME
 
-PHONE_TRY_COUNTER_SLOT = "daily_ci_enroll__phone_number_error_counter"
-CODE_TRY_COUNTER_SLOT = "daily_ci_enroll__validation_code_error_counter"
+PHONE_TRY_COUNTER_SLOT = "daily_ci_enroll_form_phone_number_error_counter"
+CODE_TRY_COUNTER_SLOT = "daily_ci_enroll_form_validation_code_error_counter"
 
 INITIAL_SLOT_VALUES = {
     PHONE_TRY_COUNTER_SLOT: 0,

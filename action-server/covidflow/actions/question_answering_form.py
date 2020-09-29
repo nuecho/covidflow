@@ -29,12 +29,12 @@ logger = structlog.get_logger()
 FAQ_URL_ENV_KEY = "COVID_FAQ_SERVICE_URL"
 DEFAULT_FAQ_URL = "https://covidfaq.dialoguecorp.com"
 
-QUESTION_SLOT = "active_question"
-FEEDBACK_SLOT = "feedback"
+QUESTION_SLOT = "question_answering_form_active_question"
+FEEDBACK_SLOT = "question_answering_form_feedback"
 STATUS_SLOT = "question_answering_status"
-ANSWERS_SLOT = "answers"
-ASKED_QUESTION_SLOT = "asked_question"
-SKIP_QA_INTRO_SLOT = "skip_qa_intro"
+ANSWERS_SLOT = "question_answering_form_answers"
+ASKED_QUESTION_SLOT = "question_answering_form_asked_question"
+SKIP_QA_INTRO_SLOT = "question_answering_form_skip_qa_intro"
 
 ANSWERS_KEY = "answers"
 STATUS_KEY = "status"
@@ -107,7 +107,9 @@ class ActionAskActiveQuestion(Action):
                 )
             events = [SlotSet(SKIP_QA_INTRO_SLOT, True)]
 
-        dispatcher.utter_message(template="utter_ask_active_question")
+        dispatcher.utter_message(
+            template="utter_ask_question_answering_form_active_question"
+        )
         return events
 
 
@@ -129,7 +131,9 @@ class ValidateQuestionAnsweringForm(Action):
 
             if slot_name == FEEDBACK_SLOT:
                 if slot_value is False:
-                    dispatcher.utter_message(template="utter_feedback_false")
+                    dispatcher.utter_message(
+                        template="utter_question_answering_form_feedback_false"
+                    )
                 elif not isinstance(slot_value, bool):
                     slot_events = [SlotSet(FEEDBACK_SLOT, FEEDBACK_NOT_GIVEN)]
             elif slot_name == QUESTION_SLOT:

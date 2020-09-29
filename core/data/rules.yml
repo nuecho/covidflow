@@ -25,7 +25,7 @@ rules:
     steps:
       - action: action_greeting_messages
       - intent: get_assessment
-      - action: utter_assessment_entry
+      - action: utter_assessment_entry__suspect
       - action: assessment_form
       - active_loop: assessment_form
     wait_for_user_input: false
@@ -44,7 +44,7 @@ rules:
       - action: action_greeting_messages
       - intent: tested_positive
       - action: utter_tested_positive_entry
-      - action: utter_tested_positive_self_isolate
+      - action: utter_self_isolation_entry__tested_positive
       - action: self_isolation_form
       - action: utter_assess_symptoms
       - action: assessment_form
@@ -73,7 +73,7 @@ rules:
       - active_loop: null
       - slot_was_set:
           - symptoms: moderate
-      - action: utter_moderate_symptoms_self_isolate
+      - action: utter_self_isolation_entry__moderate_symptoms
       - action: self_isolation_form
       - action: home_assistance_form
       - action: action_suspect_moderate_symptoms_recommendations
@@ -100,7 +100,7 @@ rules:
       - active_loop: null
       - slot_was_set:
           - symptoms: mild
-      - action: utter_mild_symptoms_self_isolate
+      - action: utter_self_isolation_entry__mild_symptoms
       - action: self_isolation_form
       - action: home_assistance_form
       - action: action_suspect_mild_symptoms_exposure_recommendations
@@ -130,7 +130,7 @@ rules:
       - action: contact_risk_form
       - slot_was_set:
           - has_contact_risk: true
-      - action: utter_contact_risk_self_isolate
+      - action: utter_self_isolation_entry__contact_risk
       - action: self_isolation_form
       - action: home_assistance_form
       - action: action_suspect_mild_symptoms_exposure_recommendations
@@ -176,7 +176,7 @@ rules:
       - active_loop: null
       - slot_was_set:
           - symptoms: moderate
-      - action: utter_symptoms_worsen_emergency_assistance
+      - action: utter_tested_positive_mild_worsened_moderate_symptoms_recommendation
       - action: action_offer_daily_ci_enrollment
 
   - rule: Tested positive moderate symptoms suite
@@ -186,7 +186,7 @@ rules:
           - symptoms: moderate
     steps:
       - action: action_daily_ci_enroll_form_ended
-      - action: action_tested_positive_not_cured_final_recommendations
+      - action: action_tested_positive_tested_less_final_recommendations
       - action: home_assistance_form
       - action: action_visit_package
       - action: utter_ask_anything_else_without_test_navigation
@@ -201,18 +201,18 @@ rules:
       - active_loop: null
       - slot_was_set:
           - symptoms: mild
-      - action: utter_ask_tested_positive__mild_symptoms_worsened
+      - action: utter_ask_tested_positive_mild_symptoms_worsened
 
   - rule: Tested positive mild symptoms worsened
     steps:
-      - action: utter_ask_tested_positive__mild_symptoms_worsened
+      - action: utter_ask_tested_positive_mild_symptoms_worsened
       - intent: affirm
-      - action: utter_symptoms_worsen_emergency_assistance
+      - action: utter_tested_positive_mild_worsened_moderate_symptoms_recommendation
       - action: action_offer_daily_ci_enrollment
 
   - rule: Tested positive mild symptoms not worsened
     steps:
-      - action: utter_ask_tested_positive__mild_symptoms_worsened
+      - action: utter_ask_tested_positive_mild_symptoms_worsened
       - intent: deny
       - action: action_offer_daily_ci_enrollment
 
@@ -223,7 +223,7 @@ rules:
           - symptoms: mild
     steps:
       - action: action_daily_ci_enroll_form_ended
-      - action: action_tested_positive_not_cured_final_recommendations
+      - action: action_tested_positive_tested_less_final_recommendations
       - action: home_assistance_form
       - action: action_visit_package
       - action: utter_ask_anything_else_without_test_navigation
@@ -239,32 +239,32 @@ rules:
       - slot_was_set:
           - symptoms: nothing
       - action: action_tested_positive_no_symptoms_recommendations
-      - action: utter_ask_when_tested
+      - action: utter_ask_tested_positive_when_tested
 
-  - rule: Tested positive utter_ask_when_tested deny
+  - rule: Tested positive utter_ask_tested_positive_when_tested deny
     steps:
-      - action: utter_ask_when_tested
+      - action: utter_ask_tested_positive_when_tested
       - intent: deny
-      - action: utter_when_tested_less_14_recommendation
+      - action: utter_tested_positive_when_tested_less_14_recommendation
       - action: action_offer_daily_ci_enrollment
 
-  - rule: Tested positive utter_ask_when_tested deny suite
+  - rule: Tested positive utter_ask_tested_positive_when_tested deny suite
     condition:
       - slot_was_set:
           - assessment_type: tested_positive
           - symptoms: nothing
     steps:
       - action: action_daily_ci_enroll_form_ended
-      - action: action_tested_positive_not_cured_final_recommendations
+      - action: action_tested_positive_tested_less_final_recommendations
       - action: home_assistance_form
       - action: action_visit_package
       - action: utter_ask_anything_else_without_test_navigation
 
-  - rule: Tested positive utter_ask_when_tested affirm
+  - rule: Tested positive utter_ask_tested_positive_when_tested affirm
     steps:
-      - action: utter_ask_when_tested
+      - action: utter_ask_tested_positive_when_tested
       - intent: affirm
-      - action: action_tested_positive_maybe_cured_final_recommendations
+      - action: action_tested_positive_tested_more_final_recommendations
       - action: utter_ask_anything_else_without_test_navigation
 
   ## Return for check-in rules
@@ -278,25 +278,24 @@ rules:
       - active_loop: null
       - slot_was_set:
           - symptoms: moderate
-      - action: utter_ask_checkin_return__moderate_symptoms_worsened
+      - action: utter_ask_checkin_return_moderate_symptoms_worsened
 
   - rule: Check-in return moderate symptoms worsened
     steps:
-      - action: utter_ask_checkin_return__moderate_symptoms_worsened
+      - action: utter_ask_checkin_return_moderate_symptoms_worsened
       - intent: affirm
-      - action: utter_contact_healthcare_professional
-      - action: utter_contact_healthcare_professional_options
+      - action: action_checkin_return_moderate_symptoms_worsened_recommendations
       - action: utter_symptoms_worsen_emergency
-      - action: utter_returning_self_isolate
+      - action: utter_self_isolation_entry__checkin_return
       - action: utter_self_isolation_final
       - action: action_offer_daily_ci_enrollment
 
   - rule: Check-in return moderate symptoms not worsened
     steps:
-      - action: utter_ask_checkin_return__moderate_symptoms_worsened
+      - action: utter_ask_checkin_return_moderate_symptoms_worsened
       - intent: deny
       - action: utter_symptoms_worsen_emergency
-      - action: utter_returning_self_isolate
+      - action: utter_self_isolation_entry__checkin_return
       - action: utter_self_isolation_final
       - action: action_offer_daily_ci_enrollment
 
@@ -307,8 +306,7 @@ rules:
           - symptoms: moderate
     steps:
       - action: action_daily_ci_enroll_form_ended
-      - action: utter_remind_monitor_symptoms_temperature
-      - action: utter_remind_possible_checkin
+      - action: action_checkin_return_mild_moderate_symptoms_final_recommendations
       - action: home_assistance_form
       - action: utter_ask_anything_else_with_test_navigation
 
@@ -322,7 +320,7 @@ rules:
       - active_loop: null
       - slot_was_set:
           - symptoms: mild
-      - action: utter_returning_self_isolate
+      - action: utter_self_isolation_entry__checkin_return
       - action: utter_self_isolation_final
       - action: action_offer_daily_ci_enrollment
 
@@ -333,8 +331,7 @@ rules:
           - symptoms: mild
     steps:
       - action: action_daily_ci_enroll_form_ended
-      - action: utter_remind_monitor_symptoms_temperature
-      - action: utter_remind_possible_checkin
+      - action: action_checkin_return_mild_moderate_symptoms_final_recommendations
       - action: home_assistance_form
       - action: utter_ask_anything_else_with_test_navigation
 
@@ -348,21 +345,21 @@ rules:
       - active_loop: null
       - slot_was_set:
           - symptoms: nothing
-      - action: utter_returning_no_symptoms
-      - action: utter_ask_when_first_symptoms
+      - action: utter_checkin_return_no_symptoms_recommendation
+      - action: utter_ask_checkin_return_when_first_symptoms
 
-  - rule: Check-in return utter_ask_when_first_symptoms deny
+  - rule: Check-in return utter_ask_checkin_return_when_first_symptoms deny
     steps:
-      - action: utter_ask_when_first_symptoms
+      - action: utter_ask_checkin_return_when_first_symptoms
       - intent: deny
-      - action: utter_self_isolate_symptom_free
+      - action: utter_checkin_return_no_symptoms_less_final_recommendation
       - action: utter_ask_anything_else_without_test_navigation
 
-  - rule: Check-in return utter_ask_when_first_symptoms affirm
+  - rule: Check-in return utter_ask_checkin_return_when_first_symptoms affirm
     steps:
-      - action: utter_ask_when_first_symptoms
+      - action: utter_ask_checkin_return_when_first_symptoms
       - intent: affirm
-      - action: utter_social_distancing_leave_home
+      - action: utter_checkin_return_no_symptoms_more_final_recommendation
       - action: utter_ask_anything_else_without_test_navigation
 
   # Daily check-in enrollment rules
@@ -370,7 +367,7 @@ rules:
     steps:
       - action: action_offer_daily_ci_enrollment
       - intent: affirm
-      - action: utter_daily_ci_enroll__start_enroll
+      - action: utter_daily_ci_enroll_entry
       - action: daily_ci_enroll_form
       - active_loop: daily_ci_enroll_form
 
@@ -390,8 +387,8 @@ rules:
       - intent: no_phone
       - action: action_deactivate_form
       - active_loop: null
-      - action: utter_daily_ci_enroll__no_phone_no_checkin
-      - action: utter_daily_ci_enroll__continue
+      - action: utter_daily_ci_enroll_no_phone_no_checkin
+      - action: utter_daily_ci_enroll_continue
       - action: action_daily_ci_enroll_form_ended
     wait_for_user_input: false
 
@@ -402,9 +399,9 @@ rules:
           - requested_slot: phone_number
     steps:
       - intent: cancel
-      - action: utter_ask_daily_ci_enroll__wants_cancel
+      - action: utter_ask_daily_ci_enroll_wants_cancel
       - intent: affirm
-      - action: utter_daily_ci_enroll__no_problem_continue
+      - action: utter_daily_ci_enroll_no_problem_continue
       - action: action_deactivate_form
       - active_loop: null
       - action: action_daily_ci_enroll_form_ended
@@ -417,12 +414,12 @@ rules:
           - requested_slot: phone_number
     steps:
       - intent: cancel
-      - action: utter_ask_daily_ci_enroll__wants_cancel
+      - action: utter_ask_daily_ci_enroll_wants_cancel
       - intent: cancel
-      - action: utter_daily_ci_enroll__no_problem_continue
+      - action: utter_daily_ci_enroll_no_problem_continue
       - action: action_deactivate_form
       - active_loop: null
-      - action: action_daily_ci_enroll_form_ended # Dammit, le nombre d'actions fonctionne pas
+      - action: action_daily_ci_enroll_form_ended
     wait_for_user_input: false
 
   - rule: Asking phone cancel deny
@@ -432,10 +429,10 @@ rules:
           - requested_slot: phone_number
     steps:
       - intent: cancel
-      - action: utter_ask_daily_ci_enroll__wants_cancel
+      - action: utter_ask_daily_ci_enroll_wants_cancel
       - intent: deny
-      - action: utter_daily_ci_enroll__ok_continue # set error counter or not? Was in code but not in design...
-      - action: daily_ci_enroll_form # ça marche... Le form repose la question. Est-ce qu'on peut faire l'autre cas?
+      - action: utter_daily_ci_enroll_acknowledge_continue
+      - action: daily_ci_enroll_form
     wait_for_user_input: false
 
   - rule: Daily checkin enrollment normal end
@@ -553,47 +550,47 @@ rules:
   ## Test navigation rules
   - rule: Do test navigation affirm
     steps:
-      - action: utter_ask_test_navigation__continue
+      - action: utter_ask_test_navigation_continue
       - intent: affirm
-      - action: utter_test_navigation__acknowledge_continue
+      - action: utter_test_navigation_acknowledge_continue
       - action: test_navigation_form
       - action: action_clear_test_navigation_slots # Necessary because of https://github.com/RasaHQ/rasa/issues/6569
-      - action: action_test_navigation__anything_else
+      - action: action_test_navigation_anything_else
 
   - rule: Do test navigation continue
     steps:
-      - action: utter_ask_test_navigation__continue
+      - action: utter_ask_test_navigation_continue
       - intent: continue
-      - action: utter_test_navigation__acknowledge_continue
+      - action: utter_test_navigation_acknowledge_continue
       - action: test_navigation_form
       - action: action_clear_test_navigation_slots
-      - action: action_test_navigation__anything_else
+      - action: action_test_navigation_anything_else
 
   - rule: Drop test navigation
     steps:
-      - action: utter_ask_test_navigation__continue
+      - action: utter_ask_test_navigation_continue
       - intent: done
-      - action: utter_test_navigation__come_back
+      - action: utter_test_navigation_come_back
       - action: action_goodbye
 
   - rule: Drop test navigation with deny
     steps:
-      - action: utter_ask_test_navigation__continue
+      - action: utter_ask_test_navigation_continue
       - intent: deny
-      - action: action_test_navigation__anything_else
+      - action: action_test_navigation_anything_else
 
   - rule: Dropped test navigation nothing else done
     steps:
-      - action: action_test_navigation__anything_else
+      - action: action_test_navigation_anything_else
       - intent: done
-      - action: utter_test_navigation__come_back
+      - action: utter_test_navigation_come_back
       - action: action_goodbye
 
   - rule: Dropped test navigation nothing else deny
     steps:
-      - action: action_test_navigation__anything_else
+      - action: action_test_navigation_anything_else
       - intent: deny
-      - action: utter_test_navigation__come_back
+      - action: utter_test_navigation_come_back
       - action: action_goodbye
 
   ## Daily check-in general rules
@@ -609,53 +606,53 @@ rules:
       - action: action_initialize_daily_checkin
       - slot_was_set:
           - invalid_reminder_id: true
-      - action: utter_ask_daily_checkin__invalid_id__want_assessment
+      - action: utter_ask_daily_ci_invalid_id_want_assessment
 
   - rule: Daily check_in valid ID
     steps:
       - action: action_initialize_daily_checkin
-      - action: utter_daily_ci__greet
-      - action: utter_ask_daily_ci__early_opt_out__continue_ci
+      - action: utter_daily_ci_greet
+      - action: utter_ask_daily_ci_early_opt_out_continue_ci
 
   - rule: Daily check-in early opt-out
     steps:
-      - action: utter_ask_daily_ci__early_opt_out__continue_ci
+      - action: utter_ask_daily_ci_early_opt_out_continue_ci
       - intent: opt_out
       - action: action_daily_ci_cancel_ci
       - action: utter_ask_anything_else_without_test_navigation
 
   - rule: Daily check-in continue
     steps:
-      - action: utter_ask_daily_ci__early_opt_out__continue_ci
+      - action: utter_ask_daily_ci_early_opt_out_continue_ci
       - intent: continue
-      - action: utter_daily_ci__early_opt_out__acknowledge_continue_ci
-      - action: utter_ask_daily_ci__feel
+      - action: utter_daily_ci_early_opt_out_acknowledge_continue_ci
+      - action: utter_ask_daily_ci_feel
 
   ## Daily check-in invalid ID
-  - rule: utter_ask_daily_checkin__invalid_id__want_assessment deny
+  - rule: utter_ask_daily_ci_invalid_id_want_assessment deny
     steps:
-      - action: utter_ask_daily_checkin__invalid_id__want_assessment
+      - action: utter_ask_daily_ci_invalid_id_want_assessment
       - intent: deny
-      - action: utter_ask_daily_checkin__invalid_id__anything_else
+      - action: utter_ask_daily_ci_invalid_id_anything_else
 
-  - rule: utter_ask_daily_checkin__invalid_id__anything_else done
+  - rule: utter_ask_daily_ci_invalid_id_anything_else done
     steps:
-      - action: utter_ask_daily_checkin__invalid_id__anything_else
+      - action: utter_ask_daily_ci_invalid_id_anything_else
       - intent: done
-      - action: utter_daily_checkin__invalid_id__visit_dialogue
+      - action: utter_daily_ci_invalid_id_visit_dialogue
       - action: action_goodbye
 
-  - rule: utter_ask_daily_checkin__invalid_id__anything_else deny
+  - rule: utter_ask_daily_ci_invalid_id_anything_else deny
     steps:
-      - action: utter_ask_daily_checkin__invalid_id__anything_else
+      - action: utter_ask_daily_ci_invalid_id_anything_else
       - intent: deny
-      - action: utter_daily_checkin__invalid_id__visit_dialogue
+      - action: utter_daily_ci_invalid_id_visit_dialogue
       - action: action_goodbye
 
   ## Daily check-in directing to appropriate form
   - rule: Daily check-in worse
     steps:
-      - action: utter_ask_daily_ci__feel
+      - action: utter_ask_daily_ci_feel
       - intent: worse
       - action: daily_ci_feel_worse_form
       - action: action_submit_daily_ci_assessment
@@ -663,7 +660,7 @@ rules:
 
   - rule: Daily check-in no_change
     steps:
-      - action: utter_ask_daily_ci__feel
+      - action: utter_ask_daily_ci_feel
       - intent: no_change
       - action: daily_ci_feel_no_change_form
       - action: action_submit_daily_ci_assessment
@@ -671,7 +668,7 @@ rules:
 
   - rule: Daily check-in better
     steps:
-      - action: utter_ask_daily_ci__feel
+      - action: utter_ask_daily_ci_feel
       - intent: better
       - action: utter_daily_ci_feel_better_acknowledge
       - action: daily_ci_feel_better_form
@@ -696,8 +693,8 @@ rules:
           - symptoms: nothing
     steps:
       - action: action_submit_daily_ci_assessment
-      - action: utter_daily_ci__keep_or_cancel__no_symptoms_recommendation
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - action: utter_daily_ci_keep_or_cancel_no_symptoms_recommendation
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms
 
   - rule: Daily check-in worse mandatory ci
     condition:
@@ -709,8 +706,8 @@ rules:
       - action: action_check_mandatory_ci
       - slot_was_set:
           - mandatory_ci: true
-      - action: utter_daily_ci__keep_or_cancel__feel_worse_keep_ci
-      - action: utter_daily_ci__keep_or_cancel__feel_worse_recommendation
+      - action: utter_daily_ci_keep_or_cancel_feel_worse_keep_ci
+      - action: utter_daily_ci_keep_or_cancel_feel_worse_recommendation
       - action: action_keep_ci_recommendations
       - action: utter_ask_anything_else_with_test_navigation
 
@@ -724,67 +721,67 @@ rules:
       - action: action_check_mandatory_ci
       - slot_was_set:
           - mandatory_ci: false
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_symptoms
 
   - rule: Keep or cancel ci symptoms
     steps:
       - action: action_submit_daily_ci_assessment
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_symptoms
 
   - rule: Keeps ci no symptoms (affirn)
     steps:
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms
       - intent: affirm
-      - action: utter_daily_ci__keep_or_cancel__acknowledge_continue_ci
+      - action: utter_daily_ci_keep_or_cancel_acknowledge_continue_ci
       - action: utter_ask_anything_else_without_test_navigation
 
   - rule: Keeps ci no symptoms (continue)
     steps:
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms
       - intent: continue
-      - action: utter_daily_ci__keep_or_cancel__acknowledge_continue_ci
+      - action: utter_daily_ci_keep_or_cancel_acknowledge_continue_ci
       - action: utter_ask_anything_else_without_test_navigation
 
   - rule: Cancels ci no symptoms (deny)
     steps:
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms
       - intent: deny
       - action: action_daily_ci_cancel_ci
       - action: utter_ask_anything_else_without_test_navigation
 
   - rule: Cancels ci no symptoms (cancel)
     steps:
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms
       - intent: cancel
       - action: action_daily_ci_cancel_ci
       - action: utter_ask_anything_else_without_test_navigation
 
   - rule: Keeps ci symptoms (affirm)
     steps:
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_symptoms
       - intent: affirm
-      - action: utter_daily_ci__keep_or_cancel__acknowledge_continue_ci
+      - action: utter_daily_ci_keep_or_cancel_acknowledge_continue_ci
       - action: action_keep_ci_recommendations
       - action: utter_ask_anything_else_with_test_navigation
 
   - rule: Keeps ci symptoms (continue)
     steps:
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_symptoms
       - intent: continue
-      - action: utter_daily_ci__keep_or_cancel__acknowledge_continue_ci
+      - action: utter_daily_ci_keep_or_cancel_acknowledge_continue_ci
       - action: action_keep_ci_recommendations
       - action: utter_ask_anything_else_with_test_navigation
 
   - rule: Cancels ci no symptoms (deny)
     steps:
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms
       - intent: deny
       - action: action_daily_ci_cancel_ci
       - action: utter_ask_anything_else_with_test_navigation
 
   - rule: Cancels ci no symptoms (cancel)
     steps:
-      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms
       - intent: deny
       - action: action_daily_ci_cancel_ci
       - action: utter_ask_anything_else_with_test_navigation
@@ -930,21 +927,21 @@ rules:
       - active_loop: question_answering_form
     wait_for_user_input: false
 
-  # utter_ask_daily_checkin__invalid_id__want_assessment
-  - rule: utter_ask_daily_checkin__invalid_id__want_assessment affirm
+  # utter_ask_daily_ci_invalid_id_want_assessment
+  - rule: utter_ask_daily_ci_invalid_id_want_assessment affirm
     steps:
-      - action: utter_ask_daily_checkin__invalid_id__want_assessment
+      - action: utter_ask_daily_ci_invalid_id_want_assessment
       - intent: affirm
       - action: assessment_form
       - active_loop: assessment_form
     wait_for_user_input: false
 
   ## Fallback with error messages
-  - rule: utter_ask_test_navigation__continue error
+  - rule: utter_ask_test_navigation_continue error
     steps:
-      - action: utter_ask_test_navigation__continue
+      - action: utter_ask_test_navigation_continue
       - intent: nlu_fallback
-      - action: action_ask_test_navigation__continue_error
+      - action: action_ask_test_navigation_continue_error
 
   ## "Main menu" generic rules
   - rule: Get assessment
@@ -963,7 +960,7 @@ rules:
       - intent: navigate_test_locations
       - action: action_check_task_allowed
       - action: action_test_navigation_explanations
-      - action: utter_ask_test_navigation__continue
+      - action: utter_ask_test_navigation_continue
 
   - rule: Ask question
     steps:

@@ -25,13 +25,15 @@ from .lib.log_util import bind_logger
 FORM_NAME = "daily_ci_enroll_form"
 VALIDATE_ACTION_NAME = f"validate_{FORM_NAME}"
 
-PHONE_TRY_COUNTER_SLOT = "daily_ci_enroll__phone_number_error_counter"
-PHONE_TO_CHANGE_SLOT = "daily_ci_enroll__phone_number_to_change"
-VALIDATION_CODE_SLOT = "daily_ci_enroll__validation_code"
-VALIDATION_CODE_REFERENCE_SLOT = "daily_ci_enroll__validation_code_reference"
-CODE_TRY_COUNTER_SLOT = "daily_ci_enroll__validation_code_error_counter"
-NO_CODE_SOLUTION_SLOT = "daily_ci_enroll__no_code_solution"
-DISPLAY_PRECONDITIONS_EXAMPLES_SLOT = "daily_ci_enroll__display_preconditions_examples"
+PHONE_TRY_COUNTER_SLOT = "daily_ci_enroll_form_phone_number_error_counter"
+PHONE_TO_CHANGE_SLOT = "daily_ci_enroll_form_phone_number_to_change"
+VALIDATION_CODE_SLOT = "daily_ci_enroll_form_validation_code"
+VALIDATION_CODE_REFERENCE_SLOT = "daily_ci_enroll_form_validation_code_reference"
+CODE_TRY_COUNTER_SLOT = "daily_ci_enroll_form_validation_code_error_counter"
+NO_CODE_SOLUTION_SLOT = "daily_ci_enroll_form_no_code_solution"
+DISPLAY_PRECONDITIONS_EXAMPLES_SLOT = (
+    "daily_ci_enroll_form_display_preconditions_examples"
+)
 
 ORDERED_FORM_SLOTS = [
     FIRST_NAME_SLOT,
@@ -59,10 +61,10 @@ class ActionOfferDailyCiEnrollment(Action):
     ) -> List[EventType]:
         bind_logger(tracker)
 
-        dispatcher.utter_message(template="utter_daily_ci_enroll__offer_checkin")
-        dispatcher.utter_message(template="utter_daily_ci_enroll__explain_checkin_1")
-        dispatcher.utter_message(template="utter_daily_ci_enroll__explain_checkin_2")
-        dispatcher.utter_message(template="utter_ask_daily_ci_enroll__do_enroll")
+        dispatcher.utter_message(template="utter_daily_ci_enroll_offer_checkin")
+        dispatcher.utter_message(template="utter_daily_ci_enroll_explain_checkin_1")
+        dispatcher.utter_message(template="utter_daily_ci_enroll_explain_checkin_2")
+        dispatcher.utter_message(template="utter_ask_daily_ci_enroll_do_enroll")
 
         return []
 
@@ -86,7 +88,7 @@ class ActionAskPhoneNumber(Action):
         # Coming from cancel digression. Cannot find a better way.
         elif (
             tracker.get_slot(PHONE_TRY_COUNTER_SLOT) > 0
-            or latest_bot_message == "utter_daily_ci_enroll__ok_continue"
+            or latest_bot_message == "utter_daily_ci_enroll_acknowledge_continue"
         ):
             dispatcher.utter_message(template="utter_ask_phone_number_error")
         else:
@@ -108,13 +110,15 @@ class ActionAskValidationCode(Action):
             "template_name"
         ]
 
-        if latest_bot_message.startswith("utter_ask_daily_ci_enroll__validation_code"):
+        if latest_bot_message.startswith(
+            "utter_ask_daily_ci_enroll_form_validation_code"
+        ):
             dispatcher.utter_message(
-                template="utter_ask_daily_ci_enroll__validation_code_error"
+                template="utter_ask_daily_ci_enroll_form_validation_code_error"
             )
         else:
             dispatcher.utter_message(
-                template="utter_ask_daily_ci_enroll__validation_code"
+                template="utter_ask_daily_ci_enroll_form_validation_code"
             )
 
         return []
@@ -131,10 +135,10 @@ class ActionAskPreconditions(Action):
 
         if tracker.get_slot(DISPLAY_PRECONDITIONS_EXAMPLES_SLOT) is True:
             dispatcher.utter_message(
-                template="utter_daily_ci_enroll__explain_preconditions"
+                template="utter_pre_ask_daily_ci_enroll_form_preconditions_examples"
             )
             dispatcher.utter_message(
-                template="utter_ask_daily_ci_enroll__preconditions_examples"
+                template="utter_ask_daily_ci_enroll_form_preconditions_examples"
             )
         else:
             dispatcher.utter_message(template="utter_ask_preconditions")
@@ -190,23 +194,23 @@ class ValidateDailyCiEnrollForm(Action):
                     ci_enroll(tracker.current_slot_values())
 
                     dispatcher.utter_message(
-                        template="utter_daily_ci_enroll__enroll_done_1"
+                        template="utter_daily_ci_enroll_form_done_1"
                     )
                     dispatcher.utter_message(
-                        template="utter_daily_ci_enroll__enroll_done_2"
+                        template="utter_daily_ci_enroll_form_done_2"
                     )
                     dispatcher.utter_message(
-                        template="utter_daily_ci_enroll__enroll_done_3"
+                        template="utter_daily_ci_enroll_form_done_3"
                     )
                 except:
                     dispatcher.utter_message(
-                        template="utter_daily_ci_enroll__enroll_fail_1"
+                        template="utter_daily_ci_enroll_form_fail_1"
                     )
                     dispatcher.utter_message(
-                        template="utter_daily_ci_enroll__enroll_fail_2"
+                        template="utter_daily_ci_enroll_form_fail_2"
                     )
                     dispatcher.utter_message(
-                        template="utter_daily_ci_enroll__enroll_fail_3"
+                        template="utter_daily_ci_enroll_form_fail_3"
                     )
 
             validation_events.extend(slot_events)
@@ -221,9 +225,10 @@ def _validate_first_name(
 
     if first_name:
         dispatcher.utter_message(
-            template="utter_daily_ci_enroll__thanks_first_name", first_name=first_name,
+            template="utter_daily_ci_enroll_form_first_name_any_1",
+            first_name=first_name,
         )
-        dispatcher.utter_message(template="utter_daily_ci_enroll__text_message_checkin")
+        dispatcher.utter_message(template="utter_daily_ci_enroll_form_first_name_any_2")
 
     return [SlotSet(FIRST_NAME_SLOT, first_name)]
 
@@ -239,7 +244,7 @@ async def _validate_phone_number(
     ]
 
     if phone_number is not None:
-        dispatcher.utter_message(template="utter_daily_ci_enroll__acknowledge")
+        dispatcher.utter_message(template="utter_daily_ci_enroll_acknowledge")
 
         return slots + await _send_validation_code(tracker, dispatcher, phone_number)
 
@@ -250,7 +255,7 @@ async def _validate_phone_number(
     if reached_max_errors:
         return error_events
 
-    dispatcher.utter_message(template="utter_daily_ci_enroll__invalid_phone_number")
+    dispatcher.utter_message(template="utter_daily_ci_enroll_form_phone_number_invalid")
     return error_events + [SlotSet(PHONE_TO_CHANGE_SLOT, False)]
 
 
@@ -262,7 +267,7 @@ async def _validate_validation_code(
     phone_number_in_message = _get_phone_number(tracker.latest_message.get("text", ""))
     if phone_number_in_message is not None:
         dispatcher.utter_message(
-            template="utter_daily_ci_enroll__acknowledge_new_phone_number"
+            template="utter_daily_ci_enroll_acknowledge_new_phone_number"
         )
         return [
             SlotSet(VALIDATION_CODE_SLOT, None),
@@ -278,7 +283,7 @@ async def _validate_validation_code(
 
     validation_code = _get_validation_code(value)
     if validation_code == tracker.get_slot(VALIDATION_CODE_REFERENCE_SLOT):
-        dispatcher.utter_message(template="utter_daily_ci_enroll__thanks")
+        dispatcher.utter_message(template="utter_daily_ci_enroll_thanks")
         return [SlotSet(VALIDATION_CODE_SLOT, validation_code)]
 
     (reached_max_errors, error_events) = _check_error_counter(
@@ -304,7 +309,7 @@ async def _validate_no_code_solution(
     phone_number_in_message = _get_phone_number(tracker.latest_message.get("text", ""))
     if phone_number_in_message is not None:
         dispatcher.utter_message(
-            template="utter_daily_ci_enroll__acknowledge_new_phone_number"
+            template="utter_daily_ci_enroll_acknowledge_new_phone_number"
         )
         return [
             SlotSet(NO_CODE_SOLUTION_SLOT, "change_phone"),
@@ -331,7 +336,7 @@ def _validate_preconditions(
     if value == "dont_know":
         if tracker.get_slot(DISPLAY_PRECONDITIONS_EXAMPLES_SLOT) is True:
             dispatcher.utter_message(
-                template="utter_daily_ci_enroll__note_preconditions"
+                template="utter_daily_ci_enroll_form_preconditions_dont_know"
             )
             return [SlotSet(PRECONDITIONS_SLOT, True)]
         else:
@@ -340,7 +345,7 @@ def _validate_preconditions(
                 SlotSet(DISPLAY_PRECONDITIONS_EXAMPLES_SLOT, True),
             ]
 
-    dispatcher.utter_message(template="utter_daily_ci_enroll__acknowledge")
+    dispatcher.utter_message(template="utter_daily_ci_enroll_acknowledge")
     return [SlotSet(PRECONDITIONS_SLOT, value)]
 
 
@@ -381,12 +386,12 @@ async def _send_validation_code(
     validation_code = await send_validation_code(phone_number, language, first_name)
     if validation_code is None:
         dispatcher.utter_message(
-            template="utter_daily_ci_enroll__validation_code_not_sent_1"
+            template="utter_daily_ci_enroll_form_validation_code_not_sent_1"
         )
         dispatcher.utter_message(
-            template="utter_daily_ci_enroll__validation_code_not_sent_2"
+            template="utter_daily_ci_enroll_form_validation_code_not_sent_2"
         )
-        dispatcher.utter_message(template="utter_daily_ci_enroll__continue")
+        dispatcher.utter_message(template="utter_daily_ci_enroll_continue")
 
         return end_form_events(PHONE_NUMBER_SLOT)
 
@@ -402,9 +407,7 @@ def _check_error_counter(
     try_counter = tracker.get_slot(counter_slot_name)
 
     if try_counter >= LOCAL_ERROR_MAX:
-        dispatcher.utter_message(
-            template="utter_daily_ci_enroll__invalid_phone_no_checkin"
-        )
+        dispatcher.utter_message(template="utter_daily_ci_enroll_form_max_errors")
         return (
             True,
             [SlotSet(slot_name, SKIP_SLOT_PLACEHOLDER)] + end_form_events(slot_name),

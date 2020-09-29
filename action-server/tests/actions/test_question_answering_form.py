@@ -98,7 +98,7 @@ class TestActionAskActiveQuestion(ActionTestCase):
             [
                 "utter_can_help_with_questions",
                 "utter_qa_disclaimer",
-                "utter_ask_active_question",
+                "utter_ask_question_answering_form_active_question",
             ]
         )
 
@@ -117,7 +117,7 @@ class TestActionAskActiveQuestion(ActionTestCase):
                 "utter_can_help_with_questions",
                 "utter_qa_disclaimer",
                 "utter_qa_sample",
-                "utter_ask_active_question",
+                "utter_ask_question_answering_form_active_question",
             ]
         )
 
@@ -132,7 +132,7 @@ class TestActionAskActiveQuestion(ActionTestCase):
 
         self.assert_events([])
 
-        self.assert_templates(["utter_ask_active_question"])
+        self.assert_templates(["utter_ask_question_answering_form_active_question"])
 
 
 class TestValidateQuestionAnsweringForm(ValidateActionTestCase):
@@ -218,7 +218,7 @@ class TestValidateQuestionAnsweringForm(ValidateActionTestCase):
 
     @pytest.mark.asyncio
     async def test_provide_feedback_deny(self):
-        templates = ["utter_feedback_false"]
+        templates = ["utter_question_answering_form_feedback_false"]
         await self.check_slot_value_accepted(FEEDBACK_SLOT, False, templates=templates)
 
     @pytest.mark.asyncio

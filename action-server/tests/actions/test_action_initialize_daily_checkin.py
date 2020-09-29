@@ -189,8 +189,8 @@ class TestActionInitializeDailyCheckin(ActionTestCase):
 
         self.assert_templates(
             [
-                "utter_daily_ci__invalid_id__invalid_link",
-                "utter_daily_ci__invalid_id__try_again",
+                "utter_daily_ci_invalid_id_invalid_link",
+                "utter_daily_ci_invalid_id_try_again",
             ]
         )
 

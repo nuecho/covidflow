@@ -1,11 +1,12 @@
 responses:
-  utter_greet:
+  # General flow
+  utter_greeting_1:
     - text: "Hi, I′m Chloe, your virtual medical assistant, I′m here to help you assess your symptoms and provide information about Covid-19"
 
-  utter_greet_warning:
+  utter_greeting_2:
     - text: Please note that the information you′ll receive is not a medical assessment. If you are experiencing severe symptoms, seek medical attention. This service is not a substitute for consulting with your doctor. The information we supply is from publicly available sources and is subject to frequent change
 
-  utter_greet_options:
+  utter_greeting_3:
     - text: I can help you with a self-assessment of your symptoms, if you think you have Covid-19, if you have been tested positive, if you want to re-assess your symptoms, if you’re looking for a screening or testing site, or if you have questions about Covid-19
 
   utter_ask_how_may_i_help:
@@ -28,23 +29,6 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_assessment_entry:
-    - text: OK, let’s assess your symptoms to see how you’re doing and which steps you should take. Let’s get started!
-
-  utter_ask_severe_symptoms:
-    - text: "First, are you experiencing any, or a combination of, the following symptoms: severe difficulty breathing, severe chest pain, having a hard time waking up, feeling confused or losing consciousness?"
-
-  utter_ask_severe_symptoms_error:
-    - text: "Sorry, are you experiencing any of the following symptoms:\n- Severe difficulty breathing\n- Severe chest pain\n- Having a hard time waking up\n- Feeling confused\n- Losing consciousness"
-      buttons:
-        - title: Yes
-          payload: "/affirm"
-        - title: No
-          payload: "/deny"
-      custom:
-        data:
-          disableTextField: "true"
-
   utter_severe_symptoms_recommendations_1:
     - text: These symptoms require immediate response, so please call 911 immediately, or go to your nearest emergency department
 
@@ -56,6 +40,27 @@ responses:
 
   utter_severe_symptoms_recommendations_4:
     - text: Most importantly, do not wait, as your symptoms need immediate medical attention
+      custom:
+        data:
+          disableTextField: "true"
+
+  utter_goodbye:
+    - text: "Thanks and take care of yourself!"
+      custom:
+        data:
+          disableTextField: "true"
+
+  # Assessment (common)
+  utter_ask_severe_symptoms:
+    - text: "First, are you experiencing any, or a combination of, the following symptoms: severe difficulty breathing, severe chest pain, having a hard time waking up, feeling confused or losing consciousness?"
+
+  utter_ask_severe_symptoms_error:
+    - text: "Sorry, are you experiencing any of the following symptoms:\n- Severe difficulty breathing\n- Severe chest pain\n- Having a hard time waking up\n- Feeling confused\n- Losing consciousness"
+      buttons:
+        - title: Yes
+          payload: "/affirm"
+        - title: No
+          payload: "/deny"
       custom:
         data:
           disableTextField: "true"
@@ -91,32 +96,6 @@ responses:
   utter_moderate_symptoms_false:
     - text: OK, it seems that you don’t have symptoms that require immediate medical assistance. Let’s continue your assessment
 
-  utter_symptoms_worsen_emergency:
-    - text: "If your symptoms worsen or if you have difficulty breathing, you will need to get to your nearest emergency or call 911"
-
-  utter_monitor_symptoms_assistance:
-    - text: "Please monitor your symptoms. If you need assistance, you should:\n- Contact your family doctor if possible, or\n- Call {provincial_811} for assistance"
-
-  utter_remind_stay_home_self_isolate:
-    - text: "Please make sure that you stay home and self-isolate for at least 14 days"
-
-  utter_monitor_symptoms_temperature:
-    - text: "Take your temperature regularly and monitor your symptoms for any changes"
-
-  utter_remind_possible_checkin:
-    - text: "At any time, you can check-in with me to monitor your symptoms"
-
-  utter_visit_package:
-    - text: "You can consult [your personal information package](https://covid19.dialogue.co/#/info?id=ca-{id})"
-
-  utter_goodbye:
-    - text: "Thanks and take care of yourself!"
-      custom:
-        data:
-          disableTextField: "true"
-
-  # Mild symptoms flow
-
   utter_ask_has_cough:
     - text: "Do you have a cough or a sore throat?"
 
@@ -131,50 +110,7 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_monitor_symptoms_changes:
-    - text: "Please monitor your symptoms for any changes or in case you get new symptoms, or if they worsen"
-
-  utter_ask_contact:
-    - text: "I need to know if you've been in close contact with someone who has Covid-19. Here are some examples:\n- Providing care for infected patients, visiting, or staying with them in the same close environment\n- Working in close proximity with an infected person\n- Living in the same household as an infected person\n\nHave you recently been in close contact with someone who has Covid-19?"
-
-  utter_ask_contact_error:
-    - text: "Sorry, have you recently been in contact with someone who has Covid-19?"
-      buttons:
-        - title: Yes
-          payload: "/affirm"
-        - title: No
-          payload: "/deny"
-      custom:
-        data:
-          disableTextField: "true"
-
-  utter_ask_travel:
-    - text: "Have you traveled in any country outside of Canada within the last 14 days (including passing through an airport)?"
-
-  utter_ask_travel_error:
-    - text: "Sorry, have you travelled in any country outside of Canada within the last 14 days?"
-      buttons:
-        - title: Yes
-          payload: "/affirm"
-        - title: No
-          payload: "/deny"
-      custom:
-        data:
-          disableTextField: "true"
-
-  utter_probably_not_covid:
-    - text: In this case, you probably don’t have Covid-19
-
-  utter_social_distancing:
-    - text: "Please continue to comply with social distancing recommendations, or wear a mask when it's not possible to do so"
-
-  utter_checkin_if_developments:
-    - text: "If you develop any symptoms in the future, or if you get in contact with someone who has the Covid-19, please check-in with me for an assessment and recommendations"
-
-  utter_link_if_anxious:
-    - text: If you feel anxious about Covid-19 or your own wellbeing, please visit [Wellness Together Canada](https://ca.portal.gs/)
-
-  # province age form
+  # province age (sub)form
   utter_pre_ask_province_code:
     - text: Next, I need to know where you live, so that I can give you information relevant for your area
 
@@ -285,21 +221,86 @@ responses:
         data:
           disableTextField: "true"
 
-  ## Tested positive
+  # Assessment suspect
+  utter_assessment_entry__suspect:
+    - text: OK, let’s assess your symptoms to see how you’re doing and which steps you should take. Let’s get started!
 
+  utter_symptoms_worsen_emergency:
+    - text: "If your symptoms worsen or if you have difficulty breathing, you will need to get to your nearest emergency or call 911"
+
+  utter_monitor_symptoms_assistance:
+    - text: "Please monitor your symptoms. If you need assistance, you should:\n- Contact your family doctor if possible, or\n- Call {provincial_811} for assistance"
+
+  utter_remind_stay_home_self_isolate:
+    - text: "Please make sure that you stay home and self-isolate for at least 14 days"
+
+  utter_monitor_symptoms_temperature:
+    - text: "Take your temperature regularly and monitor your symptoms for any changes"
+
+  utter_remind_possible_checkin:
+    - text: "At any time, you can check-in with me to monitor your symptoms"
+
+  utter_visit_package:
+    - text: "You can consult [your personal information package](https://covid19.dialogue.co/#/info?id=ca-{id})"
+
+  utter_monitor_symptoms_changes:
+    - text: "Please monitor your symptoms for any changes or in case you get new symptoms, or if they worsen"
+
+  # Contact-risk form
+  utter_ask_contact_risk_form_contact:
+    - text: "I need to know if you've been in close contact with someone who has Covid-19. Here are some examples:\n- Providing care for infected patients, visiting, or staying with them in the same close environment\n- Working in close proximity with an infected person\n- Living in the same household as an infected person\n\nHave you recently been in close contact with someone who has Covid-19?"
+
+  utter_ask_contact_risk_form_contact_error:
+    - text: "Sorry, have you recently been in contact with someone who has Covid-19?"
+      buttons:
+        - title: Yes
+          payload: "/affirm"
+        - title: No
+          payload: "/deny"
+      custom:
+        data:
+          disableTextField: "true"
+
+  utter_ask_contact_risk_form_travel:
+    - text: "Have you traveled in any country outside of Canada within the last 14 days (including passing through an airport)?"
+
+  utter_ask_contact_risk_form_travel_error:
+    - text: "Sorry, have you travelled in any country outside of Canada within the last 14 days?"
+      buttons:
+        - title: Yes
+          payload: "/affirm"
+        - title: No
+          payload: "/deny"
+      custom:
+        data:
+          disableTextField: "true"
+
+  utter_probably_not_covid:
+    - text: In this case, you probably don’t have Covid-19
+
+  utter_social_distancing:
+    - text: "Please continue to comply with social distancing recommendations, or wear a mask when it's not possible to do so"
+
+  utter_checkin_if_developments:
+    - text: "If you develop any symptoms in the future, or if you get in contact with someone who has the Covid-19, please check-in with me for an assessment and recommendations"
+
+  utter_link_if_anxious:
+    - text: If you feel anxious about Covid-19 or your own wellbeing, please visit [Wellness Together Canada](https://ca.portal.gs/)
+
+  ## Tested positive
   utter_tested_positive_entry:
     - text: OK, let’s see how you’re doing. I’ll assess your symptoms and provide you with customized recommendations
 
   utter_assess_symptoms:
     - text: "Now, I’d like to assess your symptoms"
 
-  utter_symptoms_worsen_emergency_assistance:
+  utter_tested_positive_mild_worsened_moderate_symptoms_recommendation:
     - text: "If your symptoms worsen, you may need to go to the ER. If you need assistance, you should:\n- Contact your family doctor if possible, or\n- Call {provincial_811} for assistance"
 
-  utter_ask_tested_positive__mild_symptoms_worsened:
+  utter_ask_tested_positive_mild_symptoms_worsened:
     - text: "Have your symptoms worsened in the last 24 hours?"
 
-  utter_ask_tested_positive__mild_symptoms_worsened_error:
+  utter_ask_tested_positive_mild_symptoms_worsened_error:
     - text: "Sorry, would you say that your symptoms worsened in the last 24 hours or not?"
       buttons:
         - title: Yes
@@ -313,10 +314,10 @@ responses:
   utter_tested_positive_no_symptoms:
     - text: "Although your test is positive, it looks like you’re not experiencing any significant symptoms at the moment"
 
-  utter_ask_when_tested:
+  utter_ask_tested_positive_when_tested:
     - text: Have you been diagnosed more than 14 days ago?
 
-  utter_ask_when_tested_error:
+  utter_ask_tested_positive_when_tested_error:
     - text: Sorry, when have you been diagnosed?
       buttons:
         - title: "More than 14 days ago"
@@ -327,7 +328,7 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_when_tested_less_14_recommendation:
+  utter_tested_positive_when_tested_less_14_recommendation:
     - text: In this case, I suggest you monitor your condition for any changes
 
   utter_maybe_recovered:
@@ -336,198 +337,15 @@ responses:
   utter_more_information:
     - text: "You can find more information, resources and recommendations about Covid-19 [here](https://covid19.dialogue.co/#/info?id=common)"
 
-  # Daily CI enroll flow
-
-  utter_daily_ci_enroll__offer_checkin:
-    - text: "If you'd like, you can enroll in our daily check-in"
-
-  utter_daily_ci_enroll__explain_checkin_1:
-    - text: "If you do, I will contact you everyday to see how you’re doing, monitor your symptoms, evaluate your general health, and provide recommendations to help take care of yourself and relieve your symptoms"
-
-  utter_daily_ci_enroll__explain_checkin_2:
-    - text: "The daily check-in offers you an updated assessment of your condition everyday, so that you receive the most relevant guidance and recommendations for your condition"
-
-  utter_ask_daily_ci_enroll__do_enroll:
-    - text: "Would you like me to check-in with you daily to help monitor your symptoms?"
-
-  utter_ask_daily_ci_enroll__do_enroll_error:
-    - text: "Sorry, please tell me if you'd like me to check-in with you daily to help monitor your symptoms"
-      buttons:
-        - title: Yes
-          payload: "/affirm"
-        - title: No
-          payload: "/deny"
-      custom:
-        data:
-          disableTextField: "true"
-
-  utter_daily_ci_enroll__start_enroll:
-    - text: Great! So that I can follow up with you daily and provide personalized recommendations, I need to ask you a few questions
-
-  utter_ask_first_name:
-    - text: First, what is your first name?
-
-  utter_daily_ci_enroll__thanks_first_name:
-    - text: "Thanks, {first_name}"
-
-  utter_daily_ci_enroll__text_message_checkin:
-    - text: "I will contact you by text message every day to check in on you"
-
-  utter_ask_phone_number:
-    - text: So that I can reach you, what is your phone number?
-
-  utter_daily_ci_enroll__no_phone_no_checkin:
-    - text: Unfortunately, if you don’t have a mobile phone, I won’t be able to enroll you for the daily check-in
-
-  utter_daily_ci_enroll__continue:
-    - text: Let’s continue
-
-  utter_ask_daily_ci_enroll__wants_cancel:
-    - text: I understood that you want to cancel the enrollment in daily check-in, is that correct?
-
-  utter_ask_daily_ci_enroll__wants_cancel_error:
-    - text: Sorry, are you sure you don’t want to enroll in daily check-in?
-      buttons:
-        - title: Yes stop enrollment
-          payload: "/affirm"
-        - title: No I want to enroll
-          payload: "/deny"
-      custom:
-        data:
-          disableTextField: "true"
-
-  utter_daily_ci_enroll__ok_continue:
-    - text: "OK, let’s continue!"
-
-  utter_daily_ci_enroll__no_problem_continue:
-    - text: No problem, let’s continue
-
-  utter_daily_ci_enroll__invalid_phone_number:
-    - text: Sorry, this isn’t a valid phone number, please try again
-
-  utter_ask_phone_number_error:
-    - text: Please enter your 10-digit mobile phone number
-
-  utter_daily_ci_enroll__invalid_phone_no_checkin:
-    - text: "I’m sorry, I won’t be able to complete your enrollment. Let’s continue"
-
-  utter_daily_ci_enroll__acknowledge:
-    - text: "Got it"
-
-  utter_ask_daily_ci_enroll__validation_code:
-    - text: I’m sending you a validation code on your mobile phone. When you receive it, please enter it
-
-  utter_daily_ci_enroll__validation_code_not_sent_1:
-    - text: I'm sorry, but a technical problem prevents me completing your enrollment to the Daily Check-in
-
-  utter_daily_ci_enroll__validation_code_not_sent_2:
-    - text: You may try to enroll at another time
-
-  utter_daily_ci_enroll__thanks:
-    - text: Thanks
-
-  utter_ask_daily_ci_enroll__validation_code_error:
-    - text: I’m sorry, this is not a valid code. Please try again and enter the 4-digit code that you received by text
-
-  utter_daily_ci_enroll__acknowledge_new_phone_number:
-    - text: OK, I’ll use this phone number instead
-
-  utter_ask_daily_ci_enroll__no_code_solution:
-    - text: Sorry about that. I can send a new code to the same number or you can re-enter your number. Which would you like? Send a new code or re-enter your number?
-
-  utter_ask_daily_ci_enroll__no_code_solution_error:
-    - text: "Sorry, please tell me which you would like:"
-      buttons:
-        - title: Re-send code
-          payload: "/new_code"
-        - title: Re-enter my number
-          payload: "/change_phone"
-      custom:
-        data:
-          disableTextField: "true"
-
-  utter_ask_phone_number_new:
-    - text: OK, please enter your mobile phone number, so that I can reach you
-
-  utter_ask_preconditions:
-    - text: Do you have any pre-existing conditions that may affect your immunity?
-
-  utter_ask_preconditions_error:
-    - text: Sorry, do you have any pre-existing conditions that may affect your immunity?
-      buttons:
-        - title: Yes
-          payload: "/affirm"
-        - title: No
-          payload: "/deny"
-        - title: What are pre-existing conditions?
-          payload: "/dont_know"
-      custom:
-        data:
-          disableTextField: "true"
-
-  utter_daily_ci_enroll__explain_preconditions:
-    - text: You may be more at risk if you have underlying medical conditions (e.g. heart disease, hypertension, diabetes, chronic respiratory disease, cancer) or if your immune system is compromised from a medical condition or treatment (e.g. chemotherapy)
-
-  utter_ask_daily_ci_enroll__preconditions_examples:
-    - text: Do you have such risk factors or pre-existing conditions?
-
-  utter_ask_daily_ci_enroll__preconditions_examples_error:
-    - text: Sorry, do you have such risk factors or pre-existing conditions?
-      buttons:
-        - title: Yes
-          payload: "/affirm"
-        - title: No
-          payload: "/deny"
-        - title: I don't know
-          payload: "/dont_know"
-      custom:
-        data:
-          disableTextField: "true"
-
-  utter_daily_ci_enroll__note_preconditions:
-    - text: If you’re not sure, I will put a note in your profile that you might be at risk
-
-  utter_ask_has_dialogue:
-    - text: Finally, do you have health services with Dialogue?
-
-  utter_ask_has_dialogue_error:
-    - text: Sorry, do you have health services with Dialogue? If you don't know, just reply "no"
-      buttons:
-        - title: Yes
-          payload: "/affirm"
-        - title: No
-          payload: "/deny"
-      custom:
-        data:
-          disableTextField: "true"
-
-  utter_daily_ci_enroll__enroll_done_1:
-    - text: Thanks. I have recorded all your answers in your personal profile
-
-  utter_daily_ci_enroll__enroll_done_2:
-    - text: Your registration to the daily check-in is now completed
-
-  utter_daily_ci_enroll__enroll_done_3:
-    - text: I will check-in with you everyday around this time to see how you're doing, monitor your symptoms and direct you to the right resources
-
-  utter_daily_ci_enroll__enroll_fail_1:
-    - text: I'm sorry, but a technical problem prevents me from completing your enrollment to the Daily Check-in
-
-  utter_daily_ci_enroll__enroll_fail_2:
-    - text: You may try to enroll at another time
-
-  utter_daily_ci_enroll__enroll_fail_3:
-    - text: Let's continue
-
   ## Return for check-in
 
   utter_returning_for_checkin:
     - text: Thanks for checking in. Let's see how you're doing today
 
-  utter_ask_checkin_return__moderate_symptoms_worsened:
+  utter_ask_checkin_return_moderate_symptoms_worsened:
     - text: "Have your symptoms worsened in the last 24 hours?"
 
-  utter_ask_checkin_return__moderate_symptoms_worsened_error:
+  utter_ask_checkin_return_moderate_symptoms_worsened_error:
     - text: "Sorry, would you say that your symptoms worsened in the last 24 hours or not?"
       buttons:
         - title: Yes
@@ -547,13 +365,13 @@ responses:
   utter_remind_monitor_symptoms_temperature:
     - text: Don't forget to take your temperature regularly and monitor your symptoms for any changes
 
-  utter_returning_no_symptoms:
+  utter_checkin_return_no_symptoms_recommendation:
     - text: "It looks like you’re not experiencing any significant Covid-19 symptoms"
 
-  utter_ask_when_first_symptoms:
+  utter_ask_checkin_return_when_first_symptoms:
     - text: Did you experience your first symptoms more than 14 days ago?
 
-  utter_ask_when_first_symptoms_error:
+  utter_ask_checkin_return_when_first_symptoms_error:
     - text: Sorry, when did you experience your first symptoms?
       buttons:
         - title: More than 14 days ago
@@ -564,11 +382,91 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_social_distancing_leave_home:
+  utter_checkin_return_no_symptoms_more_final_recommendation:
     - text: OK, you should keep complying with social distancing rules, and if you leave your home, I recommend that you wear a mask
 
-  utter_self_isolate_symptom_free:
+  utter_checkin_return_no_symptoms_less_final_recommendation:
     - text: In this case, you should keep self-isolating until you have been symptom-free for at least 7 days
+
+  ## action self-isolation
+
+  utter_self_isolation_entry__checkin_return:
+    - text: "Since you still have symptoms, you must continue to self-isolate. It is extremely important that you follow this directive"
+
+  utter_self_isolation_entry__moderate_symptoms:
+    - text: "Since you have symptoms, you need to *self-isolate for at least 14 days*. It is extremely important that you follow this directive"
+
+  utter_self_isolation_entry__mild_symptoms:
+    - text: "Since you have some symptoms, you must self-isolate for at least 14 days. It is essential that you follow this directive"
+
+  utter_self_isolation_entry__tested_positive:
+    - text: "Since you have tested positive to the Covid-19, *you must self-isolate for at least 14 days*. It is extremely important that you follow this directive"
+
+  utter_self_isolation_entry__contact_risk:
+    - text: "Since you are at risk of being infected, you need to *self-isolate for at least 14 days*. It is extremely important that you follow this directive"
+
+  utter_ask_self_isolation_form_lives_alone:
+    - text: "Are you the only person in your household?"
+
+  utter_ask_self_isolation_form_lives_alone_error:
+    - text: "Sorry, are you the only person in your household?"
+      buttons:
+        - title: Yes
+          payload: "/affirm"
+        - title: No
+          payload: "/deny"
+      custom:
+        data:
+          disableTextField: "true"
+
+  utter_self_isolation_form_lives_alone_true:
+    - text: "In this case, I recommend that you don’t leave your home unless you have a doctor’s appointment, or if you need to go to the hospital"
+
+  utter_self_isolation_form_lives_alone_false_1:
+    - text: "In this case, you should stay in a separate room and use a different bathroom from others, if possible"
+
+  utter_self_isolation_form_lives_alone_false_2:
+    - text: "If it’s not possible, ensure you stay at least 2 meters, or six feet, away from others in your home at all times, wash your hands often, and make sure every surface and object are cleaned after use"
+
+  utter_self_isolation_form_lives_alone_false_3:
+    - text: "You should also wear a mask every time you are in the same room as others"
+
+  utter_self_isolation_final:
+    - text: "For more information about self-isolation, and to learn what you can do to protect others, visit [canada.ca](https://www.canada.ca/en/public-health/services/publications/diseases-conditions/covid-19-how-to-isolate-at-home.html)"
+
+  ## action home-assistance
+
+  utter_ask_home_assistance_has_assistance:
+    - text: "Do you have help from someone to run errands for you (a parent, spouse, a friend or neighbour), like going to the grocery store or get medications?"
+
+  utter_ask_home_assistance_has_assistance_error:
+    - text: "Sorry, do you have help from someone to run errands for you?"
+      buttons:
+        - title: Yes
+          payload: "/affirm"
+        - title: No
+          payload: "/deny"
+      custom:
+        data:
+          disableTextField: "true"
+
+  utter_home_assistance_offer_211_false:
+    - text: "Don’t forget that most pharmacies and many grocery stores offer delivery services. Check with your local pharmacy or grocery store if they deliver"
+
+  utter_home_assistance_offer_211_true_1:
+    - text: "Most pharmacies and many grocery stores offer delivery services. You can check with your local pharmacy or grocery store if they offer this service"
+
+  utter_home_assistance_offer_211_true_2_qc:
+    - text: "If that's not possible for you, and if you live in the greater Montreal area or in Quebec City, you may call 211, or visit [211.quebec](http://www.211quebecregions.ca/), or [211.montreal](https://www.211qc.ca/), for assistance"
+
+  utter_home_assistance_offer_211_true_2_other:
+    - text: "If that’s not possible for you, you may call 211 or visit [211.ca](https://211.ca/) for assistance"
+
+  utter_home_assistance_offer_211_true_3:
+    - text: "The 211 service can direct you to a variety of local resources for assistance with food, health, or community services"
+
+  utter_home_assistance_final:
+    - text: "Your pharmacist can also provide recommendations and advice on how to relieve your symptoms and which over-the-counter medications you can safely take"
 
   # QA flow
 
@@ -700,13 +598,13 @@ responses:
     - text: "How many people are infected in Quebec?"
     - text: "How many cases are in the US?"
 
-  utter_ask_active_question:
+  utter_ask_question_answering_form_active_question:
     - text: "Please write your question about Covid-19:"
 
-  utter_ask_feedback:
+  utter_ask_question_answering_form_feedback:
     - text: "Was this answer useful?"
 
-  utter_feedback_false:
+  utter_question_answering_form_feedback_false:
     - text: "Got it, sorry about that! I’m still learning so your feedback helps me improve and provide better answers"
 
   utter_question_answering_error:
@@ -739,31 +637,25 @@ responses:
   utter_ask_another_question:
     - text: "Would you like to ask another question?"
 
-  utter_daily_ci__qa__will_contact_tomorrow:
+  utter_daily_ci_qa_will_contact_tomorrow:
     - text: I will get in touch with you tomorrow for your daily check-in
 
-  ## action self-isolation
+  # Daily CI enroll flow
 
-  utter_returning_self_isolate:
-    - text: "Since you still have symptoms, you must continue to self-isolate. It is extremely important that you follow this directive"
+  utter_daily_ci_enroll_offer_checkin:
+    - text: "If you'd like, you can enroll in our daily check-in"
 
-  utter_moderate_symptoms_self_isolate:
-    - text: "Since you have symptoms, you need to *self-isolate for at least 14 days*. It is extremely important that you follow this directive"
+  utter_daily_ci_enroll_explain_checkin_1:
+    - text: "If you do, I will contact you everyday to see how you’re doing, monitor your symptoms, evaluate your general health, and provide recommendations to help take care of yourself and relieve your symptoms"
 
-  utter_mild_symptoms_self_isolate:
-    - text: "Since you have some symptoms, you must self-isolate for at least 14 days. It is essential that you follow this directive"
+  utter_daily_ci_enroll_explain_checkin_2:
+    - text: "The daily check-in offers you an updated assessment of your condition everyday, so that you receive the most relevant guidance and recommendations for your condition"
 
-  utter_tested_positive_self_isolate:
-    - text: "Since you have tested positive to the Covid-19, *you must self-isolate for at least 14 days*. It is extremely important that you follow this directive"
+  utter_ask_daily_ci_enroll_do_enroll:
+    - text: "Would you like me to check-in with you daily to help monitor your symptoms?"
 
-  utter_contact_risk_self_isolate:
-    - text: "Since you are at risk of being infected, you need to *self-isolate for at least 14 days*. It is extremely important that you follow this directive"
-
-  utter_ask_lives_alone:
-    - text: "Are you the only person in your household?"
-
-  utter_ask_lives_alone_error:
-    - text: "Sorry, are you the only person in your household?"
+  utter_ask_daily_ci_enroll_do_enroll_error:
+    - text: "Sorry, please tell me if you'd like me to check-in with you daily to help monitor your symptoms"
       buttons:
         - title: Yes
           payload: "/affirm"
@@ -773,28 +665,140 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_lives_alone_true:
-    - text: "In this case, I recommend that you don’t leave your home unless you have a doctor’s appointment, or if you need to go to the hospital"
+  utter_daily_ci_enroll_entry:
+    - text: Great! So that I can follow up with you daily and provide personalized recommendations, I need to ask you a few questions
 
-  utter_lives_alone_false_1:
-    - text: "In this case, you should stay in a separate room and use a different bathroom from others, if possible"
+  utter_ask_first_name:
+    - text: First, what is your first name?
 
-  utter_lives_alone_false_2:
-    - text: "If it’s not possible, ensure you stay at least 2 meters, or six feet, away from others in your home at all times, wash your hands often, and make sure every surface and object are cleaned after use"
+  utter_daily_ci_enroll_form_first_name_any_1:
+    - text: "Thanks, {first_name}"
 
-  utter_lives_alone_false_3:
-    - text: "You should also wear a mask every time you are in the same room as others"
+  utter_daily_ci_enroll_form_first_name_any_2:
+    - text: "I will contact you by text message every day to check in on you"
 
-  utter_self_isolation_final:
-    - text: "For more information about self-isolation, and to learn what you can do to protect others, visit [canada.ca](https://www.canada.ca/en/public-health/services/publications/diseases-conditions/covid-19-how-to-isolate-at-home.html)"
+  utter_ask_phone_number:
+    - text: So that I can reach you, what is your phone number?
 
-  ## action home-assistance
+  utter_ask_phone_number_error:
+    - text: Please enter your 10-digit mobile phone number
 
-  utter_ask_has_assistance:
-    - text: "Do you have help from someone to run errands for you (a parent, spouse, a friend or neighbour), like going to the grocery store or get medications?"
+  utter_daily_ci_enroll_no_phone_no_checkin:
+    - text: Unfortunately, if you don’t have a mobile phone, I won’t be able to enroll you for the daily check-in
 
-  utter_ask_has_assistance_error:
-    - text: "Sorry, do you have help from someone to run errands for you?"
+  utter_daily_ci_enroll_continue:
+    - text: Let’s continue
+
+  utter_ask_daily_ci_enroll_wants_cancel:
+    - text: I understood that you want to cancel the enrollment in daily check-in, is that correct?
+
+  utter_ask_daily_ci_enroll_wants_cancel_error:
+    - text: Sorry, are you sure you don’t want to enroll in daily check-in?
+      buttons:
+        - title: Yes stop enrollment
+          payload: "/affirm"
+        - title: No I want to enroll
+          payload: "/deny"
+      custom:
+        data:
+          disableTextField: "true"
+
+  utter_daily_ci_enroll_acknowledge_continue:
+    - text: "OK, let’s continue!"
+
+  utter_daily_ci_enroll_no_problem_continue:
+    - text: No problem, let’s continue
+
+  utter_daily_ci_enroll_form_phone_number_invalid:
+    - text: Sorry, this isn’t a valid phone number, please try again
+
+  utter_daily_ci_enroll_form_max_errors:
+    - text: "I’m sorry, I won’t be able to complete your enrollment. Let’s continue"
+
+  utter_daily_ci_enroll_acknowledge:
+    - text: "Got it"
+
+  utter_daily_checkin_validation_code: # Text message
+    - text: "Hi {first_name}, this is the validation code for your daily check-in enrollment: {validation_code}. If you did not request to enroll in the daily check-in, please ignore this text message"
+
+  utter_ask_daily_ci_enroll_form_validation_code:
+    - text: I’m sending you a validation code on your mobile phone. When you receive it, please enter it
+
+  utter_daily_ci_enroll_form_validation_code_not_sent_1:
+    - text: I'm sorry, but a technical problem prevents me completing your enrollment to the Daily Check-in
+
+  utter_daily_ci_enroll_form_validation_code_not_sent_2:
+    - text: You may try to enroll at another time
+
+  utter_daily_ci_enroll_thanks:
+    - text: Thanks
+
+  utter_ask_daily_ci_enroll_form_validation_code_error:
+    - text: I’m sorry, this is not a valid code. Please try again and enter the 4-digit code that you received by text
+
+  utter_daily_ci_enroll_acknowledge_new_phone_number:
+    - text: OK, I’ll use this phone number instead
+
+  utter_ask_daily_ci_enroll_form_no_code_solution:
+    - text: Sorry about that. I can send a new code to the same number or you can re-enter your number. Which would you like? Send a new code or re-enter your number?
+
+  utter_ask_daily_ci_enroll_form_no_code_solution_error:
+    - text: "Sorry, please tell me which you would like:"
+      buttons:
+        - title: Re-send code
+          payload: "/new_code"
+        - title: Re-enter my number
+          payload: "/change_phone"
+      custom:
+        data:
+          disableTextField: "true"
+
+  utter_ask_phone_number_new:
+    - text: OK, please enter your mobile phone number, so that I can reach you
+
+  utter_ask_preconditions:
+    - text: Do you have any pre-existing conditions that may affect your immunity?
+
+  utter_ask_preconditions_error:
+    - text: Sorry, do you have any pre-existing conditions that may affect your immunity?
+      buttons:
+        - title: Yes
+          payload: "/affirm"
+        - title: No
+          payload: "/deny"
+        - title: What are pre-existing conditions?
+          payload: "/dont_know"
+      custom:
+        data:
+          disableTextField: "true"
+
+  utter_pre_ask_daily_ci_enroll_form_preconditions_examples:
+    - text: You may be more at risk if you have underlying medical conditions (e.g. heart disease, hypertension, diabetes, chronic respiratory disease, cancer) or if your immune system is compromised from a medical condition or treatment (e.g. chemotherapy)
+
+  utter_ask_daily_ci_enroll_form_preconditions_examples:
+    - text: Do you have such risk factors or pre-existing conditions?
+
+  utter_ask_daily_ci_enroll_form_preconditions_examples_error:
+    - text: Sorry, do you have such risk factors or pre-existing conditions?
+      buttons:
+        - title: Yes
+          payload: "/affirm"
+        - title: No
+          payload: "/deny"
+        - title: I don't know
+          payload: "/dont_know"
+      custom:
+        data:
+          disableTextField: "true"
+
+  utter_daily_ci_enroll_form_preconditions_dont_know:
+    - text: If you’re not sure, I will put a note in your profile that you might be at risk
+
+  utter_ask_has_dialogue:
+    - text: Finally, do you have health services with Dialogue?
+
+  utter_ask_has_dialogue_error:
+    - text: Sorry, do you have health services with Dialogue? If you don't know, just reply "no"
       buttons:
         - title: Yes
           payload: "/affirm"
@@ -804,36 +808,36 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_home_assistance_offer_211_false:
-    - text: "Don’t forget that most pharmacies and many grocery stores offer delivery services. Check with your local pharmacy or grocery store if they deliver"
+  utter_daily_ci_enroll_form_done_1:
+    - text: Thanks. I have recorded all your answers in your personal profile
 
-  utter_home_assistance_offer_211_true_1:
-    - text: "Most pharmacies and many grocery stores offer delivery services. You can check with your local pharmacy or grocery store if they offer this service"
+  utter_daily_ci_enroll_form_done_2:
+    - text: Your registration to the daily check-in is now completed
 
-  utter_home_assistance_offer_211_true_2_qc:
-    - text: "If that's not possible for you, and if you live in the greater Montreal area or in Quebec City, you may call 211, or visit [211.quebec](http://www.211quebecregions.ca/), or [211.montreal](https://www.211qc.ca/), for assistance"
+  utter_daily_ci_enroll_form_done_3:
+    - text: I will check-in with you everyday around this time to see how you're doing, monitor your symptoms and direct you to the right resources
 
-  utter_home_assistance_offer_211_true_2_other:
-    - text: "If that’s not possible for you, you may call 211 or visit [211.ca](https://211.ca/) for assistance"
+  utter_daily_ci_enroll_form_fail_1:
+    - text: I'm sorry, but a technical problem prevents me from completing your enrollment to the Daily Check-in
 
-  utter_home_assistance_offer_211_true_3:
-    - text: "The 211 service can direct you to a variety of local resources for assistance with food, health, or community services"
+  utter_daily_ci_enroll_form_fail_2:
+    - text: You may try to enroll at another time
 
-  utter_home_assistance_final:
-    - text: "Your pharmacist can also provide recommendations and advice on how to relieve your symptoms and which over-the-counter medications you can safely take"
+  utter_daily_ci_enroll_form_fail_3:
+    - text: Let's continue
 
   ## Daily check-in
 
   utter_checkin_reminder:
     - text: "Hello {first_name}, this is Chloe, for your daily check-in. To continue, please follow that link: {check_in_url}"
 
-  utter_daily_ci__greet:
+  utter_daily_ci_greet:
     - text: Hello {first_name}, this is Chloe, and I'm checking in to see how you're doing today
 
-  utter_ask_daily_ci__feel:
+  utter_ask_daily_ci_feel:
     - text: First, compared to yesterday, do you feel better, worse, or the same?
 
-  utter_ask_daily_ci__feel_error:
+  utter_ask_daily_ci_feel_error:
     - text: Sorry, please tell me how you feel compared to yesterday
       buttons:
         - title: Better
@@ -846,22 +850,22 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci__acknowledge_fever:
+  utter_daily_ci_has_fever_true_1:
     - text: OK, I'm taking note that you have a fever today
 
-  utter_daily_ci__take_acetaminophen:
+  utter_daily_ci_has_fever_true_2:
     - text: You can take acetaminophen (Tylenol) to relieve fever or aches and pain
 
-  utter_daily_ci__avoid_ibuprofen:
+  utter_daily_ci_has_fever_true_3:
     - text: But you should *avoid taking ibuprofen* (such as Advil or Motrin), as it might have unwanted effects
 
-  utter_daily_ci__cough_syrup_may_help:
+  utter_daily_ci_has_cough_true_1:
     - text: Cough syrup may help, but please make sure that it doesn't interact with other medications you take or any underlying medical condition
 
-  utter_daily_ci__cough_syrup_pharmacist:
+  utter_daily_ci_has_cough_true_2:
     - text: If you're not sure, you should speak to your pharmacist
 
-  utter_daily_ci__acknowledge_no_cough:
+  utter_daily_ci_has_cough_false:
     - text: That's good news
 
   ## Daily check-in - feel worse
@@ -880,7 +884,7 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci_feel_worse_acknowledge_no_severe_symptoms:
+  utter_daily_ci_feel_worse_severe_symptoms_false:
     - text: OK, now, let's check your symptoms
 
   utter_ask_daily_ci_feel_worse_form_has_fever:
@@ -897,13 +901,13 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci_feel_worse_acknowledge_no_fever:
+  utter_daily_ci_feel_worse_has_fever_false:
     - text: OK, I'm taking note that you don't have a fever today
 
   utter_ask_daily_ci_feel_worse_form_has_diff_breathing:
     - text: And are you experiencing shortness of breath or difficulty breathing?
 
-  utter_ask_daily_ci_feel_worse_form_has_diff_breathing___still:
+  utter_ask_daily_ci_feel_worse_form_has_diff_breathing__still:
     - text: And are you still experiencing shortness of breath or difficulty breathing?
 
   utter_ask_daily_ci_feel_worse_form_has_diff_breathing_error:
@@ -917,13 +921,13 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci_feel_worse_acknowledge_no_diff_breathing:
+  utter_daily_ci_feel_worse_has_diff_breathing_false:
     - text: That's good
 
   utter_ask_daily_ci_feel_worse_form_has_cough:
     - text: Do you have a cough?
 
-  utter_ask_daily_ci_feel_worse_form_has_cough___still:
+  utter_ask_daily_ci_feel_worse_form_has_cough__still:
     - text: Do you still have a cough?
 
   utter_ask_daily_ci_feel_worse_form_has_cough_error:
@@ -937,7 +941,7 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci_feel_worse_no_cough_recommendation:
+  utter_daily_ci_feel_worse_has_cough_false:
     - text: But since you're still feeling sick, you should keep staying isolated and continue to rest
 
   utter_ask_daily_ci_feel_worse_form_has_diff_breathing_worsened:
@@ -954,16 +958,16 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci_feel_worse_diff_breathing_worsened_recommendation_1:
+  utter_daily_ci_feel_worse_has_diff_breathing_worsened_true_1:
     - text: You may want to discuss your situation with your doctor, if that's possible, or call {provincial_811}
 
-  utter_daily_ci_feel_worse_diff_breathing_worsened_recommendation_2:
+  utter_daily_ci_feel_worse_has_diff_breathing_worsened_true_2:
     - text: If your symptoms worsen, you will need to get to the nearest emergency department or call 911
 
-  utter_daily_ci_feel_worse_diff_breathing_not_worsened_recommendation_1:
+  utter_daily_ci_feel_worse_has_diff_breathing_worsened_false_1:
     - text: OK, if this gets worse, you should call your doctor, if that's possible, or call {provincial_811} to discuss your situation with a nurse
 
-  utter_daily_ci_feel_worse_diff_breathing_not_worsened_recommendation_2:
+  utter_daily_ci_feel_worse_has_diff_breathing_worsened_false_2:
     - text: In any case, make sure you keep staying isolated and continue to rest
 
   ## Daily check-in - feel no change
@@ -971,7 +975,7 @@ responses:
   utter_ask_daily_ci_feel_no_change_form_has_fever:
     - text: And is your temperature higher than 38°C or 100.4°F? (You can take your temperature now if you're not sure)
 
-  utter_ask_daily_ci_feel_no_change_form_has_fever___still:
+  utter_ask_daily_ci_feel_no_change_form_has_fever__still:
     - text: And is your temperature still higher than 38°C or 100.4°F? (You can take your temperature now if you're not sure)
 
   utter_ask_daily_ci_feel_no_change_form_has_fever_error:
@@ -985,13 +989,13 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci_feel_no_change_form_acknowledge_no_fever:
+  utter_daily_ci_feel_no_change_form_has_fever_false:
     - text: That's good, I'm taking note that you don't have a fever today
 
   utter_ask_daily_ci_feel_no_change_form_has_cough:
     - text: Do you have a cough?
 
-  utter_ask_daily_ci_feel_no_change_form_has_cough___still:
+  utter_ask_daily_ci_feel_no_change_form_has_cough__still:
     - text: Do you still have a cough?
 
   utter_ask_daily_ci_feel_no_change_form_has_cough_error:
@@ -1019,16 +1023,16 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci_feel_no_change_form_acknowledge_diff_breathing:
+  utter_daily_ci_feel_no_change_form_has_diff_breathing_true_1:
     - text: I'm sorry to see that
 
-  utter_daily_ci_feel_no_change_form_diff_breathing_recommendation:
+  utter_daily_ci_feel_no_change_form_has_diff_breathing_true_2:
     - text: "If your symptoms worsen, you may need to go to the ER. If you need assistance, you should:\n- Contact your family doctor if possible, or\n- Call {provincial_811} for assistance\nAnd make sure you inform them of your condition"
 
-  utter_daily_ci_feel_no_change_form_acknowledge_no_diff_breathing:
+  utter_daily_ci_feel_no_change_form_has_diff_breathing_false_1:
     - text: That's good, I'm glad to hear that
 
-  utter_daily_ci_feel_no_change_form_no_diff_breathing_recommendation:
+  utter_daily_ci_feel_no_change_form_has_diff_breathing_false_2:
     - text: You should continue to rest, stay isolated and monitor your symptoms for any change
 
   utter_daily_ci_feel_no_change_form_mild_last_symptoms_recommendation:
@@ -1053,13 +1057,13 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci_feel_better_acknowledge_no_fever:
+  utter_daily_ci_feel_better_has_fever_false:
     - text: That's good, I'm taking note that you don't have a fever today
 
   utter_ask_daily_ci_feel_better_form_has_cough:
     - text: Do you have a cough?
 
-  utter_ask_daily_ci_feel_better_form_has_cough___still:
+  utter_ask_daily_ci_feel_better_form_has_cough__still:
     - text: Do you still have a cough?
 
   utter_ask_daily_ci_feel_better_form_has_cough_error:
@@ -1087,11 +1091,17 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_ask_daily_ci_feel_better_form_has_other_mild_symptoms___with_acknowledge:
-    - text: Good, and do you still have symptoms like fatigue or sore throat?
+  utter_daily_ci_feel_better_has_diff_breathing_true_1:
+    - text: Sorry about that. If this gets worse, I recommend that you contact your doctor or call {provincial_811} to discuss your symptoms
+
+  utter_daily_ci_feel_better_has_diff_breathing_true_2:
+    - text: Since you are still sick, you should stay isolated, rest, and continue monitoring your symptoms
 
   utter_ask_daily_ci_feel_better_form_has_other_mild_symptoms:
     - text: Do you still have other symptoms, like fatigue or sore throat?
+
+  utter_ask_daily_ci_feel_better_form_has_other_mild_symptoms__with_acknowledge:
+    - text: Good, and do you still have symptoms like fatigue or sore throat?
 
   utter_ask_daily_ci_feel_better_form_has_other_mild_symptoms_error:
     - text: Sorry, please tell me if you still have symptoms such as fatigue or sore throat
@@ -1118,30 +1128,21 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci_feel_better_breathing_difficulty_recommendation_1:
-    - text: Sorry about that. If this gets worse, I recommend that you contact your doctor or call {provincial_811} to discuss your symptoms
-
-  utter_daily_ci_feel_better_breathing_difficulty_recommendation_2:
-    - text: Since you are still sick, you should stay isolated, rest, and continue monitoring your symptoms
-
   utter_daily_ci_feel_better_form_has_other_mild_symptoms_recommendation:
     - text: OK, since you still have some symptoms, I recommend that you stay isolated and that you continue to rest
 
   utter_daily_ci_feel_better_form_has_other_mild_symptoms_still_sick_recommendation:
     - text: OK, since you still feel sick, I recommend that you stay isolated and that you continue to rest
 
-  utter_daily_checkin_validation_code:
-    - text: "Hi {first_name}, this is the validation code for your daily check-in enrollment: {validation_code}. If you did not request to enroll in the daily check-in, please ignore this text message"
-
   ## Daily check-in - keep or cancel
 
-  utter_daily_ci__keep_or_cancel__no_symptoms_recommendation:
+  utter_daily_ci_keep_or_cancel_no_symptoms_recommendation:
     - text: It looks like you may have recovered from Covid-19. Make sure that you continue to take steps to protect yourself and others, like staying home and wearing a mask if you absolutely have to leave your house
 
-  utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms:
+  utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms:
     - text: Do you want me to continue checking in on you everyday?
 
-  utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms_error:
+  utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms_error:
     - text: Sorry, please tell me whether you wish to continue the daily check-in, or cancel it
       buttons:
         - title: Yes continue
@@ -1152,13 +1153,13 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci__keep_or_cancel__acknowledge_continue_ci:
+  utter_daily_ci_keep_or_cancel_acknowledge_continue_ci:
     - text: Sure, I'll continue checking in on you daily
 
-  utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms:
+  utter_ask_daily_ci_keep_or_cancel_continue_ci_symptoms:
     - text: I will check-in on you tomorrow unless you wish to stop the daily check-in. Is that ok?
 
-  utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms_error:
+  utter_ask_daily_ci_keep_or_cancel_continue_ci_symptoms_error:
     - text: Sorry, please let me know if you want me to check-in on you tomorrow or if you’d prefer to cancel the daily check-in
       buttons:
         - title: Yes continue check-in
@@ -1169,38 +1170,38 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci__keep_or_cancel__feel_worse_keep_ci:
+  utter_daily_ci_keep_or_cancel_feel_worse_keep_ci:
     - text: Since you're feeling worse, I will make sure to check-in on you tomorrow
 
-  utter_daily_ci__keep_or_cancel__feel_worse_recommendation:
+  utter_daily_ci_keep_or_cancel_feel_worse_recommendation:
     - text: In the meantime, if your condition changes and you wish to reassess your symptoms, feel free to contact me
 
   ## Daily check-in - recommendations
 
-  utter_daily_ci__recommendations__more_information_vulnerable_population:
+  utter_daily_ci_recommendations_more_information_vulnerable_population:
     - text: If you want more information and recommendations, please visit [covid19.info]({provincial_link}) or [canada.ca/vulnerable-populations](https://www.canada.ca/en/public-health/services/publications/diseases-conditions/vulnerable-populations-covid-19.html)
 
-  utter_daily_ci__recommendations__more_information_general:
+  utter_daily_ci_recommendations_more_information_general:
     - text: If you want more information and recommendations, please visit [covid19.info]({provincial_link}) or [canada.ca/general](https://www.canada.ca/en/public-health/services/diseases/coronavirus-disease-covid-19.html)
 
-  utter_daily_ci__recommendations__211_qc:
+  utter_daily_ci_recommendations_211_qc:
     - text: And if you need home assistance and live in the greater Montreal area or in Quebec City, you may call 211 or visit [211.quebec](http://www.211quebecregions.ca/), or [211.montreal](https://www.211qc.ca/)
 
-  utter_daily_ci__recommendations__211_other_provinces:
+  utter_daily_ci_recommendations_211_other_provinces:
     - text: And if you need home assistance, you may call 211 or visit [211.ca](https://211.ca/)
 
-  utter_daily_ci__recommendations__tomorrow_ci:
+  utter_daily_ci_recommendations_tomorrow_ci:
     - text: I will check-in with you tomorrow around the same time
 
-  utter_daily_ci__recommendations__recommendation_1:
+  utter_daily_ci_recommendations_recommendation_1:
     - text: Make sure you stay well hydrated and get enough rest
 
-  utter_daily_ci__recommendations__recommendation_2:
+  utter_daily_ci_recommendations_recommendation_2:
     - text: You can always visit [covid19.dialogue.co](https://covid19.dialogue.co/#/info?id=common) for information, if you have questions, or if you want to assess your symptoms
 
   ## Daily check-in - early opt out
 
-  utter_ask_daily_ci__early_opt_out__continue_ci:
+  utter_ask_daily_ci_early_opt_out_continue_ci:
     - text: Before we start, if you want to opt out and cancel the daily check-in, just let me know
       buttons:
         - title: Opt out
@@ -1211,27 +1212,27 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_daily_ci__early_opt_out__acknowledge_continue_ci:
+  utter_daily_ci_early_opt_out_acknowledge_continue_ci:
     - text: OK, let's continue
 
-  utter_daily_ci__acknowledge_cancel_ci:
+  utter_daily_ci_acknowledge_cancel_ci:
     - text: OK, I will cancel your daily check-in
 
-  utter_daily_ci__cancel_ci_recommendation:
+  utter_daily_ci_cancel_ci_recommendation:
     - text: If you notice any changes or get symptoms, feel free to check with me to reassess your symptoms
 
   ## Daily check-in invalid ID
 
-  utter_daily_ci__invalid_id__invalid_link:
+  utter_daily_ci_invalid_id_invalid_link:
     - text: I’m sorry but this link does not seem to be valid
 
-  utter_daily_ci__invalid_id__try_again:
+  utter_daily_ci_invalid_id_try_again:
     - text: Please try again and make sure, if you copy the link in your browser, that you copy the exact same thing
 
-  utter_ask_daily_checkin__invalid_id__want_assessment:
+  utter_ask_daily_ci_invalid_id_want_assessment:
     - text: If that doesn’t work, would you like to assess your symptoms?
 
-  utter_ask_daily_checkin__invalid_id__want_assessment_error:
+  utter_ask_daily_ci_invalid_id_want_assessment_error:
     - text: Sorry, if the link doesn't work, do you still want to assess your symptoms?
       buttons:
         - title: Yes
@@ -1242,7 +1243,7 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_ask_daily_checkin__invalid_id__anything_else:
+  utter_ask_daily_ci_invalid_id_anything_else:
     - text: "OK, is there anything else I can help you with?"
       buttons:
         - title: No thanks
@@ -1252,27 +1253,27 @@ responses:
         - title: I’d like to know where to get tested
           payload: /navigate_test_locations
 
-  utter_daily_checkin__invalid_id__visit_dialogue:
+  utter_daily_ci_invalid_id_visit_dialogue:
     - text: At any time, you can visit [our website](https://covid19.dialogue.co/) for information, or to get a self-assessment
 
   # Test Navigation
 
-  utter_test_navigation__explanations_1:
+  utter_test_navigation_explanations_1:
     - text: I can help you find testing sites near you
 
-  utter_test_navigation__explanations_2:
+  utter_test_navigation_explanations_2:
     - text: Depending on the area where you live, or the testing site, you may need to have a referral from your doctor or a nurse in order to get tested
 
-  utter_test_navigation__explanations_3:
+  utter_test_navigation_explanations_3:
     - text: "You can get a referral by either: \n- Talking to your doctor, if that’s possible, or \n- Calling {provincial_811} and discussing your symptoms with a nurse"
 
-  utter_test_navigation__explanations_4:
+  utter_test_navigation_explanations_4:
     - text: I will provide information about referrals, as well as other details, such as appointment policy, for each available testing site in your area
 
-  utter_ask_test_navigation__continue:
+  utter_ask_test_navigation_continue:
     - text: Do you want to continue and search for a testing site?
 
-  utter_ask_test_navigation__continue_error_offer_assessment:
+  utter_ask_test_navigation_continue_error_offer_assessment:
     - text: Sorry, do you want to continue and search for a testing site?
       buttons:
         - title: Yes
@@ -1284,7 +1285,7 @@ responses:
         - title: No but I have other questions
           payload: "/ask_question"
 
-  utter_ask_test_navigation__continue_error_no_assessment:
+  utter_ask_test_navigation_continue_error_no_assessment:
     - text: Sorry, do you want to continue and search for a testing site?
       buttons:
         - title: Yes
@@ -1294,49 +1295,49 @@ responses:
         - title: No but I have other questions
           payload: "/ask_question"
 
-  utter_test_navigation__come_back:
+  utter_test_navigation_come_back:
     - text: OK, when you’re ready, come back here (https://covid19.dialogue.co/#/chat) and I’ll help you
 
-  utter_test_navigation__acknowledge_continue:
+  utter_test_navigation_acknowledge_continue:
     - text: OK, let’s continue!
 
-  utter_ask_test_navigation__postal_code:
+  utter_ask_test_navigation_form_postal_code:
     - text: To find the nearest testing sites, please type in your postal code
 
-  utter_test_navigation__invalid_postal_code:
+  utter_test_navigation_form_postal_code_invalid:
     - text: I’m sorry, this is not a valid postal code. Please try again
 
-  utter_test_navigation__invalid_postal_code_max:
+  utter_test_navigation_form_postal_code_invalid_max:
     - text: I’m sorry, this is still not a valid postal code. I will not be able to search for testing sites
 
-  utter_test_navigation__could_not_fetch_1:
+  utter_test_navigation_form_locations_not_fetched_1:
     - text: I’m sorry, I’m not able to find any testing sites at the moment
 
-  utter_test_navigation__could_not_fetch_2:
+  utter_test_navigation_form_locations_not_fetched_2:
     - text: Please try again later
 
-  utter_test_navigation__no_locations:
+  utter_test_navigation_form_locations_none:
     - text: I’m sorry, I can’t find any sites near that address
 
-  utter_test_navigation__one_location:
+  utter_test_navigation_form_locations_one:
     - text: I found 1 testing site in your area
 
-  utter_test_navigation__many_locations_1:
+  utter_test_navigation_form_locations_many_1:
     - text: I found {nb_testing_sites} testing sites in your area
 
-  utter_test_navigation__many_locations_2:
+  utter_test_navigation_form_locations_many_2:
     - text: For each testing site, you can get detailed contact information, directions and opening hours
 
-  utter_test_navigation__many_locations_3:
+  utter_test_navigation_form_locations_many_3:
     - text: You will need to contact the testing site directly for more information or to make an appointment to get tested
 
-  utter_test_navigation__display_titles:
+  utter_test_navigation_form_locations_display_titles:
     - custom:
         call_button: "Call "
         website_button: "Website"
         directions_button: "Directions"
 
-  utter_test_navigation__descriptions:
+  utter_test_navigation_form_locations_descriptions:
     - custom:
         contact_before_visit: Please contact us before presenting yourself.
         referral:
@@ -1381,10 +1382,10 @@ responses:
             friday: Fri
             saturday: Sat
 
-  utter_ask_test_navigation__try_different_address:
+  utter_ask_test_navigation_form_try_different_address:
     - text: Would you like to try a different address?
 
-  utter_ask_test_navigation__try_different_address_error:
+  utter_ask_test_navigation_form_try_different_address_error:
     - text: Sorry, please tell me if you want to try a different address or not
       buttons:
         - title: Yes
@@ -1395,10 +1396,10 @@ responses:
         data:
           disableTextField: "true"
 
-  utter_test_navigation__acknowledge:
+  utter_test_navigation_acknowledge:
     - text: OK
 
-  utter_test_navigation__anything_else_offer_assessment:
+  utter_test_navigation_anything_else_offer_assessment:
     - text: Is there anything else I can help you with?
       buttons:
         - title: No thanks
@@ -1408,7 +1409,7 @@ responses:
         - title: I have other questions
           payload: "/ask_question"
 
-  utter_test_navigation__anything_else_no_assessment:
+  utter_test_navigation_anything_else_no_assessment:
     - text: Is there anything else I can help you with?
       buttons:
         - title: No thanks

@@ -24,8 +24,8 @@ class ActionDailyCiCancelCiTest(ActionTestCase):
 
         self.assert_templates(
             [
-                "utter_daily_ci__acknowledge_cancel_ci",
-                "utter_daily_ci__cancel_ci_recommendation",
+                "utter_daily_ci_acknowledge_cancel_ci",
+                "utter_daily_ci_cancel_ci_recommendation",
             ]
         )
 

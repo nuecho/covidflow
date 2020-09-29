@@ -49,7 +49,7 @@ class TestActionAskDailyCiFeelWorseFormHasDiffBreathing(ActionTestCase):
         self.assert_events([])
 
         self.assert_templates(
-            ["utter_ask_daily_ci_feel_worse_form_has_diff_breathing___still"]
+            ["utter_ask_daily_ci_feel_worse_form_has_diff_breathing__still"]
         )
 
 
@@ -76,7 +76,7 @@ class TestActionAskDailyCiFeelWorseFormHasCough(ActionTestCase):
 
         self.assert_events([])
 
-        self.assert_templates(["utter_ask_daily_ci_feel_worse_form_has_cough___still"])
+        self.assert_templates(["utter_ask_daily_ci_feel_worse_form_has_cough__still"])
 
 
 class TestValidateDailyCiFeelWorseForm(ValidateActionTestCase):
@@ -105,7 +105,7 @@ class TestValidateDailyCiFeelWorseForm(ValidateActionTestCase):
 
     @pytest.mark.asyncio
     async def test_no_severe_symptoms(self):
-        templates = ["utter_daily_ci_feel_worse_acknowledge_no_severe_symptoms"]
+        templates = ["utter_daily_ci_feel_worse_severe_symptoms_false"]
 
         await self.check_slot_value_accepted(
             SEVERE_SYMPTOMS_SLOT, False, templates=templates
@@ -114,16 +114,16 @@ class TestValidateDailyCiFeelWorseForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_fever(self):
         templates = [
-            "utter_daily_ci__acknowledge_fever",
-            "utter_daily_ci__take_acetaminophen",
-            "utter_daily_ci__avoid_ibuprofen",
+            "utter_daily_ci_has_fever_true_1",
+            "utter_daily_ci_has_fever_true_2",
+            "utter_daily_ci_has_fever_true_3",
         ]
 
         await self.check_slot_value_accepted(HAS_FEVER_SLOT, True, templates=templates)
 
     @pytest.mark.asyncio
     async def test_no_fever(self):
-        templates = ["utter_daily_ci_feel_worse_acknowledge_no_fever"]
+        templates = ["utter_daily_ci_feel_worse_has_fever_false"]
 
         await self.check_slot_value_accepted(HAS_FEVER_SLOT, False, templates=templates)
 
@@ -137,7 +137,7 @@ class TestValidateDailyCiFeelWorseForm(ValidateActionTestCase):
 
     @pytest.mark.asyncio
     async def test_no_diff_breathing(self):
-        templates = ["utter_daily_ci_feel_worse_acknowledge_no_diff_breathing"]
+        templates = ["utter_daily_ci_feel_worse_has_diff_breathing_false"]
         extra_events = [
             SlotSet(HAS_DIFF_BREATHING_WORSENED_SLOT, SKIP_SLOT_PLACEHOLDER)
         ]
@@ -152,8 +152,8 @@ class TestValidateDailyCiFeelWorseForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_diff_breathing_worsened(self):
         templates = [
-            "utter_daily_ci_feel_worse_diff_breathing_worsened_recommendation_1",
-            "utter_daily_ci_feel_worse_diff_breathing_worsened_recommendation_2",
+            "utter_daily_ci_feel_worse_has_diff_breathing_worsened_true_1",
+            "utter_daily_ci_feel_worse_has_diff_breathing_worsened_true_2",
         ]
 
         await self.check_slot_value_accepted(
@@ -163,8 +163,8 @@ class TestValidateDailyCiFeelWorseForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_diff_breathing_not_worsened(self):
         templates = [
-            "utter_daily_ci_feel_worse_diff_breathing_not_worsened_recommendation_1",
-            "utter_daily_ci_feel_worse_diff_breathing_not_worsened_recommendation_2",
+            "utter_daily_ci_feel_worse_has_diff_breathing_worsened_false_1",
+            "utter_daily_ci_feel_worse_has_diff_breathing_worsened_false_2",
         ]
 
         await self.check_slot_value_accepted(
@@ -174,8 +174,8 @@ class TestValidateDailyCiFeelWorseForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_has_cough(self):
         templates = [
-            "utter_daily_ci__cough_syrup_may_help",
-            "utter_daily_ci__cough_syrup_pharmacist",
+            "utter_daily_ci_has_cough_true_1",
+            "utter_daily_ci_has_cough_true_2",
         ]
 
         await self.check_slot_value_accepted(HAS_COUGH_SLOT, True, templates=templates)
@@ -183,8 +183,8 @@ class TestValidateDailyCiFeelWorseForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_has_no_cough(self):
         templates = [
-            "utter_daily_ci__acknowledge_no_cough",
-            "utter_daily_ci_feel_worse_no_cough_recommendation",
+            "utter_daily_ci_has_cough_false",
+            "utter_daily_ci_feel_worse_has_cough_false",
         ]
 
         await self.check_slot_value_accepted(HAS_COUGH_SLOT, False, templates=templates)

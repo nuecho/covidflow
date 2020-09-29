@@ -39,15 +39,6 @@ FIRST_NAME = "John"
 PHONE_NUMBER = "15141234567"
 VALIDATION_CODE = "4567"
 
-DOMAIN = {
-    "responses": {
-        "utter_ask_daily_ci_enroll__wants_cancel_error": [{"text": ""}],
-        "utter_ask_daily_ci_enroll__no_code_solution_error": [{"text": ""}],
-        "utter_ask_preconditions_error": [{"text": ""}],
-        "utter_ask_daily_ci_enroll__preconditions_examples_error": [{"text": ""}],
-    }
-}
-
 
 def AsyncMock(*args, **kwargs):
     mock = MagicMock(*args, **kwargs)
@@ -72,10 +63,10 @@ class TestActionOfferDailyCiEnrollment(ActionTestCase):
 
         self.assert_templates(
             [
-                "utter_daily_ci_enroll__offer_checkin",
-                "utter_daily_ci_enroll__explain_checkin_1",
-                "utter_daily_ci_enroll__explain_checkin_2",
-                "utter_ask_daily_ci_enroll__do_enroll",
+                "utter_daily_ci_enroll_offer_checkin",
+                "utter_daily_ci_enroll_explain_checkin_1",
+                "utter_daily_ci_enroll_explain_checkin_2",
+                "utter_ask_daily_ci_enroll_do_enroll",
             ]
         )
 
@@ -126,7 +117,9 @@ class TestActionAskPhoneNumber(ActionTestCase):
             events=[
                 BotUttered(
                     "ok?",
-                    metadata={"template_name": "utter_daily_ci_enroll__ok_continue"},
+                    metadata={
+                        "template_name": "utter_daily_ci_enroll_acknowledge_continue"
+                    },
                 )
             ]
         )
@@ -150,7 +143,7 @@ class TestActionAskValidationCode(ActionTestCase):
                 BotUttered(
                     "asking validation code",
                     metadata={
-                        "template_name": "utter_ask_daily_ci_enroll__validation_code"
+                        "template_name": "utter_ask_daily_ci_enroll_form_validation_code"
                     },
                 )
             ]
@@ -160,7 +153,7 @@ class TestActionAskValidationCode(ActionTestCase):
 
         self.assert_events([])
 
-        self.assert_templates(["utter_ask_daily_ci_enroll__validation_code_error"])
+        self.assert_templates(["utter_ask_daily_ci_enroll_form_validation_code_error"])
 
     @pytest.mark.asyncio
     async def test_code_just_asked_with_error(self):
@@ -169,7 +162,7 @@ class TestActionAskValidationCode(ActionTestCase):
                 BotUttered(
                     "asking validation code",
                     metadata={
-                        "template_name": "utter_ask_daily_ci_enroll__validation_code_error"
+                        "template_name": "utter_ask_daily_ci_enroll_form_validation_code_error"
                     },
                 )
             ]
@@ -179,7 +172,7 @@ class TestActionAskValidationCode(ActionTestCase):
 
         self.assert_events([])
 
-        self.assert_templates(["utter_ask_daily_ci_enroll__validation_code_error"])
+        self.assert_templates(["utter_ask_daily_ci_enroll_form_validation_code_error"])
 
     @pytest.mark.asyncio
     async def test_code_not_just_asked(self):
@@ -196,7 +189,7 @@ class TestActionAskValidationCode(ActionTestCase):
 
         self.assert_events([])
 
-        self.assert_templates(["utter_ask_daily_ci_enroll__validation_code"])
+        self.assert_templates(["utter_ask_daily_ci_enroll_form_validation_code"])
 
 
 class TestActionAskPreconditions(ActionTestCase):
@@ -224,8 +217,8 @@ class TestActionAskPreconditions(ActionTestCase):
 
         self.assert_templates(
             [
-                "utter_daily_ci_enroll__explain_preconditions",
-                "utter_ask_daily_ci_enroll__preconditions_examples",
+                "utter_pre_ask_daily_ci_enroll_form_preconditions_examples",
+                "utter_ask_daily_ci_enroll_form_preconditions_examples",
             ]
         )
 
@@ -257,8 +250,8 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_provide_first_name(self):
         templates = [
-            "utter_daily_ci_enroll__thanks_first_name",
-            "utter_daily_ci_enroll__text_message_checkin",
+            "utter_daily_ci_enroll_form_first_name_any_1",
+            "utter_daily_ci_enroll_form_first_name_any_2",
         ]
 
         await self.check_slot_value_accepted(
@@ -275,7 +268,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
         new=AsyncMock(return_value=VALIDATION_CODE),
     )
     async def test_provide_phone_number(self):
-        templates = ["utter_daily_ci_enroll__acknowledge"]
+        templates = ["utter_daily_ci_enroll_acknowledge"]
         extra_events = [
             SlotSet(PHONE_TO_CHANGE_SLOT, False),
             SlotSet(VALIDATION_CODE_REFERENCE_SLOT, VALIDATION_CODE),
@@ -295,10 +288,10 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
     )
     async def test_provide_phone_number_sms_error(self):
         templates = [
-            "utter_daily_ci_enroll__acknowledge",
-            "utter_daily_ci_enroll__validation_code_not_sent_1",
-            "utter_daily_ci_enroll__validation_code_not_sent_2",
-            "utter_daily_ci_enroll__continue",
+            "utter_daily_ci_enroll_acknowledge",
+            "utter_daily_ci_enroll_form_validation_code_not_sent_1",
+            "utter_daily_ci_enroll_form_validation_code_not_sent_2",
+            "utter_daily_ci_enroll_continue",
         ]
         extra_events = [
             SlotSet(PHONE_TO_CHANGE_SLOT, False),
@@ -317,7 +310,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
 
     @pytest.mark.asyncio
     async def test_provide_first_invalid_phone_number(self):
-        templates = ["utter_daily_ci_enroll__invalid_phone_number"]
+        templates = ["utter_daily_ci_enroll_form_phone_number_invalid"]
         extra_events = [
             SlotSet(PHONE_TRY_COUNTER_SLOT, 1),
             SlotSet(PHONE_TO_CHANGE_SLOT, False),
@@ -333,7 +326,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_provide_second_invalid_phone_number(self):
         previous_slots = {PHONE_TRY_COUNTER_SLOT: 1}
-        templates = ["utter_daily_ci_enroll__invalid_phone_number"]
+        templates = ["utter_daily_ci_enroll_form_phone_number_invalid"]
         extra_events = [
             SlotSet(PHONE_TRY_COUNTER_SLOT, 2),
             SlotSet(PHONE_TO_CHANGE_SLOT, False),
@@ -350,7 +343,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_provide_third_invalid_phone_number(self):
         previous_slots = {PHONE_TRY_COUNTER_SLOT: 2}
-        templates = ["utter_daily_ci_enroll__invalid_phone_no_checkin"]
+        templates = ["utter_daily_ci_enroll_form_max_errors"]
         extra_events = [
             SlotSet(REQUESTED_SLOT, None),
             SlotSet(VALIDATION_CODE_SLOT, SKIP_SLOT_PLACEHOLDER),
@@ -370,7 +363,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_provide_validation_code(self):
         previous_slots = {VALIDATION_CODE_REFERENCE_SLOT: VALIDATION_CODE}
-        templates = ["utter_daily_ci_enroll__thanks"]
+        templates = ["utter_daily_ci_enroll_thanks"]
 
         await self.check_slot_value_accepted(
             VALIDATION_CODE_SLOT,
@@ -417,7 +410,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
             SlotSet(PRECONDITIONS_SLOT, SKIP_SLOT_PLACEHOLDER),
             SlotSet(HAS_DIALOGUE_SLOT, SKIP_SLOT_PLACEHOLDER),
         ]
-        templates = ["utter_daily_ci_enroll__invalid_phone_no_checkin"]
+        templates = ["utter_daily_ci_enroll_form_max_errors"]
 
         await self.check_slot_value_stored(
             VALIDATION_CODE_SLOT,
@@ -464,7 +457,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
             ]
         )
 
-        self.assert_templates(["utter_daily_ci_enroll__acknowledge_new_phone_number"])
+        self.assert_templates(["utter_daily_ci_enroll_acknowledge_new_phone_number"])
 
     @pytest.mark.asyncio
     @patch(
@@ -492,7 +485,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
             ]
         )
 
-        self.assert_templates(["utter_daily_ci_enroll__acknowledge_new_phone_number"])
+        self.assert_templates(["utter_daily_ci_enroll_acknowledge_new_phone_number"])
 
     @pytest.mark.asyncio
     async def test_provide_validation_code_did_not_get_code_first_time(self):
@@ -531,7 +524,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
             CODE_TRY_COUNTER_SLOT: 2,
             VALIDATION_CODE_REFERENCE_SLOT: VALIDATION_CODE,
         }
-        templates = ["utter_daily_ci_enroll__invalid_phone_no_checkin"]
+        templates = ["utter_daily_ci_enroll_form_max_errors"]
         extra_events = [
             SlotSet(REQUESTED_SLOT, None),
             SlotSet(PRECONDITIONS_SLOT, SKIP_SLOT_PLACEHOLDER),
@@ -565,9 +558,9 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
     )
     async def test_provide_no_code_solution_new_code_sms_error(self):
         templates = [
-            "utter_daily_ci_enroll__validation_code_not_sent_1",
-            "utter_daily_ci_enroll__validation_code_not_sent_2",
-            "utter_daily_ci_enroll__continue",
+            "utter_daily_ci_enroll_form_validation_code_not_sent_1",
+            "utter_daily_ci_enroll_form_validation_code_not_sent_2",
+            "utter_daily_ci_enroll_continue",
         ]
         extra_events = [
             SlotSet(REQUESTED_SLOT, None),
@@ -619,11 +612,11 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
             ]
         )
 
-        self.assert_templates(["utter_daily_ci_enroll__acknowledge_new_phone_number"])
+        self.assert_templates(["utter_daily_ci_enroll_acknowledge_new_phone_number"])
 
     @pytest.mark.asyncio
     async def test_provide_preconditions_affirm(self):
-        templates = ["utter_daily_ci_enroll__acknowledge"]
+        templates = ["utter_daily_ci_enroll_acknowledge"]
 
         await self.check_slot_value_accepted(
             PRECONDITIONS_SLOT, True, templates=templates
@@ -631,7 +624,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
 
     @pytest.mark.asyncio
     async def test_provide_preconditions_false(self):
-        templates = ["utter_daily_ci_enroll__acknowledge"]
+        templates = ["utter_daily_ci_enroll_acknowledge"]
 
         await self.check_slot_value_accepted(
             PRECONDITIONS_SLOT, False, templates=templates
@@ -648,7 +641,7 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_provide_preconditions_dont_know_second_time(self):
         previous_slots = {DISPLAY_PRECONDITIONS_EXAMPLES_SLOT: True}
-        templates = ["utter_daily_ci_enroll__note_preconditions"]
+        templates = ["utter_daily_ci_enroll_form_preconditions_dont_know"]
 
         await self.check_slot_value_stored(
             PRECONDITIONS_SLOT,
@@ -669,9 +662,9 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
             PRECONDITIONS_SLOT: True,
         }
         templates = [
-            "utter_daily_ci_enroll__enroll_done_1",
-            "utter_daily_ci_enroll__enroll_done_2",
-            "utter_daily_ci_enroll__enroll_done_3",
+            "utter_daily_ci_enroll_form_done_1",
+            "utter_daily_ci_enroll_form_done_2",
+            "utter_daily_ci_enroll_form_done_3",
         ]
 
         await self.check_slot_value_accepted(
@@ -691,9 +684,9 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
             PRECONDITIONS_SLOT: True,
         }
         templates = [
-            "utter_daily_ci_enroll__enroll_done_1",
-            "utter_daily_ci_enroll__enroll_done_2",
-            "utter_daily_ci_enroll__enroll_done_3",
+            "utter_daily_ci_enroll_form_done_1",
+            "utter_daily_ci_enroll_form_done_2",
+            "utter_daily_ci_enroll_form_done_3",
         ]
 
         await self.check_slot_value_accepted(
@@ -713,9 +706,9 @@ class TestValidateDailyCiEnrollForm(ValidateActionTestCase):
             PRECONDITIONS_SLOT: True,
         }
         templates = [
-            "utter_daily_ci_enroll__enroll_fail_1",
-            "utter_daily_ci_enroll__enroll_fail_2",
-            "utter_daily_ci_enroll__enroll_fail_3",
+            "utter_daily_ci_enroll_form_fail_1",
+            "utter_daily_ci_enroll_form_fail_2",
+            "utter_daily_ci_enroll_form_fail_3",
         ]
 
         await self.check_slot_value_accepted(
