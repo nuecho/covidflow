@@ -1155,12 +1155,6 @@ responses:
   utter_daily_ci__keep_or_cancel__acknowledge_continue_ci:
     - text: Sure, I'll continue checking in on you daily
 
-  utter_daily_ci__keep_or_cancel__acknowledge_cancel_ci:
-    - text: OK, I will cancel your daily check-in
-
-  utter_daily_ci__keep_or_cancel__cancel_ci_recommendation:
-    - text: If you notice any changes or get symptoms, feel free to check with me to reassess your symptoms
-
   utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms:
     - text: I will check-in on you tomorrow unless you wish to stop the daily check-in. Is that ok?
 
@@ -1220,10 +1214,10 @@ responses:
   utter_daily_ci__early_opt_out__acknowledge_continue_ci:
     - text: OK, let's continue
 
-  utter_daily_ci__early_opt_out__acknowledge_cancel_ci:
+  utter_daily_ci__acknowledge_cancel_ci:
     - text: OK, I will cancel your daily check-in
 
-  utter_daily_ci__early_opt_out__cancel_ci_recommendation:
+  utter_daily_ci__cancel_ci_recommendation:
     - text: If you notice any changes or get symptoms, feel free to check with me to reassess your symptoms
 
   ## Daily check-in invalid ID

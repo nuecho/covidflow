@@ -6,7 +6,6 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.forms import REQUESTED_SLOT
 
 from covidflow.constants import (
-    FEEL_WORSE_SLOT,
     HAS_COUGH_SLOT,
     HAS_DIFF_BREATHING_SLOT,
     HAS_FEVER_SLOT,
@@ -78,19 +77,6 @@ class ActionAskDailyCiFeelWorseFormHasCough(Action):
             dispatcher.utter_message(template=template_name)
 
         return []
-
-
-class ActionSetFeelWorseTrue(Action):
-    def name(self) -> Text:
-
-        return "action_set_feel_worse_true"
-
-    async def run(
-        self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict
-    ) -> List[EventType]:
-        bind_logger(tracker)
-
-        return [SlotSet(FEEL_WORSE_SLOT, True)]
 
 
 class ValidateDailyCiFeelWorseForm(Action):

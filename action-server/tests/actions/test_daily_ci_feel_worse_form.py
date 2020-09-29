@@ -7,11 +7,9 @@ from covidflow.actions.daily_ci_feel_worse_form import (
     HAS_DIFF_BREATHING_WORSENED_SLOT,
     ActionAskDailyCiFeelWorseFormHasCough,
     ActionAskDailyCiFeelWorseFormHasDiffBreathing,
-    ActionSetFeelWorseTrue,
     ValidateDailyCiFeelWorseForm,
 )
 from covidflow.constants import (
-    FEEL_WORSE_SLOT,
     HAS_COUGH_SLOT,
     HAS_DIFF_BREATHING_SLOT,
     HAS_FEVER_SLOT,
@@ -25,20 +23,6 @@ from covidflow.constants import (
 
 from .action_test_helper import ActionTestCase
 from .validate_action_test_helper import ValidateActionTestCase
-
-
-class TestActionSetFeelWorseTrue(ActionTestCase):
-    def setUp(self):
-        super().setUp()
-        self.action = ActionSetFeelWorseTrue()
-
-    @pytest.mark.asyncio
-    async def test_sets_feel_worse(self):
-        await self.run_action(self.create_tracker())
-
-        self.assert_events([SlotSet(FEEL_WORSE_SLOT, True)])
-
-        self.assert_templates([])
 
 
 class TestActionAskDailyCiFeelWorseFormHasDiffBreathing(ActionTestCase):

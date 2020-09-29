@@ -1161,12 +1161,6 @@ responses:
   utter_daily_ci__keep_or_cancel__acknowledge_continue_ci:
     - text: Parfait, je vais continuer à faire votre suivi quotidien
 
-  utter_daily_ci__keep_or_cancel__acknowledge_cancel_ci:
-    - text: D'accord, j'annule votre suivi quotidien
-
-  utter_daily_ci__keep_or_cancel__cancel_ci_recommendation:
-    - text: Si vous remarquez des changements, ou si vous avez à nouveau des symptômes, n'hésitez pas à communiquer avec moi pour une évaluation
-
   utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms:
     - text: Je vais continuer à vous contacter à chaque jour, à moins que vous ne souhaitiez annuler le suivi quotidien. Ça vous va?
 
@@ -1226,10 +1220,10 @@ responses:
   utter_daily_ci__early_opt_out__acknowledge_continue_ci:
     - text: D'accord, continuons
 
-  utter_daily_ci__early_opt_out__acknowledge_cancel_ci:
+  utter_daily_ci__acknowledge_cancel_ci:
     - text: Entendu, j'annule votre suivi quotidien
 
-  utter_daily_ci__early_opt_out__cancel_ci_recommendation:
+  utter_daily_ci__cancel_ci_recommendation:
     - text: Si vous remarquez des changements, ou si vous avez des symptômes, n'hésitez pas à communiquer avec moi pour une évaluation
 
   ## Daily check-in invalid ID

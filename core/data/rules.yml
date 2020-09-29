@@ -621,7 +621,7 @@ rules:
     steps:
       - action: utter_ask_daily_ci__early_opt_out__continue_ci
       - intent: opt_out
-      - action: action_daily_ci_early_opt_out
+      - action: action_daily_ci_cancel_ci
       - action: utter_ask_anything_else_without_test_navigation
 
   - rule: Daily check-in continue
@@ -657,9 +657,8 @@ rules:
     steps:
       - action: utter_ask_daily_ci__feel
       - intent: worse
-      - action: action_set_feel_worse_true
       - action: daily_ci_feel_worse_form
-      - active_loop: daily_ci_feel_worse_form
+      - action: action_submit_daily_ci_assessment
     wait_for_user_input: false
 
   - rule: Daily check-in no_change
@@ -667,16 +666,16 @@ rules:
       - action: utter_ask_daily_ci__feel
       - intent: no_change
       - action: daily_ci_feel_no_change_form
-      - active_loop: daily_ci_feel_no_change_form
+      - action: action_submit_daily_ci_assessment
     wait_for_user_input: false
 
   - rule: Daily check-in better
     steps:
       - action: utter_ask_daily_ci__feel
       - intent: better
-      - action: utter_daily_ci_feel_better_acknowledge # Added. Need to do something with the feel worse slot too
+      - action: utter_daily_ci_feel_better_acknowledge
       - action: daily_ci_feel_better_form
-      - active_loop: daily_ci_feel_better_form
+      - action: action_submit_daily_ci_assessment
     wait_for_user_input: false
 
   ## Daily check-in post-assessment rules
@@ -691,6 +690,30 @@ rules:
       - action: action_submit_daily_ci_assessment
       - action: action_severe_symptoms_recommendations
 
+  - rule: Keep or cancel ci no symptoms
+    condition:
+      - slot_was_set:
+          - symptoms: nothing
+    steps:
+      - action: action_submit_daily_ci_assessment
+      - action: utter_daily_ci__keep_or_cancel__no_symptoms_recommendation
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+
+  - rule: Daily check-in worse mandatory ci
+    condition:
+      - active_loop: daily_ci_feel_worse_form
+    steps:
+      - action: daily_ci_feel_worse_form
+      - active_loop: null
+      - action: action_submit_daily_ci_assessment
+      - action: action_check_mandatory_ci
+      - slot_was_set:
+          - mandatory_ci: true
+      - action: utter_daily_ci__keep_or_cancel__feel_worse_keep_ci
+      - action: utter_daily_ci__keep_or_cancel__feel_worse_recommendation
+      - action: action_keep_ci_recommendations
+      - action: utter_ask_anything_else_with_test_navigation
+
   - rule: Daily check-in worse to keep_or_cancel
     condition:
       - active_loop: daily_ci_feel_worse_form
@@ -698,48 +721,72 @@ rules:
       - action: daily_ci_feel_worse_form
       - active_loop: null
       - action: action_submit_daily_ci_assessment
-      - action: daily_ci_keep_or_cancel_form
-      - active_loop: daily_ci_keep_or_cancel_form
-    wait_for_user_input: false
-
-  - rule: Daily check-in no_change to keep_or_cancel
-    condition:
-      - active_loop: daily_ci_feel_no_change_form
-    steps:
-      - action: daily_ci_feel_no_change_form
-      - active_loop: null
-      - action: action_submit_daily_ci_assessment
-      - action: daily_ci_keep_or_cancel_form
-      - active_loop: daily_ci_keep_or_cancel_form
-    wait_for_user_input: false
-
-  - rule: Daily check-in better to keep_or_cancel
-    condition:
-      - active_loop: daily_ci_feel_better_form
-    steps:
-      - action: daily_ci_feel_better_form
-      - active_loop: null
-      - action: action_submit_daily_ci_assessment
-      - action: daily_ci_keep_or_cancel_form
-      - active_loop: daily_ci_keep_or_cancel_form
-    wait_for_user_input: false
-
-  - rule: Daily check-in final question no symptoms
-    condition:
-      - active_loop: daily_ci_keep_or_cancel_form
-    steps:
-      - action: daily_ci_keep_or_cancel_form
-      - active_loop: null
+      - action: action_check_mandatory_ci
       - slot_was_set:
-          - symptoms: nothing
+          - mandatory_ci: false
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms
+
+  - rule: Keep or cancel ci symptoms
+    steps:
+      - action: action_submit_daily_ci_assessment
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms
+
+  - rule: Keeps ci no symptoms (affirn)
+    steps:
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - intent: affirm
+      - action: utter_daily_ci__keep_or_cancel__acknowledge_continue_ci
       - action: utter_ask_anything_else_without_test_navigation
 
-  - rule: Daily check-in final question with symptoms
-    condition:
-      - active_loop: daily_ci_keep_or_cancel_form
+  - rule: Keeps ci no symptoms (continue)
     steps:
-      - action: daily_ci_keep_or_cancel_form
-      - active_loop: null
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - intent: continue
+      - action: utter_daily_ci__keep_or_cancel__acknowledge_continue_ci
+      - action: utter_ask_anything_else_without_test_navigation
+
+  - rule: Cancels ci no symptoms (deny)
+    steps:
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - intent: deny
+      - action: action_daily_ci_cancel_ci
+      - action: utter_ask_anything_else_without_test_navigation
+
+  - rule: Cancels ci no symptoms (cancel)
+    steps:
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - intent: cancel
+      - action: action_daily_ci_cancel_ci
+      - action: utter_ask_anything_else_without_test_navigation
+
+  - rule: Keeps ci symptoms (affirm)
+    steps:
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms
+      - intent: affirm
+      - action: utter_daily_ci__keep_or_cancel__acknowledge_continue_ci
+      - action: action_keep_ci_recommendations
+      - action: utter_ask_anything_else_with_test_navigation
+
+  - rule: Keeps ci symptoms (continue)
+    steps:
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_symptoms
+      - intent: continue
+      - action: utter_daily_ci__keep_or_cancel__acknowledge_continue_ci
+      - action: action_keep_ci_recommendations
+      - action: utter_ask_anything_else_with_test_navigation
+
+  - rule: Cancels ci no symptoms (deny)
+    steps:
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - intent: deny
+      - action: action_daily_ci_cancel_ci
+      - action: utter_ask_anything_else_with_test_navigation
+
+  - rule: Cancels ci no symptoms (cancel)
+    steps:
+      - action: utter_ask_daily_ci__keep_or_cancel__continue_ci_no_symptoms
+      - intent: deny
+      - action: action_daily_ci_cancel_ci
       - action: utter_ask_anything_else_with_test_navigation
 
   ## Questions rules

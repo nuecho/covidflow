@@ -67,7 +67,8 @@ PROVINCE_SLOT = "province_code"
 AGE_OVER_65_SLOT = "age_over_65"
 
 ## Slots used only in flows
-CONTINUE_CI_SLOT = "continue_ci"
+CANCEL_CI_SLOT = "continue_ci"
+MANDATORY_CI_SLOT = "mandatory_ci"
 HAS_ASSISTANCE_SLOT = "has_assistance"
 LIVES_ALONE_SLOT = "lives_alone"
 PROVINCIAL_811_SLOT = "provincial_811"  # used for interpolation
