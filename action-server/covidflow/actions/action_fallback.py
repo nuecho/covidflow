@@ -24,7 +24,7 @@ ERROR_SUFFIX = "_error"
 
 VARIATION_REGEX = r"__.*$"
 
-ACTION_NAME = "action_default_fallback"  # We could call it otherwise when https://github.com/RasaHQ/rasa/issues/6516 will be solved
+ACTION_NAME = "action_fallback"  # We could call it otherwise when https://github.com/RasaHQ/rasa/issues/6516 will be solved
 
 
 class ActionDefaultFallback(Action):

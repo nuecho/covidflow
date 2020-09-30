@@ -3,7 +3,7 @@
 # include source code in any python subprocess
 export PYTHONPATH = .
 
-RASA_VERSION=2.0.0a4
+RASA_VERSION=2.0.0rc3
 
 UID:=$(shell id -u)
 GID:=$(shell id -g)

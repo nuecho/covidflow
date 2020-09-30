@@ -2,7 +2,6 @@
 # https://rasa.com/docs/rasa/core/policies/
 policies:
   - name: RulePolicy
-    # We could rename the action and change the threshold to a more significant one
-    # when https://github.com/RasaHQ/rasa/issues/6516 will be solved, these are default parameters
-    core_fallback_threshold: 0.3
-    core_fallback_action_name: "action_default_fallback"
+    core_fallback_threshold: 0.01
+    core_fallback_action_name: "action_fallback"
+    restrict_rules: false
