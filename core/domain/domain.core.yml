@@ -63,15 +63,17 @@ actions:
   - action_suspect_moderate_symptoms_recommendations
   - action_suspect_moderate_symptoms_final_recommendations
   - action_suspect_no_symptoms_recommendations
-  - action_ask_test_navigation__continue_error
+  - action_ask_test_navigation_continue_error
   - action_tested_positive_no_symptoms_recommendations
-  - action_tested_positive_maybe_cured_final_recommendations
-  - action_tested_positive_not_cured_final_recommendations
+  - action_tested_positive_tested_more_final_recommendations
+  - action_tested_positive_tested_less_final_recommendations
+  - action_checkin_return_moderate_symptoms_worsened_recommendations
+  - action_checkin_return_mild_moderate_symptoms_final_recommendations
   - action_severe_symptoms_recommendations
   - action_send_validation_code
   - action_send_daily_checkin_reminder
   - action_test_navigation_explanations
-  - action_test_navigation__anything_else
+  - action_test_navigation_anything_else
   - action_qa_goodbye
   - action_ask_province_code
   - validate_assessment_form
@@ -82,12 +84,12 @@ actions:
   - action_clear_test_navigation_slots
   - validate_question_answering_form
   - action_activate_fallback_question_answering_form
-  - action_ask_active_question
+  - action_ask_question_answering_form_active_question
   - action_submit_question_answering_form
   - validate_daily_ci_enroll_form
   - action_offer_daily_ci_enrollment
   - action_ask_phone_number
-  - action_ask_daily_ci_enroll__validation_code
+  - action_ask_daily_ci_enroll_form_validation_code
   - action_ask_preconditions
   - action_daily_ci_enroll_form_ended
   - action_submit_daily_ci_assessment
@@ -105,12 +107,12 @@ actions:
 
 forms:
   - home_assistance_form:
-      has_assistance: *boolean
+      home_assistance_has_assistance: *boolean
   - self_isolation_form:
-      lives_alone: *boolean
+      self_isolation_form_lives_alone: *boolean
   - contact_risk_form:
-      contact: *boolean
-      travel: *boolean
+      contact_risk_form_contact: *boolean
+      contact_risk_form_travel: *boolean
   - daily_ci_enroll_form:
       first_name:
         - type: from_text
@@ -119,7 +121,7 @@ forms:
           not_intent:
             - no_phone
             - cancel
-      daily_ci_enroll__no_code_solution:
+      daily_ci_enroll_form_no_code_solution:
         - type: from_intent
           intent: new_code
           value: new_code
@@ -127,7 +129,7 @@ forms:
           intent: change_phone
           value: change_phone
         - type: from_text
-      daily_ci_enroll__validation_code:
+      daily_ci_enroll_form_validation_code:
         - type: from_intent
           intent: did_not_get_code
           value: did_not_get_code
@@ -163,9 +165,9 @@ forms:
       daily_ci_feel_worse_form_has_diff_breathing_worsened: *boolean
       has_cough: *boolean
   - question_answering_form:
-      active_question:
+      question_answering_form_active_question:
         - type: from_text
-      feedback:
+      question_answering_form_feedback:
         - type: from_intent
           intent: affirm
           value: true
@@ -174,9 +176,9 @@ forms:
           value: false
         - type: from_text
   - test_navigation_form:
-      test_navigation__postal_code:
+      test_navigation_form_postal_code:
         - type: from_text
-      test_navigation__try_different_address: *boolean # Only asked if no results
+      test_navigation_form_try_different_address: *boolean # Only asked if no results
   - assessment_form:
       assessment_type:
         - type: from_trigger_intent
@@ -206,9 +208,6 @@ slots:
   language:
     type: unfeaturized
     initial_value: *language
-
-  last_requested_slot:
-    type: unfeaturized
 
   severe_symptoms:
     type: unfeaturized
@@ -246,10 +245,10 @@ slots:
   has_diff_breathing:
     type: unfeaturized
 
-  contact:
+  contact_risk_form_contact:
     type: unfeaturized
 
-  travel:
+  contact_risk_form_travel:
     type: unfeaturized
 
   first_name:
@@ -264,19 +263,19 @@ slots:
   has_dialogue:
     type: unfeaturized
 
-  active_question:
+  question_answering_form_active_question:
     type: unfeaturized
 
-  feedback:
+  question_answering_form_feedback:
     type: unfeaturized
 
-  answers:
+  question_answering_form_answers:
     type: unfeaturized
 
-  asked_question:
+  question_answering_form_asked_question:
     type: unfeaturized
 
-  skip_qa_intro:
+  question_answering_form_skip_qa_intro:
     type: unfeaturized
 
   question_answering_status:
@@ -293,10 +292,10 @@ slots:
   self_assess_done:
     type: bool
 
-  lives_alone:
+  self_isolation_form_lives_alone:
     type: unfeaturized
 
-  has_assistance:
+  home_assistance_has_assistance:
     type: unfeaturized
 
   cancel_ci:
@@ -323,34 +322,28 @@ slots:
   mandatory_ci:
     type: bool
 
-  checkin_return__moderate_symptoms_worsened:
+  daily_ci_enroll_form_phone_number_to_change:
     type: unfeaturized
 
-  tested_positive__mild_symptoms_worsened:
+  daily_ci_enroll_form_validation_code_reference:
     type: unfeaturized
 
-  daily_ci_enroll__phone_number_to_change:
+  daily_ci_enroll_form_validation_code:
     type: unfeaturized
 
-  daily_ci_enroll__validation_code_reference:
-    type: unfeaturized
-
-  daily_ci_enroll__validation_code:
-    type: unfeaturized
-
-  daily_ci_enroll__no_code_solution:
+  daily_ci_enroll_form_no_code_solution:
     type: unfeaturized
     initial_value: "N/A"
 
-  daily_ci_enroll__phone_number_error_counter:
+  daily_ci_enroll_form_phone_number_error_counter:
     type: unfeaturized
     initial_value: 0
 
-  daily_ci_enroll__validation_code_error_counter:
+  daily_ci_enroll_form_validation_code_error_counter:
     type: unfeaturized
     initial_value: 0
 
-  daily_ci_enroll__display_preconditions_examples:
+  daily_ci_enroll_form_display_preconditions_examples:
     type: unfeaturized
 
   daily_ci_feel_worse_form_has_diff_breathing_worsened:
@@ -362,14 +355,14 @@ slots:
   daily_ci_feel_better_form_is_symptom_free:
     type: unfeaturized
 
-  test_navigation__postal_code:
+  test_navigation_form_postal_code:
     type: unfeaturized
 
-  test_navigation__invalid_postal_code_counter:
+  test_navigation_invalid_postal_code_counter:
     type: unfeaturized
     initial_value: 0
 
-  test_navigation__try_different_address:
+  test_navigation_form_try_different_address:
     type: unfeaturized
 
 

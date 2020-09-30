@@ -21,7 +21,7 @@ class ActionQAGoodbyeTest(ActionTestCase):
         self.assert_events([ConversationPaused()])
 
         self.assert_templates(
-            ["utter_daily_ci__qa__will_contact_tomorrow", "utter_goodbye"]
+            ["utter_daily_ci_qa_will_contact_tomorrow", "utter_goodbye"]
         )
 
     @pytest.mark.asyncio

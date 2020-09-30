@@ -22,12 +22,12 @@ MAIN_INTENTS = [
 
 SUPPORTED_INTENTS_BY_ACTION = {
     "action_greeting_messages": MAIN_INTENTS,
-    "utter_ask_test_navigation__continue": [
+    "utter_ask_test_navigation_continue": [
         "get_assessment",
         "ask_question",
         "nlu_fallback",
     ],
-    "action_test_navigation__anything_else": [
+    "action_test_navigation_anything_else": [
         "get_assessment",
         "ask_question",
         "nlu_fallback",
@@ -40,8 +40,8 @@ SUPPORTED_INTENTS_BY_ACTION = {
         "navigate_test_locations",
         "nlu_fallback",
     ],
-    "utter_ask_daily_checkin__invalid_id__want_assessment": MAIN_INTENTS,
-    "utter_ask_daily_checkin__invalid_id__anything_else": MAIN_INTENTS,
+    "utter_ask_daily_ci_invalid_id_want_assessment": MAIN_INTENTS,
+    "utter_ask_daily_ci_invalid_id_anything_else": MAIN_INTENTS,
     "utter_ask_anything_else_with_test_navigation": MAIN_INTENTS,
     "utter_ask_anything_else_without_test_navigation": MAIN_INTENTS,
 }

@@ -38,9 +38,9 @@ CLEAR_SLOTS_ACTION_NAME = "action_clear_test_navigation_slots"
 POSTAL_CODE_REGEX = re.compile(r"[a-z]\d[a-z] ?\d[a-z]\d", re.IGNORECASE)
 MAX_POSTAL_CODE_TRIES = 2
 
-POSTAL_CODE_SLOT = "test_navigation__postal_code"
-INVALID_POSTAL_CODE_COUNTER_SLOT = "test_navigation__invalid_postal_code_counter"
-TRY_DIFFERENT_ADDRESS_SLOT = "test_navigation__try_different_address"
+POSTAL_CODE_SLOT = "test_navigation_form_postal_code"
+INVALID_POSTAL_CODE_COUNTER_SLOT = "test_navigation_invalid_postal_code_counter"
+TRY_DIFFERENT_ADDRESS_SLOT = "test_navigation_form_try_different_address"
 
 CHILDREN_CLIENTELE_REGEXP = re.compile(r"no_children_under_(\d{1,2})(_months)?")
 
@@ -71,7 +71,7 @@ class ValidateTestNavigationForm(Action):
             slot_events = [SlotSet(slot_name, slot_value)]
 
             if slot_name == POSTAL_CODE_SLOT:
-                slot_events = await validate_test_navigation__postal_code(
+                slot_events = await validate_test_navigation_form_postal_code(
                     slot_value, self.geocoding_client, dispatcher, tracker, domain
                 )
             elif slot_name == TRY_DIFFERENT_ADDRESS_SLOT:
@@ -82,7 +82,7 @@ class ValidateTestNavigationForm(Action):
                     ]
                 else:
                     dispatcher.utter_message(
-                        template="utter_test_navigation__acknowledge"
+                        template="utter_test_navigation_acknowledge"
                     )
 
             validation_events.extend(slot_events)
@@ -109,7 +109,7 @@ class ActionClearTestNavigationSlots(Action):
         ]
 
 
-async def validate_test_navigation__postal_code(
+async def validate_test_navigation_form_postal_code(
     value: Text,
     geocoding_client: Geocoding,
     dispatcher: CollectingDispatcher,
@@ -133,8 +133,12 @@ async def validate_test_navigation__postal_code(
 
     except Exception:
         logger.exception("Failed to fetch testing locations")
-        dispatcher.utter_message(template="utter_test_navigation__could_not_fetch_1")
-        dispatcher.utter_message(template="utter_test_navigation__could_not_fetch_2")
+        dispatcher.utter_message(
+            template="utter_test_navigation_form_locations_not_fetched_1"
+        )
+        dispatcher.utter_message(
+            template="utter_test_navigation_form_locations_not_fetched_2"
+        )
         return [
             SlotSet(POSTAL_CODE_SLOT, postal_code),
             SlotSet(REQUESTED_SLOT, None),
@@ -142,22 +146,22 @@ async def validate_test_navigation__postal_code(
         ]
 
     if len(testing_locations) == 0:
-        dispatcher.utter_message(template="utter_test_navigation__no_locations")
+        dispatcher.utter_message(template="utter_test_navigation_form_locations_none")
         return [SlotSet(POSTAL_CODE_SLOT, postal_code)]
 
     elif len(testing_locations) == 1:
-        dispatcher.utter_message(template="utter_test_navigation__one_location")
+        dispatcher.utter_message(template="utter_test_navigation_form_locations_one")
         dispatcher.utter_message(
             attachment=_locations_carousel(testing_locations, coordinates, domain)
         )
 
     else:
         dispatcher.utter_message(
-            template="utter_test_navigation__many_locations_1",
+            template="utter_test_navigation_form_locations_many_1",
             nb_testing_sites=len(testing_locations),
         )
-        dispatcher.utter_message(template="utter_test_navigation__many_locations_2")
-        dispatcher.utter_message(template="utter_test_navigation__many_locations_3")
+        dispatcher.utter_message(template="utter_test_navigation_form_locations_many_2")
+        dispatcher.utter_message(template="utter_test_navigation_form_locations_many_3")
         dispatcher.utter_message(
             attachment=_locations_carousel(testing_locations, coordinates, domain)
         )
@@ -185,7 +189,7 @@ def _check_postal_code_error_counter(
     if try_counter == MAX_POSTAL_CODE_TRIES:
 
         dispatcher.utter_message(
-            template="utter_test_navigation__invalid_postal_code_max"
+            template="utter_test_navigation_form_postal_code_invalid_max"
         )
         return [
             SlotSet(REQUESTED_SLOT, None),
@@ -193,7 +197,7 @@ def _check_postal_code_error_counter(
             SlotSet(TRY_DIFFERENT_ADDRESS_SLOT, SKIP_SLOT_PLACEHOLDER),
         ]
 
-    dispatcher.utter_message(template="utter_test_navigation__invalid_postal_code")
+    dispatcher.utter_message(template="utter_test_navigation_form_postal_code_invalid")
 
     return [
         SlotSet(POSTAL_CODE_SLOT, None),
@@ -221,11 +225,15 @@ def _locations_carousel(
     domain: Dict[Text, Any],
 ) -> Dict[Text, Any]:
     responses = domain.get("responses", {})
-    titles_response = responses.get("utter_test_navigation__display_titles", [])
+    titles_response = responses.get(
+        "utter_test_navigation_form_locations_display_titles", []
+    )
 
     titles = titles_response[0].get("custom", {}) if len(titles_response) >= 1 else {}
 
-    descriptions_response = responses.get("utter_test_navigation__descriptions", [])
+    descriptions_response = responses.get(
+        "utter_test_navigation_form_locations_descriptions", []
+    )
     description_parts = (
         descriptions_response[0].get("custom", {})
         if len(descriptions_response) >= 1

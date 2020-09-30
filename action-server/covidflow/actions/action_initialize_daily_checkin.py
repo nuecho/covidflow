@@ -55,10 +55,8 @@ class ActionInitializeDailyCheckin(Action):
 
         user_slots = _get_user_info(current_slot_values, domain)
         if user_slots is None:
-            dispatcher.utter_message(
-                template="utter_daily_ci__invalid_id__invalid_link"
-            )
-            dispatcher.utter_message(template="utter_daily_ci__invalid_id__try_again")
+            dispatcher.utter_message(template="utter_daily_ci_invalid_id_invalid_link")
+            dispatcher.utter_message(template="utter_daily_ci_invalid_id_try_again")
             return [SlotSet(INVALID_REMINDER_ID_SLOT, True)]
 
         assessment_slots = _get_last_assessment_slots(current_slot_values)

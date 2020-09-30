@@ -52,7 +52,7 @@ class ActionAskDailyCiFeelWorseFormHasDiffBreathing(Action):
         template_name = f"utter_ask_{FORM_NAME}_{HAS_DIFF_BREATHING_SLOT}"
 
         if tracker.get_slot(LAST_HAS_DIFF_BREATHING_SLOT) is True:
-            dispatcher.utter_message(template=f"{template_name}___still")
+            dispatcher.utter_message(template=f"{template_name}__still")
         else:
             dispatcher.utter_message(template=template_name)
 
@@ -72,7 +72,7 @@ class ActionAskDailyCiFeelWorseFormHasCough(Action):
         template_name = f"utter_ask_{FORM_NAME}_{HAS_COUGH_SLOT}"
 
         if tracker.get_slot(LAST_HAS_COUGH_SLOT) is True:
-            dispatcher.utter_message(template=f"{template_name}___still")
+            dispatcher.utter_message(template=f"{template_name}__still")
         else:
             dispatcher.utter_message(template=template_name)
 
@@ -122,9 +122,7 @@ def _validate_severe_symptoms(
             SlotSet(REQUESTED_SLOT, None),
         ] + end_form_additional_events(SEVERE_SYMPTOMS_SLOT, ORDERED_FORM_SLOTS)
 
-    dispatcher.utter_message(
-        template="utter_daily_ci_feel_worse_acknowledge_no_severe_symptoms"
-    )
+    dispatcher.utter_message(template="utter_daily_ci_feel_worse_severe_symptoms_false")
     return []
 
 
@@ -132,13 +130,11 @@ def _validate_has_fever(
     value: bool, dispatcher: CollectingDispatcher,
 ) -> List[EventType]:
     if value is True:
-        dispatcher.utter_message(template="utter_daily_ci__acknowledge_fever")
-        dispatcher.utter_message(template="utter_daily_ci__take_acetaminophen")
-        dispatcher.utter_message(template="utter_daily_ci__avoid_ibuprofen")
+        dispatcher.utter_message(template="utter_daily_ci_has_fever_true_1")
+        dispatcher.utter_message(template="utter_daily_ci_has_fever_true_2")
+        dispatcher.utter_message(template="utter_daily_ci_has_fever_true_3")
     else:
-        dispatcher.utter_message(
-            template="utter_daily_ci_feel_worse_acknowledge_no_fever"
-        )
+        dispatcher.utter_message(template="utter_daily_ci_feel_worse_has_fever_false")
 
     return []
 
@@ -148,7 +144,7 @@ def _validate_has_diff_breathing(
 ) -> List[EventType]:
     if value == False:
         dispatcher.utter_message(
-            template="utter_daily_ci_feel_worse_acknowledge_no_diff_breathing"
+            template="utter_daily_ci_feel_worse_has_diff_breathing_false"
         )
         return [SlotSet(HAS_DIFF_BREATHING_WORSENED_SLOT, SKIP_SLOT_PLACEHOLDER)]
 
@@ -160,17 +156,17 @@ def _validate_has_diff_breathing_worsened(
 ) -> List[EventType]:
     if value is True:
         dispatcher.utter_message(
-            template="utter_daily_ci_feel_worse_diff_breathing_worsened_recommendation_1"
+            template="utter_daily_ci_feel_worse_has_diff_breathing_worsened_true_1"
         )
         dispatcher.utter_message(
-            template="utter_daily_ci_feel_worse_diff_breathing_worsened_recommendation_2"
+            template="utter_daily_ci_feel_worse_has_diff_breathing_worsened_true_2"
         )
     else:
         dispatcher.utter_message(
-            template="utter_daily_ci_feel_worse_diff_breathing_not_worsened_recommendation_1"
+            template="utter_daily_ci_feel_worse_has_diff_breathing_worsened_false_1"
         )
         dispatcher.utter_message(
-            template="utter_daily_ci_feel_worse_diff_breathing_not_worsened_recommendation_2"
+            template="utter_daily_ci_feel_worse_has_diff_breathing_worsened_false_2"
         )
 
     return []
@@ -180,12 +176,10 @@ def _validate_has_cough(
     value: bool, dispatcher: CollectingDispatcher,
 ) -> List[EventType]:
     if value is True:
-        dispatcher.utter_message(template="utter_daily_ci__cough_syrup_may_help")
-        dispatcher.utter_message(template="utter_daily_ci__cough_syrup_pharmacist")
+        dispatcher.utter_message(template="utter_daily_ci_has_cough_true_1")
+        dispatcher.utter_message(template="utter_daily_ci_has_cough_true_2")
     else:
-        dispatcher.utter_message(template="utter_daily_ci__acknowledge_no_cough")
-        dispatcher.utter_message(
-            template="utter_daily_ci_feel_worse_no_cough_recommendation"
-        )
+        dispatcher.utter_message(template="utter_daily_ci_has_cough_false")
+        dispatcher.utter_message(template="utter_daily_ci_feel_worse_has_cough_false")
 
     return []

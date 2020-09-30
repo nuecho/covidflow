@@ -4,7 +4,6 @@ from rasa_sdk.events import ConversationPaused
 from covidflow.actions.action_severe_symptoms_recommendations import (
     ActionSevereSymptomsRecommendations,
 )
-from covidflow.constants import END_CONVERSATION_MESSAGE
 
 from .action_test_helper import ActionTestCase
 
@@ -28,8 +27,7 @@ class ActionSevereSymptomsRecommendationsTest(ActionTestCase):
                 "utter_severe_symptoms_recommendations_2",
                 "utter_severe_symptoms_recommendations_3",
                 "utter_severe_symptoms_recommendations_4",
-                None,
             ]
         )
 
-        self.assert_json_messages([{}, {}, {}, {}, END_CONVERSATION_MESSAGE])
+        self.assert_json_messages([{}, {}, {}, {}])

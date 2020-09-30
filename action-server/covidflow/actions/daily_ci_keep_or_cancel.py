@@ -54,35 +54,33 @@ class ActionKeepCiRecommendations(Action):
             or tracker.get_slot(PRECONDITIONS_SLOT) is True
         ):
             dispatcher.utter_message(
-                template="utter_daily_ci__recommendations__more_information_vulnerable_population",
+                template="utter_daily_ci_recommendations_more_information_vulnerable_population",
                 provincial_link=provincial_link,
             )
         else:
             dispatcher.utter_message(
-                template="utter_daily_ci__recommendations__more_information_general",
+                template="utter_daily_ci_recommendations_more_information_general",
                 provincial_link=provincial_link,
             )
 
         if tracker.get_slot(PROVINCE_SLOT) in PROVINCES_WITH_211:
             if tracker.get_slot(PROVINCE_SLOT) == "qc":
                 dispatcher.utter_message(
-                    template="utter_daily_ci__recommendations__211_qc"
+                    template="utter_daily_ci_recommendations_211_qc"
                 )
             else:
                 dispatcher.utter_message(
-                    template="utter_daily_ci__recommendations__211_other_provinces"
+                    template="utter_daily_ci_recommendations_211_other_provinces"
                 )
 
+        dispatcher.utter_message(template="utter_daily_ci_recommendations_tomorrow_ci")
+
         dispatcher.utter_message(
-            template="utter_daily_ci__recommendations__tomorrow_ci"
+            template="utter_daily_ci_recommendations_recommendation_1"
         )
 
         dispatcher.utter_message(
-            template="utter_daily_ci__recommendations__recommendation_1"
-        )
-
-        dispatcher.utter_message(
-            template="utter_daily_ci__recommendations__recommendation_2"
+            template="utter_daily_ci_recommendations_recommendation_2"
         )
 
         return []

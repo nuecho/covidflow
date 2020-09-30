@@ -69,14 +69,14 @@ AGE_OVER_65_SLOT = "age_over_65"
 ## Slots used only in flows
 CANCEL_CI_SLOT = "continue_ci"
 MANDATORY_CI_SLOT = "mandatory_ci"
-HAS_ASSISTANCE_SLOT = "has_assistance"
-LIVES_ALONE_SLOT = "lives_alone"
+HAS_ASSISTANCE_SLOT = "home_assistance_has_assistance"
+LIVES_ALONE_SLOT = "self_isolation_form_lives_alone"
 PROVINCIAL_811_SLOT = "provincial_811"  # used for interpolation
 SELF_ASSESS_DONE_SLOT = "self_assess_done"
 SEVERE_SYMPTOMS_SLOT = "severe_symptoms"
 MODERATE_SYMPTOMS_SLOT = "moderate_symptoms"
-CONTACT_SLOT = "contact"
-TRAVEL_SLOT = "travel"
+CONTACT_SLOT = "contact_risk_form_contact"
+TRAVEL_SLOT = "contact_risk_form_travel"
 HAS_CONTACT_RISK_SLOT = "has_contact_risk"
 ASSESSMENT_TYPE_SLOT = "assessment_type"
 

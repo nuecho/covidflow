@@ -25,9 +25,7 @@ class ActionQaGoodbye(Action):
             tracker.get_slot(LAST_SYMPTOMS_SLOT) is not None
             and tracker.get_slot(CANCEL_CI_SLOT) is not True
         ):
-            dispatcher.utter_message(
-                template="utter_daily_ci__qa__will_contact_tomorrow"
-            )
+            dispatcher.utter_message(template="utter_daily_ci_qa_will_contact_tomorrow")
 
         dispatcher.utter_message(template="utter_goodbye")
 

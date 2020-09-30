@@ -26,49 +26,49 @@ DOMAIN = {
 }
 
 RECOMMENDATIONS_VULNERABLE__NOT_HAS_211 = [
-    "utter_daily_ci__recommendations__more_information_vulnerable_population",
-    "utter_daily_ci__recommendations__tomorrow_ci",
-    "utter_daily_ci__recommendations__recommendation_1",
-    "utter_daily_ci__recommendations__recommendation_2",
+    "utter_daily_ci_recommendations_more_information_vulnerable_population",
+    "utter_daily_ci_recommendations_tomorrow_ci",
+    "utter_daily_ci_recommendations_recommendation_1",
+    "utter_daily_ci_recommendations_recommendation_2",
 ]
 
 RECOMMENDATIONS_GENERAL__NOT_HAS_211 = [
-    "utter_daily_ci__recommendations__more_information_general",
-    "utter_daily_ci__recommendations__tomorrow_ci",
-    "utter_daily_ci__recommendations__recommendation_1",
-    "utter_daily_ci__recommendations__recommendation_2",
+    "utter_daily_ci_recommendations_more_information_general",
+    "utter_daily_ci_recommendations_tomorrow_ci",
+    "utter_daily_ci_recommendations_recommendation_1",
+    "utter_daily_ci_recommendations_recommendation_2",
 ]
 
 RECOMMENDATIONS_VULNERABLE__HAS_211_OTHER = [
-    "utter_daily_ci__recommendations__more_information_vulnerable_population",
-    "utter_daily_ci__recommendations__211_other_provinces",
-    "utter_daily_ci__recommendations__tomorrow_ci",
-    "utter_daily_ci__recommendations__recommendation_1",
-    "utter_daily_ci__recommendations__recommendation_2",
+    "utter_daily_ci_recommendations_more_information_vulnerable_population",
+    "utter_daily_ci_recommendations_211_other_provinces",
+    "utter_daily_ci_recommendations_tomorrow_ci",
+    "utter_daily_ci_recommendations_recommendation_1",
+    "utter_daily_ci_recommendations_recommendation_2",
 ]
 
 RECOMMENDATIONS_GENERAL__HAS_211_OTHER = [
-    "utter_daily_ci__recommendations__more_information_general",
-    "utter_daily_ci__recommendations__211_other_provinces",
-    "utter_daily_ci__recommendations__tomorrow_ci",
-    "utter_daily_ci__recommendations__recommendation_1",
-    "utter_daily_ci__recommendations__recommendation_2",
+    "utter_daily_ci_recommendations_more_information_general",
+    "utter_daily_ci_recommendations_211_other_provinces",
+    "utter_daily_ci_recommendations_tomorrow_ci",
+    "utter_daily_ci_recommendations_recommendation_1",
+    "utter_daily_ci_recommendations_recommendation_2",
 ]
 
 RECOMMENDATIONS_VULNERABLE__HAS_211_QC = [
-    "utter_daily_ci__recommendations__more_information_vulnerable_population",
-    "utter_daily_ci__recommendations__211_qc",
-    "utter_daily_ci__recommendations__tomorrow_ci",
-    "utter_daily_ci__recommendations__recommendation_1",
-    "utter_daily_ci__recommendations__recommendation_2",
+    "utter_daily_ci_recommendations_more_information_vulnerable_population",
+    "utter_daily_ci_recommendations_211_qc",
+    "utter_daily_ci_recommendations_tomorrow_ci",
+    "utter_daily_ci_recommendations_recommendation_1",
+    "utter_daily_ci_recommendations_recommendation_2",
 ]
 
 RECOMMENDATIONS_GENERAL__HAS_211_QC = [
-    "utter_daily_ci__recommendations__more_information_general",
-    "utter_daily_ci__recommendations__211_qc",
-    "utter_daily_ci__recommendations__tomorrow_ci",
-    "utter_daily_ci__recommendations__recommendation_1",
-    "utter_daily_ci__recommendations__recommendation_2",
+    "utter_daily_ci_recommendations_more_information_general",
+    "utter_daily_ci_recommendations_211_qc",
+    "utter_daily_ci_recommendations_tomorrow_ci",
+    "utter_daily_ci_recommendations_recommendation_1",
+    "utter_daily_ci_recommendations_recommendation_2",
 ]
 
 

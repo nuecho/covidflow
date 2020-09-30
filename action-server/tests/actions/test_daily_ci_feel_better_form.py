@@ -48,7 +48,7 @@ class TestActionAskDailyCiFeelBetterFormHasCough(ActionTestCase):
 
         self.assert_events([])
 
-        self.assert_templates(["utter_ask_daily_ci_feel_better_form_has_cough___still"])
+        self.assert_templates(["utter_ask_daily_ci_feel_better_form_has_cough__still"])
 
 
 class TestActionAskDailyCiFeelBetterFormHasOtherMildSymptoms(ActionTestCase):
@@ -66,7 +66,7 @@ class TestActionAskDailyCiFeelBetterFormHasOtherMildSymptoms(ActionTestCase):
 
         self.assert_templates(
             [
-                "utter_ask_daily_ci_feel_better_form_has_other_mild_symptoms___with_acknowledge"
+                "utter_ask_daily_ci_feel_better_form_has_other_mild_symptoms__with_acknowledge"
             ]
         )
 
@@ -96,16 +96,16 @@ class TestValidateDailyCiFeelBetterForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_fever(self):
         templates = [
-            "utter_daily_ci__acknowledge_fever",
-            "utter_daily_ci__take_acetaminophen",
-            "utter_daily_ci__avoid_ibuprofen",
+            "utter_daily_ci_has_fever_true_1",
+            "utter_daily_ci_has_fever_true_2",
+            "utter_daily_ci_has_fever_true_3",
         ]
 
         await self.check_slot_value_accepted(HAS_FEVER_SLOT, True, templates=templates)
 
     @pytest.mark.asyncio
     async def test_no_fever(self):
-        templates = ["utter_daily_ci_feel_better_acknowledge_no_fever"]
+        templates = ["utter_daily_ci_feel_better_has_fever_false"]
 
         await self.check_slot_value_accepted(HAS_FEVER_SLOT, False, templates=templates)
 
@@ -113,8 +113,8 @@ class TestValidateDailyCiFeelBetterForm(ValidateActionTestCase):
     async def test_mild_last_symptoms_cough(self):
         previous_slots = {LAST_SYMPTOMS_SLOT: Symptoms.MILD}
         templates = [
-            "utter_daily_ci__cough_syrup_may_help",
-            "utter_daily_ci__cough_syrup_pharmacist",
+            "utter_daily_ci_has_cough_true_1",
+            "utter_daily_ci_has_cough_true_2",
         ]
         extra_events = [SlotSet(HAS_DIFF_BREATHING_SLOT, SKIP_SLOT_PLACEHOLDER)]
 
@@ -129,7 +129,7 @@ class TestValidateDailyCiFeelBetterForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_mild_last_symptoms_no_cough(self):
         previous_slots = {LAST_SYMPTOMS_SLOT: Symptoms.MILD}
-        templates = ["utter_daily_ci__acknowledge_no_cough"]
+        templates = ["utter_daily_ci_has_cough_false"]
         extra_events = [SlotSet(HAS_DIFF_BREATHING_SLOT, SKIP_SLOT_PLACEHOLDER)]
 
         await self.check_slot_value_accepted(
@@ -144,8 +144,8 @@ class TestValidateDailyCiFeelBetterForm(ValidateActionTestCase):
     async def test_moderate_last_symptoms_cough(self):
         previous_slots = {LAST_SYMPTOMS_SLOT: Symptoms.MODERATE}
         templates = [
-            "utter_daily_ci__cough_syrup_may_help",
-            "utter_daily_ci__cough_syrup_pharmacist",
+            "utter_daily_ci_has_cough_true_1",
+            "utter_daily_ci_has_cough_true_2",
         ]
 
         await self.check_slot_value_accepted(
@@ -155,7 +155,7 @@ class TestValidateDailyCiFeelBetterForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_moderate_last_symptoms_no_cough(self):
         previous_slots = {LAST_SYMPTOMS_SLOT: Symptoms.MODERATE}
-        templates = ["utter_daily_ci__acknowledge_no_cough"]
+        templates = ["utter_daily_ci_has_cough_false"]
 
         await self.check_slot_value_accepted(
             HAS_COUGH_SLOT, False, previous_slots=previous_slots, templates=templates
@@ -164,8 +164,8 @@ class TestValidateDailyCiFeelBetterForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_has_diff_breathing(self):
         templates = [
-            "utter_daily_ci_feel_better_breathing_difficulty_recommendation_1",
-            "utter_daily_ci_feel_better_breathing_difficulty_recommendation_2",
+            "utter_daily_ci_feel_better_has_diff_breathing_true_1",
+            "utter_daily_ci_feel_better_has_diff_breathing_true_2",
         ]
         extra_events = [
             SlotSet(REQUESTED_SLOT, None),

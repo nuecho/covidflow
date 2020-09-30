@@ -25,16 +25,16 @@ class ActionTestNavigationExplanations(Action):
         if tracker.get_slot(PROVINCIAL_811_SLOT) is None:
             variables[PROVINCIAL_811_SLOT] = get_provincial_811(None, domain)
         dispatcher.utter_message(
-            template="utter_test_navigation__explanations_1", **variables
+            template="utter_test_navigation_explanations_1", **variables
         )
         dispatcher.utter_message(
-            template="utter_test_navigation__explanations_2", **variables
+            template="utter_test_navigation_explanations_2", **variables
         )
         dispatcher.utter_message(
-            template="utter_test_navigation__explanations_3", **variables
+            template="utter_test_navigation_explanations_3", **variables
         )
         dispatcher.utter_message(
-            template="utter_test_navigation__explanations_4", **variables
+            template="utter_test_navigation_explanations_4", **variables
         )
 
         return []

@@ -62,7 +62,7 @@ class ActionDefaultFallbackTest(ActionTestCase):
     async def test_already_message_with_variation(self):
         tracker = self.create_tracker(
             intent=FALLBACK_INTENT,
-            events=latest_events("utter_dwarfs_song___some_variation"),
+            events=latest_events("utter_dwarfs_song__some_variation"),
         )
 
         await self.run_action(tracker)

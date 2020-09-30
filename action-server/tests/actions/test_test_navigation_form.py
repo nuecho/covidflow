@@ -76,9 +76,13 @@ DESCRIPTION_PARTS = {
 
 DOMAIN = {
     "responses": {
-        "utter_test_navigation__display_titles": [{"custom": BUTTON_TITLES}],
-        "utter_test_navigation__descriptions": [{"custom": DESCRIPTION_PARTS}],
-        "utter_ask_test_navigation__try_different_address_error": [{"text": ""}],
+        "utter_test_navigation_form_locations_display_titles": [
+            {"custom": BUTTON_TITLES}
+        ],
+        "utter_test_navigation_form_locations_descriptions": [
+            {"custom": DESCRIPTION_PARTS}
+        ],
+        "utter_ask_test_navigation_form_try_different_address_error": [{"text": ""}],
     }
 }
 
@@ -185,7 +189,7 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_postal_code_invalid_format(self):
         extra_events = [SlotSet(INVALID_POSTAL_CODE_COUNTER_SLOT, 1)]
-        templates = ["utter_test_navigation__invalid_postal_code"]
+        templates = ["utter_test_navigation_form_postal_code_invalid"]
 
         await self.check_slot_value_rejected(
             POSTAL_CODE_SLOT,
@@ -197,7 +201,7 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_postal_code_invalid_format_twice(self):
         extra_events = [SlotSet(INVALID_POSTAL_CODE_COUNTER_SLOT, 2)]
-        templates = ["utter_test_navigation__invalid_postal_code"]
+        templates = ["utter_test_navigation_form_postal_code_invalid"]
         previous_slots = {INVALID_POSTAL_CODE_COUNTER_SLOT: 1}
 
         await self.check_slot_value_rejected(
@@ -230,7 +234,7 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
             ]
         )
 
-        self.assert_templates(["utter_test_navigation__invalid_postal_code_max"])
+        self.assert_templates(["utter_test_navigation_form_postal_code_invalid_max"])
 
     @pytest.mark.asyncio
     async def test_postal_code_geocoding_error(self):
@@ -241,8 +245,8 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
             SlotSet(TRY_DIFFERENT_ADDRESS_SLOT, SKIP_SLOT_PLACEHOLDER),
         ]
         templates = [
-            "utter_test_navigation__could_not_fetch_1",
-            "utter_test_navigation__could_not_fetch_2",
+            "utter_test_navigation_form_locations_not_fetched_1",
+            "utter_test_navigation_form_locations_not_fetched_2",
         ]
         await self.check_slot_value_accepted(
             POSTAL_CODE_SLOT,
@@ -256,7 +260,7 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
         self._set_geocode(None)
 
         extra_events = [SlotSet(INVALID_POSTAL_CODE_COUNTER_SLOT, 1)]
-        templates = ["utter_test_navigation__invalid_postal_code"]
+        templates = ["utter_test_navigation_form_postal_code_invalid"]
 
         await self.check_slot_value_rejected(
             POSTAL_CODE_SLOT,
@@ -270,7 +274,7 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
         self._set_geocode(None)
 
         extra_events = [SlotSet(INVALID_POSTAL_CODE_COUNTER_SLOT, 2)]
-        templates = ["utter_test_navigation__invalid_postal_code"]
+        templates = ["utter_test_navigation_form_postal_code_invalid"]
         previous_slots = {INVALID_POSTAL_CODE_COUNTER_SLOT: 1}
 
         await self.check_slot_value_rejected(
@@ -305,7 +309,7 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
             ]
         )
 
-        self.assert_templates(["utter_test_navigation__invalid_postal_code_max"])
+        self.assert_templates(["utter_test_navigation_form_postal_code_invalid_max"])
 
     @pytest.mark.asyncio
     @patch(
@@ -320,8 +324,8 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
             SlotSet(TRY_DIFFERENT_ADDRESS_SLOT, SKIP_SLOT_PLACEHOLDER),
         ]
         templates = [
-            "utter_test_navigation__could_not_fetch_1",
-            "utter_test_navigation__could_not_fetch_2",
+            "utter_test_navigation_form_locations_not_fetched_1",
+            "utter_test_navigation_form_locations_not_fetched_2",
         ]
         await self.check_slot_value_accepted(
             POSTAL_CODE_SLOT,
@@ -338,7 +342,7 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
     async def test_postal_code_no_results(self):
         self._set_geocode(USER_COORDINATES)
 
-        templates = ["utter_test_navigation__no_locations"]
+        templates = ["utter_test_navigation_form_locations_none"]
         await self.check_slot_value_accepted(
             POSTAL_CODE_SLOT, POSTAL_CODE, templates=templates
         )
@@ -352,7 +356,7 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
 
     @pytest.mark.asyncio
     async def test_try_different_address_deny(self):
-        templates = ["utter_test_navigation__acknowledge"]
+        templates = ["utter_test_navigation_acknowledge"]
         await self.check_slot_value_accepted(
             TRY_DIFFERENT_ADDRESS_SLOT, False, templates=templates
         )
@@ -373,7 +377,7 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
             SlotSet(REQUESTED_SLOT, None),
             SlotSet(TRY_DIFFERENT_ADDRESS_SLOT, SKIP_SLOT_PLACEHOLDER),
         ]
-        templates = ["utter_test_navigation__one_location", None]
+        templates = ["utter_test_navigation_form_locations_one", None]
         await self.check_slot_value_accepted(
             POSTAL_CODE_SLOT,
             POSTAL_CODE,
@@ -400,9 +404,9 @@ class TestValidateTestNavigationForm(ValidateActionTestCase):
             SlotSet(TRY_DIFFERENT_ADDRESS_SLOT, SKIP_SLOT_PLACEHOLDER),
         ]
         templates = [
-            "utter_test_navigation__many_locations_1",
-            "utter_test_navigation__many_locations_2",
-            "utter_test_navigation__many_locations_3",
+            "utter_test_navigation_form_locations_many_1",
+            "utter_test_navigation_form_locations_many_2",
+            "utter_test_navigation_form_locations_many_3",
             None,
         ]
         await self.check_slot_value_accepted(

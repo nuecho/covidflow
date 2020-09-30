@@ -48,7 +48,7 @@ class TestActionAskDailyCiFeelNoChangeFormHasFever(ActionTestCase):
         self.assert_events([])
 
         self.assert_templates(
-            ["utter_ask_daily_ci_feel_no_change_form_has_fever___still"]
+            ["utter_ask_daily_ci_feel_no_change_form_has_fever__still"]
         )
 
 
@@ -76,7 +76,7 @@ class TestActionAskDailyCiFeelNoChangeFormHasCough(ActionTestCase):
         self.assert_events([])
 
         self.assert_templates(
-            ["utter_ask_daily_ci_feel_no_change_form_has_cough___still"]
+            ["utter_ask_daily_ci_feel_no_change_form_has_cough__still"]
         )
 
 
@@ -93,16 +93,16 @@ class TestDailyCiFeelNoChangeForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_fever(self):
         templates = [
-            "utter_daily_ci__acknowledge_fever",
-            "utter_daily_ci__take_acetaminophen",
-            "utter_daily_ci__avoid_ibuprofen",
+            "utter_daily_ci_has_fever_true_1",
+            "utter_daily_ci_has_fever_true_2",
+            "utter_daily_ci_has_fever_true_3",
         ]
 
         await self.check_slot_value_accepted(HAS_FEVER_SLOT, True, templates=templates)
 
     @pytest.mark.asyncio
     async def test_no_fever(self):
-        templates = ["utter_daily_ci_feel_no_change_form_acknowledge_no_fever"]
+        templates = ["utter_daily_ci_feel_no_change_form_has_fever_false"]
 
         await self.check_slot_value_accepted(HAS_FEVER_SLOT, False, templates=templates)
 
@@ -110,8 +110,8 @@ class TestDailyCiFeelNoChangeForm(ValidateActionTestCase):
     async def test_mild_last_symptoms_cough(self):
         previous_slots = {LAST_SYMPTOMS_SLOT: Symptoms.MILD}
         templates = [
-            "utter_daily_ci__cough_syrup_may_help",
-            "utter_daily_ci__cough_syrup_pharmacist",
+            "utter_daily_ci_has_cough_true_1",
+            "utter_daily_ci_has_cough_true_2",
             "utter_daily_ci_feel_no_change_form_mild_last_symptoms_recommendation",
         ]
         extra_events = [
@@ -131,7 +131,7 @@ class TestDailyCiFeelNoChangeForm(ValidateActionTestCase):
     async def test_mild_last_symptoms_no_cough(self):
         previous_slots = {LAST_SYMPTOMS_SLOT: Symptoms.MILD}
         templates = [
-            "utter_daily_ci__acknowledge_no_cough",
+            "utter_daily_ci_has_cough_false",
             "utter_daily_ci_feel_no_change_form_mild_last_symptoms_recommendation",
         ]
         extra_events = [
@@ -151,8 +151,8 @@ class TestDailyCiFeelNoChangeForm(ValidateActionTestCase):
     async def test_moderate_last_symptoms_cough(self):
         previous_slots = {LAST_SYMPTOMS_SLOT: Symptoms.MODERATE}
         templates = [
-            "utter_daily_ci__cough_syrup_may_help",
-            "utter_daily_ci__cough_syrup_pharmacist",
+            "utter_daily_ci_has_cough_true_1",
+            "utter_daily_ci_has_cough_true_2",
         ]
 
         await self.check_slot_value_accepted(
@@ -162,7 +162,7 @@ class TestDailyCiFeelNoChangeForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_moderate_last_symptoms_no_cough(self):
         previous_slots = {LAST_SYMPTOMS_SLOT: Symptoms.MODERATE}
-        templates = ["utter_daily_ci__acknowledge_no_cough"]
+        templates = ["utter_daily_ci_has_cough_false"]
 
         await self.check_slot_value_accepted(
             HAS_COUGH_SLOT, False, previous_slots=previous_slots, templates=templates
@@ -171,8 +171,8 @@ class TestDailyCiFeelNoChangeForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_has_diff_breathing(self):
         templates = [
-            "utter_daily_ci_feel_no_change_form_acknowledge_diff_breathing",
-            "utter_daily_ci_feel_no_change_form_diff_breathing_recommendation",
+            "utter_daily_ci_feel_no_change_form_has_diff_breathing_true_1",
+            "utter_daily_ci_feel_no_change_form_has_diff_breathing_true_2",
         ]
         await self.check_slot_value_accepted(
             HAS_DIFF_BREATHING_SLOT, True, templates=templates
@@ -181,8 +181,8 @@ class TestDailyCiFeelNoChangeForm(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_has_no_diff_breathing_no_other_symptom(self):
         templates = [
-            "utter_daily_ci_feel_no_change_form_acknowledge_no_diff_breathing",
-            "utter_daily_ci_feel_no_change_form_no_diff_breathing_recommendation",
+            "utter_daily_ci_feel_no_change_form_has_diff_breathing_false_1",
+            "utter_daily_ci_feel_no_change_form_has_diff_breathing_false_2",
         ]
         previous_slots = {HAS_FEVER_SLOT: False, HAS_COUGH_SLOT: False}
         extra_events = [SlotSet(SYMPTOMS_SLOT, Symptoms.MILD)]
@@ -205,8 +205,8 @@ class TestDailyCiFeelNoChangeForm(ValidateActionTestCase):
 
     async def _test_has_no_diff_breathing_other_symptom(self, fever: bool, cough: bool):
         templates = [
-            "utter_daily_ci_feel_no_change_form_acknowledge_no_diff_breathing",
-            "utter_daily_ci_feel_no_change_form_no_diff_breathing_recommendation",
+            "utter_daily_ci_feel_no_change_form_has_diff_breathing_false_1",
+            "utter_daily_ci_feel_no_change_form_has_diff_breathing_false_2",
         ]
         previous_slots = {HAS_FEVER_SLOT: fever, HAS_COUGH_SLOT: cough}
 

@@ -18,7 +18,10 @@ class ValidateSelfIsolationFormTest(ValidateActionTestCase):
 
     @pytest.mark.asyncio
     async def test_lives_alone(self):
-        templates = ["utter_lives_alone_true", "utter_self_isolation_final"]
+        templates = [
+            "utter_self_isolation_form_lives_alone_true",
+            "utter_self_isolation_final",
+        ]
         await self.check_slot_value_accepted(
             LIVES_ALONE_SLOT, True, templates=templates
         )
@@ -26,9 +29,9 @@ class ValidateSelfIsolationFormTest(ValidateActionTestCase):
     @pytest.mark.asyncio
     async def test_does_not_live_alone(self):
         templates = [
-            "utter_lives_alone_false_1",
-            "utter_lives_alone_false_2",
-            "utter_lives_alone_false_3",
+            "utter_self_isolation_form_lives_alone_false_1",
+            "utter_self_isolation_form_lives_alone_false_2",
+            "utter_self_isolation_form_lives_alone_false_3",
             "utter_self_isolation_final",
         ]
         await self.check_slot_value_accepted(

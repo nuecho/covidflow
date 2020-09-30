@@ -39,7 +39,7 @@ class ActionAskDailyCiFeelNoChangeFormHasFever(Action):
         template_name = f"utter_ask_{FORM_NAME}_{HAS_FEVER_SLOT}"
 
         if tracker.get_slot(LAST_HAS_FEVER_SLOT) is True:
-            dispatcher.utter_message(template=f"{template_name}___still")
+            dispatcher.utter_message(template=f"{template_name}__still")
         else:
             dispatcher.utter_message(template=template_name)
 
@@ -59,7 +59,7 @@ class ActionAskDailyCiFeelNoChangeFormHasCough(Action):
         template_name = f"utter_ask_{FORM_NAME}_{HAS_COUGH_SLOT}"
 
         if tracker.get_slot(LAST_HAS_COUGH_SLOT) is True:
-            dispatcher.utter_message(template=f"{template_name}___still")
+            dispatcher.utter_message(template=f"{template_name}__still")
         else:
             dispatcher.utter_message(template=template_name)
 
@@ -112,12 +112,12 @@ def _validate_has_fever(
     value: bool, dispatcher: CollectingDispatcher,
 ) -> List[EventType]:
     if value is True:
-        dispatcher.utter_message(template="utter_daily_ci__acknowledge_fever")
-        dispatcher.utter_message(template="utter_daily_ci__take_acetaminophen")
-        dispatcher.utter_message(template="utter_daily_ci__avoid_ibuprofen")
+        dispatcher.utter_message(template="utter_daily_ci_has_fever_true_1")
+        dispatcher.utter_message(template="utter_daily_ci_has_fever_true_2")
+        dispatcher.utter_message(template="utter_daily_ci_has_fever_true_3")
     else:
         dispatcher.utter_message(
-            template="utter_daily_ci_feel_no_change_form_acknowledge_no_fever"
+            template="utter_daily_ci_feel_no_change_form_has_fever_false"
         )
 
     return []
@@ -127,10 +127,10 @@ def _validate_has_cough(
     value: bool, dispatcher: CollectingDispatcher,
 ) -> List[EventType]:
     if value is True:
-        dispatcher.utter_message(template="utter_daily_ci__cough_syrup_may_help")
-        dispatcher.utter_message(template="utter_daily_ci__cough_syrup_pharmacist")
+        dispatcher.utter_message(template="utter_daily_ci_has_cough_true_1")
+        dispatcher.utter_message(template="utter_daily_ci_has_cough_true_2")
     else:
-        dispatcher.utter_message(template="utter_daily_ci__acknowledge_no_cough")
+        dispatcher.utter_message(template="utter_daily_ci_has_cough_false")
 
     return []
 
@@ -142,10 +142,10 @@ def _validate_has_diff_breathing(
 
     if value is True:
         dispatcher.utter_message(
-            template="utter_daily_ci_feel_no_change_form_acknowledge_diff_breathing"
+            template="utter_daily_ci_feel_no_change_form_has_diff_breathing_true_1"
         )
         dispatcher.utter_message(
-            template="utter_daily_ci_feel_no_change_form_diff_breathing_recommendation"
+            template="utter_daily_ci_feel_no_change_form_has_diff_breathing_true_2"
         )
     else:
         if (
@@ -155,10 +155,10 @@ def _validate_has_diff_breathing(
             slots.append(SlotSet(SYMPTOMS_SLOT, Symptoms.MILD))
 
         dispatcher.utter_message(
-            template="utter_daily_ci_feel_no_change_form_acknowledge_no_diff_breathing"
+            template="utter_daily_ci_feel_no_change_form_has_diff_breathing_false_1"
         )
         dispatcher.utter_message(
-            template="utter_daily_ci_feel_no_change_form_no_diff_breathing_recommendation"
+            template="utter_daily_ci_feel_no_change_form_has_diff_breathing_false_2"
         )
 
     return slots

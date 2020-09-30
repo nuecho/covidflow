@@ -29,11 +29,19 @@ class ValidateSelfIsolationForm(Action):
             return []
 
         if extracted_slots[LIVES_ALONE_SLOT] is True:
-            dispatcher.utter_message(template="utter_lives_alone_true")
+            dispatcher.utter_message(
+                template="utter_self_isolation_form_lives_alone_true"
+            )
         else:
-            dispatcher.utter_message(template="utter_lives_alone_false_1")
-            dispatcher.utter_message(template="utter_lives_alone_false_2")
-            dispatcher.utter_message(template="utter_lives_alone_false_3")
+            dispatcher.utter_message(
+                template="utter_self_isolation_form_lives_alone_false_1"
+            )
+            dispatcher.utter_message(
+                template="utter_self_isolation_form_lives_alone_false_2"
+            )
+            dispatcher.utter_message(
+                template="utter_self_isolation_form_lives_alone_false_3"
+            )
 
         dispatcher.utter_message(template="utter_self_isolation_final")
 

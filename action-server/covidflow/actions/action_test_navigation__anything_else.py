@@ -10,7 +10,7 @@ from .lib.log_util import bind_logger
 
 class ActionAskTestNavigationAnythingElse(Action):
     def name(self) -> Text:
-        return "action_test_navigation__anything_else"
+        return "action_test_navigation_anything_else"
 
     async def run(
         self,
@@ -21,11 +21,11 @@ class ActionAskTestNavigationAnythingElse(Action):
         bind_logger(tracker)
         if tracker.get_slot(SELF_ASSESS_DONE_SLOT) is True:
             dispatcher.utter_message(
-                template="utter_test_navigation__anything_else_no_assessment"
+                template="utter_test_navigation_anything_else_no_assessment"
             )
         else:
             dispatcher.utter_message(
-                template="utter_test_navigation__anything_else_offer_assessment"
+                template="utter_test_navigation_anything_else_offer_assessment"
             )
 
         return []

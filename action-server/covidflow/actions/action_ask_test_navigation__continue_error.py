@@ -11,7 +11,7 @@ from .lib.log_util import bind_logger
 
 class ActionAskTestNavigationContinueError(Action):
     def name(self) -> Text:
-        return "action_ask_test_navigation__continue_error"
+        return "action_ask_test_navigation_continue_error"
 
     async def run(
         self,
@@ -22,11 +22,11 @@ class ActionAskTestNavigationContinueError(Action):
         bind_logger(tracker)
         if tracker.get_slot(SELF_ASSESS_DONE_SLOT) is True:
             dispatcher.utter_message(
-                template="utter_ask_test_navigation__continue_error_no_assessment"
+                template="utter_ask_test_navigation_continue_error_no_assessment"
             )
         else:
             dispatcher.utter_message(
-                template="utter_ask_test_navigation__continue_error_offer_assessment"
+                template="utter_ask_test_navigation_continue_error_offer_assessment"
             )
 
         return [UserUtteranceReverted(), FollowupAction(ACTION_LISTEN_NAME)]

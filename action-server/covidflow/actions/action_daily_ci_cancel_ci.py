@@ -23,9 +23,9 @@ class ActionDailyCiCancelCi(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         bind_logger(tracker)
-        dispatcher.utter_message(template="utter_daily_ci__acknowledge_cancel_ci")
+        dispatcher.utter_message(template="utter_daily_ci_acknowledge_cancel_ci")
 
-        dispatcher.utter_message(template="utter_daily_ci__cancel_ci_recommendation")
+        dispatcher.utter_message(template="utter_daily_ci_cancel_ci_recommendation")
 
         cancel_reminder(tracker.current_slot_values())
 
