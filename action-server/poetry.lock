@@ -677,13 +677,13 @@ description = "Open source machine learning framework to automate text- and voic
 name = "rasa-sdk"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "2.0.0a4"
+version = "2.0.0rc1"
 
 [package.dependencies]
 coloredlogs = ">=10,<15"
 requests = ">=2.0,<3.0"
-sanic = ">=19.12.2,<20.0.0"
-sanic-cors = ">=0.10.0b1,<0.11.0"
+sanic = ">=19.12.2,<21.0.0"
+sanic-cors = ">=0.10.0,<0.11.0"
 
 [[package]]
 category = "dev"
@@ -950,7 +950,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
-content-hash = "940ccef2d9d53d35cefc5b349c7c4315e573274b5467c4a5dba1901f687ee93e"
+content-hash = "52757aa2dbcf675b59c513f479e74505bc2ab79cdba4614849dfb6c74b92d4f2"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1355,8 +1355,8 @@ pytz = [
     {file = "pytz-2020.1.tar.gz", hash = "sha256:c35965d010ce31b23eeb663ed3cc8c906275d6be1a34393a1d73a41febf4a048"},
 ]
 rasa-sdk = [
-    {file = "rasa-sdk-2.0.0a4.tar.gz", hash = "sha256:fe5e3f1f5a19e7f7f51d0db4be1ec9556cc33bd59cc16abab8970ebed5c4f02d"},
-    {file = "rasa_sdk-2.0.0a4-py3-none-any.whl", hash = "sha256:d8e1a33a965e3b60e9362489b82655f353783f3b6e9151dc71fd1546b53ff9ea"},
+    {file = "rasa-sdk-2.0.0rc1.tar.gz", hash = "sha256:4f4eee61dfaacc09396e852840073fca7b71884337ad6ea9bcafbfc2044f04a0"},
+    {file = "rasa_sdk-2.0.0rc1-py3-none-any.whl", hash = "sha256:38087859a7cfaf37f60101a4ae73a6b8806b5da78bb4869856e7dd8fb6b29d48"},
 ]
 regex = [
     {file = "regex-2020.9.27-cp27-cp27m-win32.whl", hash = "sha256:d23a18037313714fb3bb5a94434d3151ee4300bae631894b1ac08111abeaa4a3"},

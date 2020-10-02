@@ -2,9 +2,7 @@ import pytest
 from rasa_sdk.events import ActionExecuted, ActionReverted, FollowupAction, UserUttered
 
 from covidflow.actions.action_check_task_allowed import ActionCheckTaskAllowed
-from covidflow.actions.action_default_fallback import (
-    ACTION_NAME as FALLBACK_ACTION_NAME,
-)
+from covidflow.actions.action_fallback import ACTION_NAME as FALLBACK_ACTION_NAME
 from covidflow.constants import ACTION_LISTEN_NAME
 
 from .action_test_helper import ActionTestCase

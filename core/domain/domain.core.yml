@@ -50,7 +50,7 @@ entities:
   - validation_code
 
 actions:
-  - action_default_fallback
+  - action_fallback
   - action_check_task_allowed
   - action_visit_package
   - action_initialize_daily_checkin
@@ -106,98 +106,98 @@ actions:
   - action_keep_ci_recommendations
 
 forms:
-  - home_assistance_form:
-      home_assistance_has_assistance: *boolean
-  - self_isolation_form:
-      self_isolation_form_lives_alone: *boolean
-  - contact_risk_form:
-      contact_risk_form_contact: *boolean
-      contact_risk_form_travel: *boolean
-  - daily_ci_enroll_form:
-      first_name:
-        - type: from_text
-      phone_number:
-        - type: from_text
-          not_intent:
-            - no_phone
-            - cancel
-      daily_ci_enroll_form_no_code_solution:
-        - type: from_intent
-          intent: new_code
-          value: new_code
-        - type: from_intent
-          intent: change_phone
-          value: change_phone
-        - type: from_text
-      daily_ci_enroll_form_validation_code:
-        - type: from_intent
-          intent: did_not_get_code
-          value: did_not_get_code
-        - type: from_intent
-          intent: change_phone
-          value: change_phone
-        - type: from_text
-      preconditions:
-        - type: from_intent
-          intent: affirm
-          value: true
-        - type: from_intent
-          intent: deny
-          value: false
-        - type: from_intent
-          intent: dont_know
-          value: dont_know # Will reject first time and set to true second time
-      has_dialogue: *boolean
-  - daily_ci_feel_no_change_form:
-      has_fever: *boolean
-      has_cough: *boolean
-      has_diff_breathing: *boolean
-  - daily_ci_feel_better_form:
-      has_fever: *boolean
-      has_cough: *boolean
-      has_diff_breathing: *boolean
-      daily_ci_feel_better_form_has_other_mild_symptoms: *boolean
-      daily_ci_feel_better_form_is_symptom_free: *boolean
-  - daily_ci_feel_worse_form:
-      severe_symptoms: *boolean
-      has_fever: *boolean
-      has_diff_breathing: *boolean
-      daily_ci_feel_worse_form_has_diff_breathing_worsened: *boolean
-      has_cough: *boolean
-  - question_answering_form:
-      question_answering_form_active_question:
-        - type: from_text
-      question_answering_form_feedback:
-        - type: from_intent
-          intent: affirm
-          value: true
-        - type: from_intent
-          intent: deny
-          value: false
-        - type: from_text
-  - test_navigation_form:
-      test_navigation_form_postal_code:
-        - type: from_text
-      test_navigation_form_try_different_address: *boolean # Only asked if no results
-  - assessment_form:
-      assessment_type:
-        - type: from_trigger_intent
-          intent: [tested_positive, deny]
-          value: tested_positive
-        - type: from_trigger_intent
-          intent: checkin_return
-          value: checkin_return
-        - type: from_trigger_intent
-          intent: [affirm, get_assessment]
-          value: generic
-      severe_symptoms: *boolean
-      province_code:
-        - type: from_entity
-          entity: province
-      age_over_65: *boolean
-      has_fever: *boolean
-      moderate_symptoms: *boolean
-      has_cough: *boolean
+  home_assistance_form:
+    home_assistance_has_assistance: *boolean
+  self_isolation_form:
+    self_isolation_form_lives_alone: *boolean
+  contact_risk_form:
+    contact_risk_form_contact: *boolean
+    contact_risk_form_travel: *boolean
+  daily_ci_enroll_form:
+    first_name:
+      - type: from_text
+    phone_number:
+      - type: from_text
+        not_intent:
+          - no_phone
+          - cancel
+    daily_ci_enroll_form_no_code_solution:
+      - type: from_intent
+        intent: new_code
+        value: new_code
+      - type: from_intent
+        intent: change_phone
+        value: change_phone
+      - type: from_text
+    daily_ci_enroll_form_validation_code:
+      - type: from_intent
+        intent: did_not_get_code
+        value: did_not_get_code
+      - type: from_intent
+        intent: change_phone
+        value: change_phone
+      - type: from_text
+    preconditions:
+      - type: from_intent
+        intent: affirm
+        value: true
+      - type: from_intent
+        intent: deny
+        value: false
+      - type: from_intent
+        intent: dont_know
+        value: dont_know # Will reject first time and set to true second time
+    has_dialogue: *boolean
+  daily_ci_feel_no_change_form:
+    has_fever: *boolean
+    has_cough: *boolean
+    has_diff_breathing: *boolean
+  daily_ci_feel_better_form:
+    has_fever: *boolean
+    has_cough: *boolean
+    has_diff_breathing: *boolean
+    daily_ci_feel_better_form_has_other_mild_symptoms: *boolean
+    daily_ci_feel_better_form_is_symptom_free: *boolean
+  daily_ci_feel_worse_form:
+    severe_symptoms: *boolean
+    has_fever: *boolean
+    has_diff_breathing: *boolean
+    daily_ci_feel_worse_form_has_diff_breathing_worsened: *boolean
+    has_cough: *boolean
+  question_answering_form:
+    question_answering_form_active_question:
+      - type: from_text
+    question_answering_form_feedback:
+      - type: from_intent
+        intent: affirm
+        value: true
+      - type: from_intent
+        intent: deny
+        value: false
+      - type: from_text
+  test_navigation_form:
+    test_navigation_form_postal_code:
+      - type: from_text
+    test_navigation_form_try_different_address: *boolean # Only asked if no results
+  assessment_form:
+    assessment_type:
+      - type: from_trigger_intent
+        intent: [tested_positive, deny]
+        value: tested_positive
+      - type: from_trigger_intent
+        intent: checkin_return
+        value: checkin_return
+      - type: from_trigger_intent
+        intent: [affirm, get_assessment]
+        value: generic
+    severe_symptoms: *boolean
+    province_code:
+      - type: from_entity
+        entity: province
+    age_over_65: *boolean
+    has_fever: *boolean
+    moderate_symptoms: *boolean
+    has_cough: *boolean
 
 
 

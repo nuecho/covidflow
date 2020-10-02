@@ -7,7 +7,7 @@ from rasa_sdk.executor import CollectingDispatcher
 
 from covidflow.constants import ACTION_LISTEN_NAME
 
-from .action_default_fallback import ACTION_NAME as FALLBACK_ACTION_NAME
+from .action_fallback import ACTION_NAME as FALLBACK_ACTION_NAME
 from .lib.action_utils import get_intent
 from .lib.log_util import bind_logger
 

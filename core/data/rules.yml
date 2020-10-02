@@ -385,7 +385,7 @@ rules:
           - requested_slot: phone_number
     steps:
       - intent: no_phone
-      - action: action_deactivate_form
+      - action: action_deactivate_loop
       - active_loop: null
       - action: utter_daily_ci_enroll_no_phone_no_checkin
       - action: utter_daily_ci_enroll_continue
@@ -402,7 +402,7 @@ rules:
       - action: utter_ask_daily_ci_enroll_wants_cancel
       - intent: affirm
       - action: utter_daily_ci_enroll_no_problem_continue
-      - action: action_deactivate_form
+      - action: action_deactivate_loop
       - active_loop: null
       - action: action_daily_ci_enroll_form_ended
     wait_for_user_input: false
@@ -417,7 +417,7 @@ rules:
       - action: utter_ask_daily_ci_enroll_wants_cancel
       - intent: cancel
       - action: utter_daily_ci_enroll_no_problem_continue
-      - action: action_deactivate_form
+      - action: action_deactivate_loop
       - active_loop: null
       - action: action_daily_ci_enroll_form_ended
     wait_for_user_input: false
@@ -772,17 +772,17 @@ rules:
       - action: action_keep_ci_recommendations
       - action: utter_ask_anything_else_with_test_navigation
 
-  - rule: Cancels ci no symptoms (deny)
+  - rule: Cancels ci symptoms (deny)
     steps:
-      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_symptoms
       - intent: deny
       - action: action_daily_ci_cancel_ci
       - action: utter_ask_anything_else_with_test_navigation
 
-  - rule: Cancels ci no symptoms (cancel)
+  - rule: Cancels ci symptoms (cancel)
     steps:
-      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_no_symptoms
-      - intent: deny
+      - action: utter_ask_daily_ci_keep_or_cancel_continue_ci_symptoms
+      - intent: cancel
       - action: action_daily_ci_cancel_ci
       - action: utter_ask_anything_else_with_test_navigation
 

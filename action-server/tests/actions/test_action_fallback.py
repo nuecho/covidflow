@@ -7,7 +7,7 @@ from rasa_sdk.events import (
     UserUttered,
 )
 
-from covidflow.actions.action_default_fallback import ActionDefaultFallback
+from covidflow.actions.action_fallback import ActionDefaultFallback
 from covidflow.constants import ACTION_LISTEN_NAME, FALLBACK_INTENT
 
 from .action_test_helper import ActionTestCase
